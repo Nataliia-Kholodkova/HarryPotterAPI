@@ -28,7 +28,7 @@
                             type="checkbox"
                             class="checkbox-input faculty-form__box visually-hidden"
                             value="gryffindor"
-                            name="gryffindor"
+                            name="house"
                         />
                         <img
                             class="img img-checkbox"
@@ -43,7 +43,7 @@
                             type="checkbox"
                             class="input checkbox-input faculty-form__box visually-hidden"
                             value="hufflepuff"
-                            name="hufflepuff"
+                            name="house"
                         />
                         <img
                             class="img img-checkbox"
@@ -58,7 +58,7 @@
                             type="checkbox"
                             class="input checkbox-input faculty-form__box visually-hidden"
                             value="ravenclaw"
-                            name="ravenclaw"
+                            name="house"
                         />
                         <img
                             class="img img-checkbox"
@@ -73,7 +73,7 @@
                             type="checkbox"
                             class="input checkbox-input faculty-form__box visually-hidden"
                             value="slytherin"
-                            name="slytherin"
+                            name="house"
                         />
                         <img
                             class="img img-checkbox"
@@ -87,8 +87,8 @@
                         <input
                             type="checkbox"
                             class="input checkbox-input faculty-form__box visually-hidden"
-                            value="hogwarts"
-                            name="hogwards"
+                            value="all"
+                            name="house"
                         />
                         <img
                             class="img img-checkbox"
@@ -130,7 +130,7 @@
                             <input
                                 type="radio"
                                 name="hogwarts"
-                                value="-"
+                                value=""
                                 class="input radio-input filter-form-input__radio visually-hidden"
                             />
                             <span class="label label-radio"
@@ -189,7 +189,7 @@
                             <input
                                 type="radio"
                                 name="alive"
-                                value="true"
+                                value="1"
                                 class="input radio-input filter-form-input__radio visually-hidden"
                             />
                             <span class="label label-radio">Alive</span>
@@ -198,7 +198,7 @@
                             <input
                                 type="radio"
                                 name="alive"
-                                value="false"
+                                value=""
                                 class="input radio-input filter-form-input__radio visually-hidden"
                             />
                             <span class="label label-radio">Dead</span>
@@ -219,7 +219,7 @@
                         >
                             <input
                                 type="search"
-                                name="search"
+                                name="name"
                                 class="input text-input filter-form-input__text"
                                 placeholder="Hero's name"
                             />
@@ -228,6 +228,9 @@
                             >
                         </label>
                     </fieldset>
+                    <button type="reset" class="btn btn-reset", name='reset'>
+                        Reset
+                    </button>
                 </form>
                 <div class="additional">
                     <button type="button" class="btn btn-find">
@@ -237,36 +240,6 @@
             </aside>
             <main class="main">
                 <div class="results">
-                    <div class="hero-card hero-card__big">
-                        <img
-                            src="http://hp-api.herokuapp.com/images/harry.jpg"
-                            alt="Harry Potter"
-                            width="120"
-                            class="img card-img card-img__big"
-                        />
-                        <div class="hero-description">
-                            <h2 class="title card-title">Harry Potter</h2>
-                            <p class="text card-text">
-                                <span class="hero-name">Harry Potter</span> was
-                                bourn
-                                <span class="hero-birth-date">31-07-1980</span>.
-                                <span class="hero-occupation"
-                                    >Student of Hogwards, Griffindorf</span
-                                >.
-                            </p>
-                            <p class="text card-text">
-                                Has <span class="hero-hair">black</span> hair,
-                                <span class="hero-eyes">green</span> eyes.
-                                Patronus -
-                                <span class="hero-patronus">stag</span>
-                            </p>
-                            <p class="text card-text">
-                                Acted by
-                                <span class="hero-actor">Daniel Radcliffe</span
-                                >.
-                            </p>
-                        </div>
-                    </div>
 
                     <div class="hero-list">
                         <button
@@ -284,169 +257,8 @@
                             &rsaquo;
                         </button>
                         <div class="hero-list__wrapper">
-                            <div class="hero-list__slider">
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/hermione.jpeg"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Hermione Granger
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Hermione Granger</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >19-09-1979</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Student of Hogwards,
-                                                Griffindorf</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/ron.jpg"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Ron Weasley
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Ron Weasley</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >31-07-1980</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Student of Hogwards,
-                                                Griffindorf</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/draco.jpg"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Draco Malfoy
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Draco Malfoy</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >31-07-1980</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Student of Hogwards,
-                                                Slytherin</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/mcgonagall.jpg"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Minerva McGonagall
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Minerva McGonagall</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >31-07-1980</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Professor of Hogwards,
-                                                Griffindorf</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/cedric.png"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Cedric Diggory
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Cedric Diggory</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >31-07-1980</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Student of Hogwards,
-                                                Griffindorf</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="hero-card hero-card__small">
-                                    <img
-                                        src="http://hp-api.herokuapp.com/images/cho.jpg"
-                                        alt="description"
-                                        width="80"
-                                        class="img card-img card-img__small"
-                                    />
-                                    <div class="hero-description">
-                                        <h3 class="title card-title">
-                                            Cho Chang
-                                        </h3>
-                                        <p class="text card-text">
-                                            <span class="hero-name"
-                                                >Cho Chang</span
-                                            >
-                                            was bourn
-                                            <span class="hero-birth-date"
-                                                >31-07-1980</span
-                                            >.
-                                            <span class="hero-occupation"
-                                                >Student of Hogwards,
-                                                Ravenclaw</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="hero-list__slider"></div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -481,11 +293,8 @@
                 </div>
             </div>
         </template>
-        <template id="heroList">
-            <div class="hero-list"><div class="hero-list__wrapper"></div></div>
-        </template>
         <template id="smallHero">
-            <div class="hero-card hero-card__small">
+            <div class="hero-card hero-card__small" data-id="1">
                 <img
                     src="img.jpg"
                     alt="description"
@@ -668,6 +477,6 @@
                 </button>
             </form>
         </div>
-        <script src="js/script.js"></script>
+        <script src="js/script.js" type="module"></script>
     </body>
 </html>

@@ -22,6 +22,7 @@ body {
     border: none;
     font: inherit;
     background: none;
+    cursor: pointer;
 }
 
 .form {
@@ -164,6 +165,10 @@ body {
     }
 }
 
+.filter-form {
+    margin-bottom: 30px;
+}
+
 .fieldset {
     display: flex;
     width: 100%;
@@ -250,7 +255,7 @@ body {
     margin: 0 auto;
 }
 
-.btn-find, .btn-submit {
+.btn-find, .btn-submit, .btn-reset {
     color: aliceblue;
     padding: 10px 0;
     background-color: #c22828;
@@ -263,7 +268,8 @@ body {
 }
 
 .btn-find:hover,.btn-submit:hover,
-.btn-find:focus, .btn-submit:focus {
+.btn-find:focus, .btn-submit:focus,
+.btn-reset:hover,.btn-reset:hover {
     background-color: #8a0f0f;
 }
 
