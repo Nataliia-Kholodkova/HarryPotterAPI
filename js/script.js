@@ -1,3 +1,4 @@
-import app from './controller.js'
+import App from './controller.js'
 
+const app = new App();
 app.addListeners()

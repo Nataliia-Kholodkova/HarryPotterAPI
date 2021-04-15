@@ -110,6 +110,27 @@ class Model {
         const newData = data.filter(hero => hero.name.toLowerCase().includes(name.toLowerCase()));
         return newData;
     }
+
+    calculateSimilarity(data, state) {
+        let heroes = {};
+        for (let [key, [val, score]] of Object.entries(state)) {
+            let filteredHeroes = data.filter(hero => hero[key] === val);
+            for (let hero of filteredHeroes) {
+                if (hero.id in heroes) {
+                    heroes[hero.id] += score;
+                } else {
+                    heroes[hero.id] = score;
+                }
+            }
+        }
+        heroes = Object.entries(heroes);
+        heroes.sort(function (a, b) {
+            return b[1] - a[1];
+        })
+        heroes = heroes.map(hero => hero[0]);
+        heroes = heroes.map(id => data.find(hero => hero.id === +id));
+        return heroes.slice(0, 6);
+    }
 }
 
 const model = new Model(URL);

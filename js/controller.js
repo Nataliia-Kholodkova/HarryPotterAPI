@@ -1,5 +1,5 @@
 import model from "./model.js";
-import view from "./view.js";
+import View from "./view.js";
 
 class Controller {
     constructor(model, view) {
@@ -110,6 +110,7 @@ class Slider {
 class ModalForm {
     constructor() {
         this.modalWindow = document.querySelector(".modal");
+        this.form = this.modalWindow.querySelector('.similarity-form');
         this.findButton = document.querySelector(".btn-find");
     }
 
@@ -123,11 +124,25 @@ class ModalForm {
                 this.modalWindow.classList.remove("modal-open");
             });
     }
+
+    modalFormSubmit = (controller) => {
+        const state = {};
+        for (let element of this.form.elements) {
+            if (element.type === 'radio' && element.checked) {
+                state[element.name] = [element.value, +element.dataset.score]
+            }
+        }
+        const heroes = Promise.resolve(controller.model.heroes).then((data) => controller.model.calculateSimilarity(data, state));
+        heroes.then(data => controller.renderHeroCard(data[0].id));
+        heroes.then(data => controller.view.renderHeroesList(data)).then((template) => controller.displayHeroesList(template)).catch();
+        this.modalWindow.classList.add("modal-closed");
+        this.modalWindow.classList.remove("modal-open");
+    }
 }
 
 class App {
     constructor() {
-        this.controller = new Controller(model, view);
+        this.controller = new Controller(model, new View());
         this.slider = new Slider();
         this.modalWindow = new ModalForm();
         this.facultyForm = document.querySelector('.faculty-form');
@@ -147,6 +162,10 @@ class App {
             this.slider.cardHandler(target, this.controller)
         });
         this.modalWindow.findButton.addEventListener('click', this.modalWindow.modalFormHandler);
+        this.modalWindow.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.modalWindow.modalFormSubmit(this.controller)
+        });
     }
 
     filterFormHandler = ({ target }) => {
@@ -159,5 +178,4 @@ class App {
 
 }
 
-const app = new App();
-export default app;
+export default App;

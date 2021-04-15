@@ -1,5 +1,5 @@
 class View {
-    generateOccupation(hero, template) {
+    generateOccupation(hero) {
         let occupationTemplate = ``;
         if (hero.fromHogwarts()) {
             if (hero.hogwartsStaff) {
@@ -40,7 +40,7 @@ class View {
             hero.dateOfBirth;
         template.querySelector(
             ".hero-occupation"
-        ).textContent = this.generateOccupation(hero, template);
+        ).textContent = this.generateOccupation(hero);
         return template
     }
 
@@ -59,5 +59,4 @@ class View {
     }
 }
 
-const view = new View();
-export default view;
+export default View;
