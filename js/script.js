@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable indent */
-/* eslint-disable linebreak-style */
+
 import Controller from './controller.js';
 import model from './model.js';
 import View from './view.js';
@@ -26,12 +26,13 @@ class App {
     }));
         this.slider.slider.addEventListener('click', ({ target }) => {
             const id = this.slider.cardHandler(target, this);
-            this.controller.getHeroes().then((data) => this.controller.renderHeroCard(data, id));
+            this.controller.getHeroes()
+                .then((dataHeroes) => this.controller.renderHeroCard(dataHeroes, id));
         });
         this.modalWindow.findButton.addEventListener('click', this.modalWindow.modalFormHandler);
         this.modalWindow.form.addEventListener('submit', (event) => {
             event.preventDefault();
-            const state = this.modalWindow.modalFormSubmit(this.controller);
+            const state = this.modalWindow.modalFormSubmit();
             this.controller.renderSimilarHeroes(state);
             this.modalWindow.closeModal();
         });

@@ -237,7 +237,7 @@ svg:not([fill]) {
 svg:not(:root) {
   overflow: hidden;
 }
-/* Tabular data
+/* Tabular dataHeroes
  * ========================================================================== */
 /**
  * 1. Collapse border spacing in all browsers (opinionated).

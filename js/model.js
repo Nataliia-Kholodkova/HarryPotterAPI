@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
 /* eslint-disable indent */
 
@@ -9,135 +8,149 @@ const URL = 'http://hp-api.herokuapp.com/api/characters';
 class Model {
     constructor(url) {
         this.url = url;
-        this.heroes = this.getHerosFromServer();
+        this.heroes = this.getheroesFromServer();
     }
 
     getHeroes = () => this.heroes;
 
-    getHerosFromServer() {
+    getheroesFromServer() {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.responseType = 'json';
             xhr.open('GET', this.url);
             xhr.addEventListener('load', () => {
                 if (xhr.status !== 200) {
-                    alert(`Cannot load data ${xhr.status}: ${xhr.statusText}. Please, reload`);
+                    alert(
+                        `Cannot load dataHeroes ${xhr.status}: ${xhr.statusText}. Please, reload`,
+                    );
                     reject();
                 }
                 resolve(xhr.response);
             });
 
             xhr.addEventListener('error', () => {
-                alert(`Cannot load data ${xhr.status}: ${xhr.statusText}. Please, reload`);
+                alert(
+                    `Cannot load dataHeroes ${xhr.status}: ${xhr.statusText}. Please, reload`,
+                );
                 reject();
             });
             xhr.send();
-        }).then((data) => this.constructHeroesList(data));
+        })
+            .then((dataHeroes) => this.constructHeroesList(dataHeroes));
     }
 
-    constructHeroesList = (data) => Model.$constructHeroesList(data)
+    constructHeroesList = (dataHeroes) => Model.$constructHeroesList(dataHeroes);
 
-    static $constructHeroesList(data) {
+    static $constructHeroesList(dataHeroes) {
         let id = 1;
-        const heros = data.map((item) => {
+        const heroes = dataHeroes.map((item) => {
             const hero = new Hero(item);
             hero.id = id;
             id += 1;
             return hero;
         });
-        return heros;
+        return heroes;
     }
 
-    getRandomHero = (data) => Model.getRandomHero(data)
+    getRandomHero = (dataHeroes) => Model.getRandomHero(dataHeroes);
 
-    static getRandomHero(data) {
-        const index = Math.floor(Math.random() * data.length);
-        return data[index];
+    static getRandomHero(dataHeroes) {
+        const index = Math.floor(Math.random() * dataHeroes.length);
+        return dataHeroes[index];
     }
 
-    getRandomHeros = (data) => Model.getRandomHeros(data)
+    getRandomHeroes = (dataHeroes) => Model.getRandomHeroes(dataHeroes);
 
-    static getRandomHeros(data) {
-        const heros = new Set();
-        while (heros.size < 5) {
-            const index = Math.floor(Math.random() * data.length);
-            heros.add(data[index]);
+    static getRandomHeroes(dataHeroes) {
+        const heroes = new Set();
+        while (heroes.size < 5) {
+            const index = Math.floor(Math.random() * dataHeroes.length);
+            heroes.add(dataHeroes[index]);
         }
-        return Array.from(heros);
+        return Array.from(heroes);
     }
 
-    getHero = (data, id) => Model.getHero(data, id)
+    getHero = (dataHeroes, id) => Model.getHero(dataHeroes, id);
 
-    static getHero(data, id) {
-        const hero = data.find((item) => item.id === id);
+    static getHero(dataHeroes, id) {
+        const hero = dataHeroes.find((item) => item.id === id);
         return hero;
     }
 
-    filterFromState = (data, state) => {
-        const res = Object.entries(state).reduce((initial, entry) => initial.then((result) => {
-                if (entry[1] !== null) {
-                    const [key, value] = entry;
-                    const newData = result.filter((hero) => {
-                        if (key === 'alive') {
-                            return hero[key] === !!value;
-                        }
-                        if (key === 'name') {
-                            return hero[key].toLowerCase().includes(value.toLowerCase());
-                        }
-                        return hero[key].toLowerCase() === value.toLowerCase();
-                    });
-                    return new Promise((resolve, reject) => resolve(newData));
-                }
-                return new Promise((resolve, reject) => resolve(data));
-            }), Promise.resolve(data));
-        return res.then((result) => result);
-    }
+    filterFromState = (dataHeroes, state) => {
+        const fileteredHeroes = Object.entries(state).reduce(
+            (initial, entry) => initial.then((result) => {
+                    if (entry[1] !== null) {
+                        const [key, value] = entry;
+                        const newdataHeroes = result.filter((hero) => {
+                            switch (key) {
+                                case 'alive':
+                                    return hero[key] === !!value;
+                                case 'name':
+                                    return hero[key]
+                                        .toLowerCase()
+                                        .includes(value.toLowerCase());
+                                default:
+                                    return hero[key].toLowerCase() === value.toLowerCase();
+                            }
+                        });
+                        return new Promise((resolve, reject) => resolve(newdataHeroes));
+                    }
+                    return new Promise((resolve, reject) => resolve(dataHeroes));
+                }),
+            Promise.resolve(dataHeroes),
+        );
+        return fileteredHeroes;
+            // .then((resultHeroes) => resultHeroes);
+    };
 
-    filterByHouse = (data, faculty) => Model.filterByHouse(data, faculty)
+    filterByHouse = (dataHeroes, faculty) => Model.filterByHouse(dataHeroes, faculty);
 
-    static filterByHouse(data, faculty) {
+    static filterByHouse(dataHeroes, faculty) {
         if (faculty === 'hogwards') {
-            return data;
+            return dataHeroes;
         }
-        const newData = data.filter((hero) => hero.house === 'faculty');
-        return newData;
+        const newdataHeroes = dataHeroes.filter((hero) => hero.house === 'faculty');
+        return newdataHeroes;
     }
 
-    filterByHogwarts = (data, hogwarts) => Model.filterByHogwarts(data, hogwarts)
+    filterByHogwarts = (dataHeroes, hogwarts) => Model.filterByHogwarts(dataHeroes, hogwarts);
 
-    static filterByHogwarts(data, hogwarts) {
-        let newData = [];
+    static filterByHogwarts(dataHeroes, hogwarts) {
+        let newdataHeroes = [];
         if (hogwarts === '') {
-            newData = data.filter((hero) => !hero.fromHogwarts());
+            newdataHeroes = dataHeroes.filter((hero) => !hero.fromHogwarts());
         } else {
-            newData = data.filter((hero) => hero.hogwarts);
+            newdataHeroes = dataHeroes.filter((hero) => hero.hogwarts);
         }
-        return newData;
+        return newdataHeroes;
     }
 
-    filterByGender = (data, gender) => Model.filterByGender(data, gender)
+    filterByGender = (dataHeroes, gender) => Model.filterByGender(dataHeroes, gender);
 
-    static filterByGender(data, gender) {
-        const newData = data.filter((hero) => hero.gender === gender);
-        return newData;
+    static filterByGender(dataHeroes, gender) {
+        const newdataHeroes = dataHeroes.filter((hero) => hero.gender === gender);
+        return newdataHeroes;
     }
 
-    filterByName = (data, name) => Model.filterByName(data, name)
+    filterByName = (dataHeroes, name) => Model.filterByName(dataHeroes, name);
 
-    static filterByName(data, name) {
+    static filterByName(dataHeroes, name) {
         if (name === '') {
-            return data;
+            return dataHeroes;
         }
-        const newData = data.filter((hero) => hero.name.toLowerCase().includes(name.toLowerCase()));
-        return newData;
+        const newdataHeroes = dataHeroes.filter(
+            (hero) => hero.name.toLowerCase().includes(name.toLowerCase()),
+        );
+        return newdataHeroes;
     }
 
-    calculateSimilarity = (data, state) => Model.calculateSimilarity(data, state)
+    calculateSimilarity = (dataHeroes, state) => Model.calculateSimilarity(dataHeroes, state);
 
-    static calculateSimilarity(data, state) {
+    static calculateSimilarity(dataHeroes, state) {
         let heroes = {};
         Object.entries(state).forEach(([key, [val, score]]) => {
-            const filteredHeroes = data.filter((hero) => hero[key] === val);
+            const filteredHeroes = dataHeroes.filter((hero) => hero[key] === val);
             filteredHeroes.forEach((hero) => {
                 if (hero.id in heroes) {
                     heroes[hero.id] += score;
@@ -149,7 +162,7 @@ class Model {
         heroes = Object.entries(heroes);
         heroes.sort((a, b) => b[1] - a[1]);
         heroes = heroes.map((hero) => hero[0]);
-        heroes = heroes.map((id) => data.find((hero) => hero.id === +id));
+        heroes = heroes.map((id) => dataHeroes.find((hero) => hero.id === +id));
         return heroes.slice(0, 6);
     }
 }

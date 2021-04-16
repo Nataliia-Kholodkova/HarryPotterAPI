@@ -1,11 +1,10 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable indent */
 
 class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
-        this.result = document.querySelector('.results');
+        this.resultDiv = document.querySelector('.results');
         this.state = {
             house: null,
             gender: null,
@@ -13,50 +12,60 @@ class Controller {
             hogwarts: null,
             isAlive: null,
         };
-        this.getHeroes().then((data) => this.renderHeroCard(data));
-        this.getHeroes().then((data) => this.renderHeroesList(data));
+        this.getHeroes()
+            .then((heroes) => this.renderHeroCard(heroes));
+        this.getHeroes()
+            .then((heroes) => this.model.getRandomHeroes(heroes))
+            .then((heroes) => this.renderHeroesList(heroes));
     }
 
-    getHeroes = () => this.model.getHeroes()
+    getHeroes = () => this.model.getHeroes();
 
-    renderHeroesList = (data) => {
-        if (data.length === 0) {
+    renderHeroesList = (dataHeroes) => {
+        if (dataHeroes.length === 0) {
             return;
         }
-        Promise.resolve(data).then((heroes) => this.view.renderHeroesList(heroes))
-            .then((template) => this.displayHeroesList(template)).catch();
+        Promise.resolve(dataHeroes)
+            .then((heroes) => this.view.renderHeroesList(heroes))
+            .then((template) => this.displayHeroesList(template))
+            .catch();
     };
 
-    renderHeroCard = (data, id = null) => {
+    renderHeroCard = (dataHeroes, id = null) => {
         let promise = null;
         if (id != null) {
-            promise = Promise.resolve(data).then((heroes) => this.model.getHero(heroes, id));
+            promise = Promise.resolve(dataHeroes)
+                .then((heroes) => this.model.getHero(heroes, id));
         } else {
-            promise = Promise.resolve(data).then((heroes) => this.model.getRandomHero(heroes));
+            promise = Promise.resolve(dataHeroes)
+                .then((heroes) => this.model.getRandomHero(heroes));
         }
-        promise.then((hero) => this.view.renderHero('big', hero)).then((template) => this.displayBigHero(template));
-    }
+        promise
+            .then((hero) => this.view.renderHero('big', hero))
+            .then((template) => this.displayBigHero(template));
+    };
 
     displayBigHero = (template) => {
-        const heroCardBig = this.result.querySelector('.hero-card__big');
+        const heroCardBig = this.resultDiv.querySelector('.hero-card__big');
         if (heroCardBig) {
-            this.result.replaceChild(template, heroCardBig);
+            this.resultDiv.replaceChild(template, heroCardBig);
         } else {
-            this.result.insertAdjacentElement('afterbegin', template);
+            this.resultDiv.insertAdjacentElement('afterbegin', template);
         }
     };
 
     displayHeroesList = (template) => {
-        const slider = this.result.querySelector('.hero-list__slider');
+        const slider = this.resultDiv.querySelector('.hero-list__slider');
         slider.innerHTML = '';
         slider.append(template);
     };
 
     renderSimilarHeroes = (state) => {
-        const heroes = this.getHeroes().then((data) => this.model.calculateSimilarity(data, state));
-        heroes.then((data) => this.renderHeroCard(data, data[0].id));
-        heroes.then((data) => this.renderHeroesList(data));
-    }
+        const heroes = this.getHeroes()
+            .then((dataHeroes) => this.model.calculateSimilarity(dataHeroes, state));
+        heroes.then((dataHeroes) => this.renderHeroCard(dataHeroes, dataHeroes[0].id));
+        heroes.then((dataHeroes) => this.renderHeroesList(dataHeroes));
+    };
 
     formFilterHandler = (element) => {
         switch (element.value) {
@@ -67,9 +76,9 @@ class Controller {
                 this.state[element.name] = element.value;
         }
         const promise = this.getHeroes()
-            .then((data) => this.model.filterFromState(data, this.state));
-        promise.then((data) => this.renderHeroCard(data));
-        promise.then((data) => this.renderHeroesList(data));
+            .then((dataHeroes) => this.model.filterFromState(dataHeroes, this.state));
+        promise.then((dataHeroes) => this.renderHeroCard(dataHeroes));
+        promise.then((dataHeroes) => this.renderHeroesList(dataHeroes));
     };
 
     resetFilter = () => {
@@ -81,8 +90,8 @@ class Controller {
             isAlive: null,
         };
         const promise = this.getHeroes();
-        promise.then((data) => this.renderHeroCard(data));
-        promise.then((data) => this.renderHeroesList(data));
+        promise.then((dataHeroes) => this.renderHeroCard(dataHeroes));
+        promise.then((dataHeroes) => this.renderHeroesList(dataHeroes));
     };
 }
 
