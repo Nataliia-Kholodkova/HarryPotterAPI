@@ -1,6 +1,7 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
 /* eslint-disable indent */
-/* eslint-disable linebreak-style */
+
 import Hero from './hero.js';
 
 const URL = 'http://hp-api.herokuapp.com/api/characters';

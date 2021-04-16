@@ -23,11 +23,10 @@ class App {
         this.resetBtn.addEventListener('click', this.resetHandler);
         this.slider.sliderButtons.forEach((btn) => btn.addEventListener('click', ({ target }) => {
             this.slider.sliderMove(target);
-    })
-        );
+    }));
         this.slider.slider.addEventListener('click', ({ target }) => {
             const id = this.slider.cardHandler(target, this);
-            this.controller.getHeroes().then(data => this.controller.renderHeroCard(data, id));
+            this.controller.getHeroes().then((data) => this.controller.renderHeroCard(data, id));
         });
         this.modalWindow.findButton.addEventListener('click', this.modalWindow.modalFormHandler);
         this.modalWindow.form.addEventListener('submit', (event) => {

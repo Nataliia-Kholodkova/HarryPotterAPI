@@ -1,7 +1,8 @@
-/* eslint-disable consistent-return */
-/* eslint-disable radix */
 /* eslint-disable linebreak-style */
 /* eslint-disable indent */
+/* eslint-disable consistent-return */
+/* eslint-disable radix */
+
 class Slider {
     constructor() {
         this.sliderButtons = document.querySelectorAll('.btn-list');
@@ -16,7 +17,8 @@ class Slider {
         const totalSliderWidth = cardWidth * this.slider.children.length;
         const left = this.slider.style.left ? parseInt(this.slider.style.left) : 0;
         if (Math.abs(
-            left + direction * cardWidth) > totalSliderWidth - cardsPerSlider * cardWidth) {
+            left + direction * cardWidth,
+        ) > totalSliderWidth - cardsPerSlider * cardWidth) {
             this.slider.style.left = '0px';
         } else if (left + direction * cardWidth > 0) {
             this.slider.style.left = `-${

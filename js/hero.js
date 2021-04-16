@@ -2,9 +2,12 @@
 /* eslint-disable indent */
 
 class Hero {
-    constructor({ name, dateOfBirth, eyeColour, hairColour, gender,
-        hogwartsStaff, hogwartsStudent, house, image, patronus, species, alive, actor,
-}) {
+    constructor(
+        {
+            name, dateOfBirth, eyeColour, hairColour, gender,
+            hogwartsStaff, hogwartsStudent, house, image, patronus, species, alive, actor,
+        },
+    ) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.eyeColour = eyeColour;

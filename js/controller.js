@@ -30,9 +30,9 @@ class Controller {
     renderHeroCard = (data, id = null) => {
         let promise = null;
         if (id != null) {
-            promise = Promise.resolve(data).then((data) => this.model.getHero(data, id));
+            promise = Promise.resolve(data).then((heroes) => this.model.getHero(heroes, id));
         } else {
-            promise = Promise.resolve(data).then((data) => this.model.getRandomHero(data));
+            promise = Promise.resolve(data).then((heroes) => this.model.getRandomHero(heroes));
         }
         promise.then((hero) => this.view.renderHero('big', hero)).then((template) => this.displayBigHero(template));
     }
