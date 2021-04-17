@@ -5,7 +5,6 @@
 -	Filter staff /students;
 -	Filter by gender;
 -	Search by name;
--	May be some other filters.
 -	Find the most looking like you hero (by color of hair, eyes, gender);
 
 # GitHubPages: https://ua-girl.github.io/HarryPotterAPI/
