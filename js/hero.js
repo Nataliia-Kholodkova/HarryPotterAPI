@@ -27,7 +27,7 @@ class Hero {
         this.house = house;
         this.patronus = patronus;
         this.species = species;
-        this.image = image;
+        this.image = `${image.slice(0, 4)}s${image.slice(4)}`;
         this.alive = alive;
         this.actor = actor;
         this.id = null;

@@ -3,7 +3,7 @@
 
 import Hero from './hero.js';
 
-const URL = 'http://hp-api.herokuapp.com/api/characters';
+const URL = 'https://hp-api.herokuapp.com/api/characters';
 
 class Model {
     constructor(url) {
