@@ -11,7 +11,7 @@ class Model {
     this.heroes = this.getheroesFromServer();
   }
 
-  getHeroes = () => this.heroes;
+  getHeroes = () => this.heroes.then(heroes => Promise.resolve(heroes));
 
   getheroesFromServer() {
     return new Promise((resolve, reject) => {
@@ -90,12 +90,11 @@ class Model {
             });
             return new Promise((resolve, reject) => resolve(newdataHeroes));
           }
-          return new Promise((resolve, reject) => resolve(dataHeroes));
+          return new Promise((resolve, reject) => resolve(result));
         }),
       Promise.resolve(dataHeroes),
     );
-    return fileteredHeroes;
-    // .then((resultHeroes) => resultHeroes);
+    return fileteredHeroes.then(resultHeroes => resultHeroes);
   };
 
   filterByHouse = (dataHeroes, faculty) => Model.filterByHouse(dataHeroes, faculty);

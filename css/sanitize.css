@@ -1,15 +1,10 @@
-/* Document
- * ========================================================================== */
-/**
- * Add border box sizing in all browsers (opinionated).
- */
 *,
 ::before,
 ::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-.visually-hidden {
+:global .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -19,7 +14,8 @@
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
-.clearfix::after {
+
+:global .clearfix::after {
   display: block;
   content: '';
   clear: both;
