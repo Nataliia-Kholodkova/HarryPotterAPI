@@ -1,0 +1,587 @@
+body {
+    font-family: 'Satisfy', cursive;
+    font-size: 14px;
+    color: aliceblue;
+    background-image: url(../img/lib.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  :global(.form, .input, .label, .title, .text) {
+    margin: 0;
+    padding: 0;
+  }
+  
+  label, fieldset {
+    margin: 0;
+    padding: 0;
+  }
+  
+  :global .btn {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font: inherit;
+    background: none;
+    cursor: pointer;
+  }
+  
+  :global .form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  :global .faculty-form {
+    width: 90%;
+    margin: 0 auto;
+    align-items: flex-end;
+  }
+  
+  :global .filter-form {
+    width: 95%;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  
+  :global .similarity-form {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .faculty-form {
+      width: 70%;
+    }
+  }
+  
+  :global .header {
+    width: 100%;
+    background-image: url(../img/hogwarts-school.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 30px 0;
+  }
+  
+  :global .wrapper {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  :global .main-wrapper {
+    width: 100%;
+    background-image: url(../img/pergament.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .wrapper,
+    :global .main-wrapper {
+      width: 85%;
+    }
+  }
+  
+  :global .title-main {
+    font-family: 'Arizonia', cursive;
+    font-size: 50px;
+    color: aliceblue;
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .title-main {
+      font-size: 100px;
+    }
+  }
+  
+  :global .faculty-form label {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 38px;
+  }
+  
+  :global .img-checkbox {
+    opacity: 0.7;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    cursor: pointer;
+  }
+  
+  :global .faculty-form__box:checked + .img-checkbox {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+  }
+  
+  :global .faculty-form__box:focus + .img-checkbox {
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+  }
+  
+  :global .faculty-form__box:hover + .img-checkbox {
+    opacity: 0.9;
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+  }
+  
+  :global .aside {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    background-color: #2a221e;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .aside {
+      width: 30%;
+    }
+  }
+  
+  :global .filter-form {
+    margin-bottom: 30px;
+  }
+  
+  :global .fieldset {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  :global .filter-form__fieldset {
+    margin-bottom: 5px;
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .filter-form__fieldset {
+      margin-bottom: 30px;
+    }
+  }
+  
+  :global .legend {
+    font-size: 26px;
+  }
+  
+  :global .filter-form__legend {
+    margin-bottom: 20px;
+  }
+  
+  :global .form-label {
+    height: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 6px 20px;
+  }
+  
+  :global .filter-form__label {
+    width: 45%;
+  }
+  
+  @media screen and (min-width: 648px) and (max-width: 959px) {
+    :global .filter-form__label {
+      width: 95%;
+    }
+  }
+  
+  :global .label-radio {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 6px 0;
+    text-align: center;
+    background-color: #c22828;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    cursor: pointer;
+  }
+  
+  :global(.radio-input:checked + .label-radio, .radio-input:hover + .label-radio, .radio-input:focus + .label-radio) {
+    background-color: #8a0f0f;
+  }
+  
+  :global .form-label__text {
+    width: 100%;
+  }
+  
+  :global .text-input {
+    padding: 10px;
+    font: inherit;
+    width: 100%;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+  }
+  
+  :global .additional {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  
+  :global(.btn-find, .btn-submit, .btn-reset) {
+    color: aliceblue;
+    padding: 10px 0;
+    background-color: #c22828;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    cursor: pointer;
+  }
+  
+  :global(.btn-find:hover, .btn-submit:hover, .btn-find:focus, .btn-submit:focus, .btn-reset:hover, .btn-reset:hover) {
+    background-color: #8a0f0f;
+  }
+  
+  :global .main {
+    width: 100%;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .main {
+      width: 70%;
+    }
+  }
+  
+  :global .results {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  :global .hero-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    color: #2a221e;
+  }
+  
+  :global .hero-card__big {
+    padding-top: 50px;
+    margin-bottom: 60px;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .hero-card__big {
+      flex-direction: column;
+      margin-bottom: 55px;
+      padding-top: 70px;
+    }
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .hero-card__big {
+      flex-direction: row;
+    }
+  }
+  
+  :global .card-img {
+    width: 35%;
+  }
+  
+  :global .card-img__big {
+    width: 35%;
+    transform: rotate(-15deg) translateX(15px);
+    -webkit-transform: rotate(-15deg) translateX(15px);
+    -moz-transform: rotate(-15deg) translateX(15px);
+    -ms-transform: rotate(-15deg) translateX(15px);
+    -o-transform: rotate(-15deg) translateX(15px);
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .card-img__big {
+      width: 73%;
+      margin-bottom: 65px;
+      transform: rotate(-15deg) translateX(0);
+      -webkit-transform: rotate(-15deg) translateX(0);
+      -moz-transform: rotate(-15deg) translateX(0);
+      -ms-transform: rotate(-15deg) translateX(0);
+      -o-transform: rotate(-15deg) translateX(0);
+    }
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .card-img__big {
+      width: 45%;
+      margin-bottom: 0;
+      transform: rotate(-15deg) translateX(65px);
+      -webkit-transform: rotate(-15deg) translateX(65px);
+      -moz-transform: rotate(-15deg) translateX(65px);
+      -ms-transform: rotate(-15deg) translateX(65px);
+      -o-transform: rotate(-15deg) translateX(65px);
+    }
+  }
+  
+  :global .hero-description {
+    width: 55%;
+  }
+  
+  @media screen and (min-width: 960px) {
+    :global .hero-description {
+      width: 35%;
+    }
+  }
+  
+  :global .hero-list {
+    position: relative;
+  }
+  
+  :global .btn-list {
+    position: absolute;
+    top: 10px;
+    width: 38px;
+    color: #2a221e;
+    font-size: 80px;
+    opacity: 0.7;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+  }
+  
+  .btn-list:hover, .btn-list:focus {
+    opacity: 1;
+  }
+  
+  :global .btn-list__left {
+    left: 3px;
+  }
+  
+  :global .btn-list__right {
+    right: 3px;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .btn-list {
+      top: 21%;
+    }
+  }
+  
+  :global .hero-list__slider {
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    left: 0px;
+  }
+  
+  :global .hero-list__wrapper {
+    width: 75%;
+    padding: 15px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  :global .hero-card__small {
+    width: 100%;
+    margin-right: 15px;
+    flex-shrink: 0;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    cursor: pointer;
+  }
+  
+  :global .hero-card__small:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+  }
+  
+  :global .card-img__small {
+    border-radius: 49%;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .hero-card__small {
+      width: 31%;
+    }
+  
+    :global .hero-card__small .hero-description {
+      width: 100%;
+      text-align: center;
+    }
+  
+    :global .card-img__small {
+      width: 100%;
+    }
+  }
+  
+  :global .modal {
+    position: fixed;
+    width: 95%;
+    height: 516px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: antiquewhite;
+    margin: auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    padding: 20px;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .modal {
+      height: 470px;
+    }
+  }
+  
+  @media screen and (min-width: 800px) {
+    :global .modal {
+      height: 420px;
+    }
+  }
+  
+  :global .modal-closed {
+    transform: scale(0);
+    z-index: -10;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+  }
+  
+  :global .modal-opened {
+    transform: scale(1);
+    z-index: 2;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  
+  :global .similarity-form__legend {
+    color: #2a221e;
+  }
+  
+  :global .similarity-form__fieldset {
+    margin-bottom: 5px;
+  }
+  
+  :global .similarity-form .form-label {
+    width: 28%;
+  }
+  
+  @media screen and (min-width: 648px) {
+    :global .similarity-form .form-label {
+      width: 15%;
+    }
+  }
+  
+  :global .similarity-form .label {
+    padding: 5px 0;
+  }
+  
+  :global .btn-submit {
+    font: inherit;
+    background-color: #c22828;
+  }
+  
+  :global .btn-modal {
+    position: absolute;
+    top: 22px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .btn-modal::before, .btn-modal::after {
+    display: block;
+    width: 30px;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #2a221e;
+    opacity: 0.7;
+    content: '';
+    transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+  }
+  
+  .btn-modal::before {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+  }
+  
+  .btn-modal::after {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+  }
+  
+  .btn-modal:hover::after, .btn-modal:focus::after, .btn-modal:hover::before, .btn-modal:focus::before {
+    opacity: 1;
+  }
+  
