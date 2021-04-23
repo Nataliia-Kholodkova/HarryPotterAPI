@@ -1,16 +1,17 @@
 /* eslint-disable indent */
-
+import styles from '../css/style.css';
 const CARD_MARGIN = 15;
 
 class Slider {
   constructor() {
-    this.sliderButtons = document.querySelectorAll('.btn-list');
-    this.slider = document.querySelector('.hero-list__slider');
+    this.sliderButtons = document.querySelectorAll(`.${styles['btn-list']}`);
+    this.slider = document.querySelector(`.${styles['hero-list__slider']}`);
     this.sliderWidth = this.slider.offsetWidth;
   }
 
   sliderMove = element => {
-    const cardWidth = this.slider.querySelector('.hero-card__small').offsetWidth + CARD_MARGIN;
+    const cardWidth =
+      this.slider.querySelector(`.${styles['hero-card__small']}`).offsetWidth + CARD_MARGIN;
     const direction = +element.dataset.dir;
     const cardsPerSlider = Math.round(this.sliderWidth / cardWidth);
     const totalSliderWidth = cardWidth * this.slider.children.length;
@@ -31,7 +32,7 @@ class Slider {
 
   cardHandler = target => {
     const card = target.closest('div');
-    if (!card.classList.contains('hero-card__small')) {
+    if (!card.classList.contains(styles['hero-card__small'])) {
       return false;
     }
     return +card.dataset.id;

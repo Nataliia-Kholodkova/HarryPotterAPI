@@ -1,14 +1,27 @@
 /* eslint-disable indent */
-
+import { doc } from 'prettier';
+import styles from '../css/style.css';
 class View {
+  updateTemplateClasses = temlate => {
+    temlate.children.forEach(child => {
+      child.classList.forEach(_class => {
+        child.classList.remove(_class);
+        child.classList.add(styles[_class]);
+      });
+      child.children.forEach(ch => this.updateTemplateClasses(ch));
+    });
+  }
+
   renderHero = (templateIdMark, hero) => View.renderHero(templateIdMark, hero);
 
   static renderHero(templateIdMark, hero) {
     let template = document
       .querySelector(`#${templateIdMark}Hero`)
-      .content.querySelector(`.hero-card__${templateIdMark}`)
+      .content.querySelector(`#hero-card__${templateIdMark}`)
       .cloneNode(true);
-    template = View.renderHeroeSmall(hero, template);
+    this.updateTemplateClasses(template);
+    template.classList.add('hero-card', `hero-card__${templateIdMark}`);
+    template = View.renderHeroeSmall(hero, template, templateIdMark);
     if (templateIdMark === 'big') {
       template = View.renderHeroBig(hero, template);
     }
@@ -39,15 +52,23 @@ class View {
 
   renderHeroeSmall = (hero, template) => View.renderHeroeSmall(hero, template);
 
-  static renderHeroeSmall(hero, template) {
+  static renderHeroeSmall(hero, template, templateIdMark) {
     const newTemplate = template.cloneNode(true);
-    const templateImg = newTemplate.querySelector('.card-img');
+    const templateImg = newTemplate.querySelector('img');
+    templateImg.classList.add(
+      styles.img,
+      styles['card-img'],
+      styles[`card-img__${templateIdMark}`],
+    );
     templateImg.src = hero.image;
     templateImg.alt = hero.name;
-    newTemplate.querySelector('.card-title').textContent = hero.name;
-    newTemplate.querySelector('.hero-name').textContent = hero.name;
-    newTemplate.querySelector('.hero-birth-date').textContent = hero.dateOfBirth;
-    newTemplate.querySelector('.hero-occupation').textContent = View.generateOccupation(hero);
+    newTemplate.querySelector('');
+    newTemplate.querySelector(`.${styles['card-title']}`).textContent = hero.name;
+    newTemplate.querySelector(`.${styles['hero-name']}`).textContent = hero.name;
+    newTemplate.querySelector(`.${styles['hero-birth-date']}`).textContent = hero.dateOfBirth;
+    newTemplate.querySelector(
+      `.${styles['hero-occupation']}`,
+    ).textContent = View.generateOccupation(hero);
     return newTemplate;
   }
 
@@ -55,10 +76,10 @@ class View {
 
   static renderHeroBig(hero, template) {
     const newTemplate = template.cloneNode(true);
-    newTemplate.querySelector('.hero-eyes').textContent = hero.eyeColour;
-    newTemplate.querySelector('.hero-hair').textContent = hero.hairColour;
-    newTemplate.querySelector('.hero-patronus').textContent = hero.patronus;
-    newTemplate.querySelector('.hero-actor').textContent = hero.actor;
+    newTemplate.querySelector(`.${styles['hero-eyes']}`).textContent = hero.eyeColour;
+    newTemplate.querySelector(`.${styles['hero-hair']}`).textContent = hero.hairColour;
+    newTemplate.querySelector(`.${styles['hero-patronus']}`).textContent = hero.patronus;
+    newTemplate.querySelector(`.${styles['hero-actor']}`).textContent = hero.actor;
     return newTemplate;
   }
 

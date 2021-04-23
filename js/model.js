@@ -80,8 +80,6 @@ class Model {
             const [key, value] = entry;
             const newdataHeroes = result.filter(hero => {
               switch (key) {
-                case 'alive':
-                  return hero[key] === !!value;
                 case 'name':
                   return hero[key].toLowerCase().includes(value.toLowerCase());
                 default:

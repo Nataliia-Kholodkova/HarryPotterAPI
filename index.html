@@ -7,223 +7,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet" />
-    <link href="css/sanitize.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
-    <header class="header">
-      <div class="wrapper">
-        <h1 class="title title-main">Welcome to the magic World of Hogwarts</h1>
-        <form class="form faculty-form">
-          <label>
-            <input
-              type="checkbox"
-              class="checkbox-input faculty-form__box visually-hidden"
-              value="gryffindor"
-              name="house"
-            />
-            <img
-              class="img img-checkbox"
-              alt="Gryffindor logo"
-              src="img/gryffindor.png"
-              width="120"
-            />
-            <span class="visually-hidden">Gryffindor</span>
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              class="input checkbox-input faculty-form__box visually-hidden"
-              value="hufflepuff"
-              name="house"
-            />
-            <img
-              class="img img-checkbox"
-              alt="Hufflepuff logo"
-              src="img/hufflepuff.png"
-              width="120"
-            />
-            <span class="visually-hidden">Hufflepuff</span>
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              class="input checkbox-input faculty-form__box visually-hidden"
-              value="ravenclaw"
-              name="house"
-            />
-            <img
-              class="img img-checkbox"
-              alt="Ravenclaw logo"
-              src="img/ravenclaw.png"
-              width="120"
-            />
-            <span class="visually-hidden">Ravenclaw</span>
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              class="input checkbox-input faculty-form__box visually-hidden"
-              value="slytherin"
-              name="house"
-            />
-            <img
-              class="img img-checkbox"
-              alt="Slytherin logo"
-              src="img/slytherin.png"
-              width="120"
-            />
-            <span class="visually-hidden">Slytherin</span>
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              class="input checkbox-input faculty-form__box visually-hidden"
-              value="all"
-              name="house"
-            />
-            <img class="img img-checkbox" alt="Hogwards logo" src="img/hogwards.png" width="150" />
-            <span class="visually-hidden">Hogwarts</span>
-          </label>
-        </form>
-      </div>
-    </header>
-    <div class="wrapper main-wrapper">
-      <aside class="aside">
-        <form class="form filter-form">
-          <fieldset class="fieldset filter-form__fieldset">
-            <legend class="legend filter-form__legend">Find heroes by House</legend>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="hogwarts"
-                value="staff"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Staff</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="hogwarts"
-                value="student"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Students</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="hogwarts"
-                value=""
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Not from Hogwarts</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="hogwarts"
-                value="all"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">All Magic World</span>
-            </label>
-          </fieldset>
-          <fieldset class="fieldset filter-form__fieldset">
-            <legend class="legend filter-form__legend">Filter by gender</legend>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Boys</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Girls</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="gender"
-                value="all"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">All</span>
-            </label>
-          </fieldset>
-          <fieldset class="fieldset filter-form__fieldset">
-            <legend class="legend filter-form__legend">Filter by Destiny</legend>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="alive"
-                value="1"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Alive</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="alive"
-                value=""
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">Dead</span>
-            </label>
-            <label class="form-label filter-form__label">
-              <input
-                type="radio"
-                name="alive"
-                value="all"
-                class="input radio-input filter-form-input__radio visually-hidden"
-              />
-              <span class="label label-radio">All</span>
-            </label>
-          </fieldset>
-          <fieldset class="fieldset filter-form__fieldset">
-            <label class="form-label filter-form__label form-label__text">
-              <input
-                type="search"
-                name="name"
-                class="input text-input filter-form-input__text"
-                placeholder="Hero's name"
-              />
-              <span class="label label-search visually-hidden">Search</span>
-            </label>
-          </fieldset>
-          <button type="reset" class="btn btn-reset" , name="reset">Reset</button>
-        </form>
-        <div class="additional">
-          <button type="button" class="btn btn-find">Find your Hero :)</button>
-        </div>
-      </aside>
-      <main class="main">
-        <div class="results">
-          <div class="hero-list">
-            <button type="button" class="btn btn-list btn-list__left" data-dir="1">&lsaquo;</button>
-            <button type="button" class="btn btn-list btn-list__right" data-dir="-1">
-              &rsaquo;
-            </button>
-            <div class="hero-list__wrapper">
-              <div class="hero-list__slider"></div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+    <template id="facultyLabel">
+      <label>
+        <input type="radio" value="gryffindor" name="house" />
+        <img alt="Gryffindor logo" src="img/gryffindor.png" width="120" />
+        <span>Gryffindor</span>
+      </label>
+    </template>
+    <template id="filterLabel">
+      <label>
+        <input type="radio" name="hogwarts" value="" />
+        <span>Not from Hogwarts</span>
+      </label>
+    </template>
+    <template id="searchLabel">
+      <label>
+        <input type="search" name="name" placeholder="Hero's name" />
+        <span>Search</span>
+      </label>
+    </template>
+
     <template id="bigHero">
-      <div class="hero-card hero-card__big">
-        <img src="img/lib.jpg" alt="description" width="150" class="img card-img card-img__big" />
+      <div class="hero-card hero-card__big" id="hero-card__big">
+        <img src="" alt="description" width="150" />
         <div class="hero-description">
           <h2 class="title card-title">Harry Potter</h2>
           <p class="text card-text">
@@ -244,8 +52,8 @@
       </div>
     </template>
     <template id="smallHero">
-      <div class="hero-card hero-card__small" data-id="1">
-        <img src="img/lib.jpg" alt="description" width="80" class="img card-img card-img__small" />
+      <div class="hero-card hero-card__small" data-id="1" id="hero-card__small">
+        <img src="" alt="description" width="80" class="img card-img card-img__small" />
         <div class="hero-description">
           <h3 class="title card-title">Harry Potter</h3>
           <p class="text card-text">
@@ -256,7 +64,7 @@
         </div>
       </div>
     </template>
-    <div class="modal modal-closed">
+    <!-- <div class="modal modal-closed">
       <button type="button" class="btn btn-modal"></button>
       <form class="form similarity-form">
         <fieldset class="fieldset similarity-form__fieldset">
@@ -427,8 +235,9 @@
           </label>
         </fieldset>
         <button type="submit" class="btn btn-submit" value="submit">Submit</button>
-      </form>
-    </div>
+      </form> -->
+    <!-- </div> -->
+    <script src="js/index.js" type="module"></script>
     <script src="js/script.js" type="module"></script>
   </body>
 </html>

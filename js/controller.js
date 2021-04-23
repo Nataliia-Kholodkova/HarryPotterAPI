@@ -1,10 +1,10 @@
 /* eslint-disable indent */
-
+import styles from '../css/style.css';
 class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.resultDiv = document.querySelector('.results');
+    this.resultDiv = document.querySelector(styles.result);
     this.state = {
       house: null,
       gender: null,
@@ -43,7 +43,7 @@ class Controller {
   };
 
   displayBigHero = template => {
-    const heroCardBig = this.resultDiv.querySelector('.hero-card__big');
+    const heroCardBig = this.resultDiv.querySelector(`.${styles['hero-card__big']}`);
     if (heroCardBig) {
       this.resultDiv.replaceChild(template, heroCardBig);
     } else {
@@ -52,7 +52,7 @@ class Controller {
   };
 
   displayHeroesList = template => {
-    const slider = this.resultDiv.querySelector('.hero-list__slider');
+    const slider = this.resultDiv.querySelector(`.${styles['hero-list__slider']}`);
     slider.innerHTML = '';
     slider.append(template);
   };
