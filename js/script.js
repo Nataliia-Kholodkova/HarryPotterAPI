@@ -13,9 +13,9 @@ class App {
     this.controller = new Controller(model, new View());
     this.slider = new Slider();
     // this.modalWindow = new ModalForm();
-    this.facultyForm = document.querySelector(`.$styles['faculty-form']`);
-    this.filterForm = document.querySelector(`.$styles['filter-form']`);
-    this.resetBtn = document.querySelector(`.$styles['btn-reset']`);
+    this.facultyForm = document.querySelector(`.${styles['faculty-form']}`);
+    this.filterForm = document.querySelector(`.${styles['filter-form']}`);
+    this.resetBtn = document.querySelector(`.${styles['btn-reset']}`);
   }
 
   addListeners = () => {

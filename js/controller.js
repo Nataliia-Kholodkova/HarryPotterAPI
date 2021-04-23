@@ -4,7 +4,7 @@ class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.resultDiv = document.querySelector(styles.result);
+    this.resultDiv = document.querySelector(`.${styles.results}`);
     this.state = {
       house: null,
       gender: null,
@@ -45,7 +45,7 @@ class Controller {
   displayBigHero = template => {
     const heroCardBig =
       this.resultDiv.querySelector(`.${styles['hero-card__big']}`) ||
-      this.resultDiv.querySelector(`.hero-card__big'`);
+      this.resultDiv.querySelector(`.hero-card__big`);
     if (heroCardBig) {
       this.resultDiv.replaceChild(template, heroCardBig);
     } else {

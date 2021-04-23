@@ -56,10 +56,10 @@ const FORM_STATE = {
 
 function crealeFieldset(fieldsetClass, legendClass = null, legendValue = null) {
   const fieldset = document.createElement('fieldset');
-  fieldsetClass.forEach(_class => fieldset.classList.add(_class));
+  fieldsetClass.forEach(_class => fieldset.classList.add(styles[_class]));
   if (legendClass && legendValue) {
-    document.createElement('legend');
-    legendClass.forEach(_class => legend.classList.add(_class));
+    const legend = document.createElement('legend');
+    legendClass.forEach(_class => legend.classList.add(styles[_class]));
     legend.textContent = legendValue;
     fieldset.appendChild(legend);
   }
@@ -75,19 +75,18 @@ function createInput(state, labelString, container) {
     state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
     const input = label.querySelector('input');
     state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
-    input.value = value.length > 0 ? value.toLowerCase() : 'None';
+    input.value = value;
     input.name = state.name;
     const img = label.querySelector('img');
     if (img) {
-      img.src = `.${state[imgUrls][value]}`;
+      img.src = `${state['imgUrls'][value].slice(1)}`;
       img.alt = value;
       state.imgClasses.forEach(_class => img.classList.add(styles[_class]));
-      img.width = value === 'all' ? '150px' : '120px';
+      img.width = value === 'All' ? '150' : '120';
     }
     const span = label.querySelector('span');
     state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
-    span.textContent = value;
-    console.log(label)
+    span.textContent = value.length > 0 ? value : 'None';
     container.appendChild(label);
   });
   return container;
@@ -124,36 +123,38 @@ function createAside() {
   let fieldsetStaff = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
-    (legendValue = 'Filter by Staff'),
+    'Filter by Staff',
   );
   fieldsetStaff = createInput(FORM_STATE['staff'], 'filter', fieldsetStaff);
   form.appendChild(fieldsetStaff);
   let fieldsetGender = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
-    (legendValue = 'Filter by Gender'),
+    'Filter by Gender',
   );
   fieldsetGender = createInput(FORM_STATE['gender'], 'filter', fieldsetGender);
   form.appendChild(fieldsetGender);
   let fieldsetAlive = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
-    (legendValue = 'Filter by Destiny'),
+    'Filter by Destiny',
   );
   fieldsetAlive = createInput(FORM_STATE['alive'], 'filter', fieldsetAlive);
   form.appendChild(fieldsetAlive);
   let fieldsetSearch = document.createElement('fieldset');
-  ['fieldset', 'filter-form__fieldset'].forEach(_class => fieldsetSearch.classList.add(_class));
+  ['fieldset', 'filter-form__fieldset'].forEach(_class =>
+    fieldsetSearch.classList.add(styles[_class]),
+  );
   const searchLabel = document
     .querySelector(`#searchLabel`)
     .content.querySelector('label')
     .cloneNode(true);
-  ['form-label', 'filter-form__label', 'form-label__text'].forEach(_class =>
+  ['label', 'form-label', 'filter-form__label', 'form-label__text'].forEach(_class =>
     searchLabel.classList.add(styles[_class]),
   );
   const input = searchLabel.querySelector('input');
   ['input', 'text-input', 'filter-form-input__text'].forEach(_class =>
-    lsearchLabel.classList.add(styles[_class]),
+    input.classList.add(styles[_class]),
   );
   input.name = 'name';
   input.placeholder = "Hero's name";
@@ -166,7 +167,7 @@ function createAside() {
   form.appendChild(fieldsetSearch);
   aside.appendChild(form);
   const divAdditional = document.createElement('div');
-  divAdditional.classList.add('additional');
+  divAdditional.classList.add(styles['additional']);
   const buttonAdditional = document.createElement('button');
   ['btn', 'btn-find'].forEach(_class => buttonAdditional.classList.add(styles[_class]));
   buttonAdditional.type = 'button';
@@ -186,14 +187,14 @@ function createMain() {
   const buttonLeft = document.createElement('button');
   ['btn', 'btn-list', 'btn-list__left'].forEach(_class => buttonLeft.classList.add(styles[_class]));
   buttonLeft.type = 'button';
-  buttonLeft.textContent = '&lsaquo;';
+  buttonLeft.innerHTML = '&lsaquo;';
   buttonLeft.dataset.dir = '1';
   const buttonRight = document.createElement('button');
   ['btn', 'btn-list', 'btn-list__right'].forEach(_class =>
     buttonRight.classList.add(styles[_class]),
   );
   buttonRight.type = 'button';
-  buttonRight.textContent = '&rsaquo;';
+  buttonRight.innerHTML = '&rsaquo;';
   buttonRight.dataset.dir = '-1';
   const heroListWrapper = document.createElement('div');
   heroListWrapper.classList.add(styles['hero-list__wrapper']);
@@ -213,7 +214,7 @@ function createBodyMain() {
   const wrapper = document.createElement('div');
   wrapper.classList.add(styles.wrapper, styles['main-wrapper']);
   wrapper.appendChild(createAside());
-  wrapper.appendChild(createBodyMain());
+  wrapper.appendChild(createMain());
   fragment.appendChild(wrapper);
   document.querySelector('body').insertBefore(fragment, document.querySelector('script'));
 }
