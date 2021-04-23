@@ -43,7 +43,9 @@ class Controller {
   };
 
   displayBigHero = template => {
-    const heroCardBig = this.resultDiv.querySelector(`.${styles['hero-card__big']}`);
+    const heroCardBig =
+      this.resultDiv.querySelector(`.${styles['hero-card__big']}`) ||
+      this.resultDiv.querySelector(`.hero-card__big'`);
     if (heroCardBig) {
       this.resultDiv.replaceChild(template, heroCardBig);
     } else {

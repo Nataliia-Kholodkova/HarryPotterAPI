@@ -1,14 +1,26 @@
 import styles from '../css/style.css';
+import allUrl from '../img/all.png';
+import gryffindorUrl from '../img/gryffindor.png';
+import hufflepuffUrl from '../img/hufflepuff.png';
+import ravenclawUrl from '../img/ravenclaw.png';
+import slytherinUrl from '../img/slytherin.png';
 
 const FORM_STATE = {
   faculty: {
     name: 'house',
     values: ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin', 'All'],
-    inputClasses: ['checkbox-input', 'faculty-form__box', 'visually-hidden'],
-    imgClasses: ['img', 'img-checkbox'],
+    inputClasses: ['faculty-form__box', 'visually-hidden'],
+    imgClasses: ['img-checkbox'],
     labelClasses: [],
     formClasses: ['form', 'faculty-form'],
     spanClasses: ['visually-hidden'],
+    imgUrls: {
+      Gryffindor: gryffindorUrl,
+      Hufflepuff: hufflepuffUrl,
+      Ravenclaw: ravenclawUrl,
+      Slytherin: slytherinUrl,
+      All: allUrl,
+    },
   },
 
   staff: {
@@ -62,12 +74,12 @@ function createInput(state, labelString, container) {
       .cloneNode(true);
     state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
     const input = label.querySelector('input');
-    state.inputClasses.forEach(_class => label.classList.add(styles[_class]));
+    state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
     input.value = value.length > 0 ? value.toLowerCase() : 'None';
     input.name = state.name;
     const img = label.querySelector('img');
     if (img) {
-      img.src = `img/${value}.png`;
+      img.src = `.${state[imgUrls][value]}`;
       img.alt = value;
       state.imgClasses.forEach(_class => img.classList.add(styles[_class]));
       img.width = value === 'all' ? '150px' : '120px';
@@ -75,6 +87,7 @@ function createInput(state, labelString, container) {
     const span = label.querySelector('span');
     state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
     span.textContent = value;
+    console.log(label)
     container.appendChild(label);
   });
   return container;
@@ -82,7 +95,7 @@ function createInput(state, labelString, container) {
 
 function createForm(state) {
   const form = document.createElement('form');
-  state.formClasses.forEach(_class => form.classList.add(_class));
+  state.formClasses.forEach(_class => form.classList.add(styles[_class]));
   return form;
 }
 
@@ -92,7 +105,7 @@ function createHeader() {
   header.classList.add(styles.header);
   const wrapper = document.createElement('div');
   wrapper.classList.add(styles.wrapper);
-  const headerTitle = document.createElement('div');
+  const headerTitle = document.createElement('h1');
   headerTitle.classList.add(styles.title, styles['title-main']);
   headerTitle.textContent = 'Welcome to the magic World of Hogwarts';
   wrapper.appendChild(headerTitle);
@@ -101,7 +114,7 @@ function createHeader() {
   wrapper.appendChild(form);
   header.appendChild(wrapper);
   fragment.appendChild(header);
-  document.querySelector('body').appendChild(fragment);
+  document.querySelector('body').insertBefore(fragment, document.querySelector('script'));
 }
 
 function createAside() {
@@ -202,7 +215,7 @@ function createBodyMain() {
   wrapper.appendChild(createAside());
   wrapper.appendChild(createBodyMain());
   fragment.appendChild(wrapper);
-  document.querySelector('body').appendChild(fragment);
+  document.querySelector('body').insertBefore(fragment, document.querySelector('script'));
 }
 
 createHeader();
