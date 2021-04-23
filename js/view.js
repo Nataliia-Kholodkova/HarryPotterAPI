@@ -4,25 +4,29 @@ import styles from '../css/style.css';
 class View {
   static updateTemplateClasses(template) {
     if (template) {
-      [...template.children].forEach(child => {
-        child.classList.forEach(_class => {
-          child.classList.remove(_class);
-          child.classList.add(styles[_class]);
-        });
-        [...child.children].forEach(ch => View.updateTemplateClasses(ch));
+      const classes = {};
+      template.classList.forEach(_class => {
+        classes[_class] = styles[_class];
       });
+      for (let _class in classes) {
+        template.classList.remove(_class);
+        template.classList.add(styles[_class]);
+      }
+      [...template.children].forEach(child => View.updateTemplateClasses(child));
     }
   }
 
   renderHero = (templateIdMark, hero) => View.renderHero(templateIdMark, hero);
 
   static renderHero(templateIdMark, hero) {
+    if (!hero) {
+      return;
+    }
     let template = document
       .querySelector(`#${templateIdMark}Hero`)
       .content.querySelector(`#hero-card__${templateIdMark}`)
       .cloneNode(true);
     View.updateTemplateClasses(template);
-    template.classList.add(styles['hero-card'], styles[`hero-card__${templateIdMark}`]);
     template = View.renderHeroeSmall(hero, template, templateIdMark);
     if (templateIdMark === 'big') {
       template = View.renderHeroBig(hero, template);
@@ -55,6 +59,9 @@ class View {
   renderHeroeSmall = (hero, template) => View.renderHeroeSmall(hero, template);
 
   static renderHeroeSmall(hero, template, templateIdMark) {
+    if (!hero) {
+      return;
+    }
     const newTemplate = template.cloneNode(true);
     const templateImg = newTemplate.querySelector('img');
     templateImg.classList.add(
@@ -76,6 +83,9 @@ class View {
   renderHeroBig = (hero, template) => View.renderHeroBig(hero, template);
 
   static renderHeroBig(hero, template) {
+    if (!hero) {
+      return;
+    }
     const newTemplate = template.cloneNode(true);
     newTemplate.querySelector(`.${styles['hero-eyes']}`).textContent = hero.eyeColour;
     newTemplate.querySelector(`.${styles['hero-hair']}`).textContent = hero.hairColour;

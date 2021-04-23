@@ -78,6 +78,9 @@ class Model {
         initial.then(result => {
           if (entry[1] !== null) {
             const [key, value] = entry;
+            if (value === 'All') {
+              return result;
+            }
             const newdataHeroes = result.filter(hero => {
               switch (key) {
                 case 'name':

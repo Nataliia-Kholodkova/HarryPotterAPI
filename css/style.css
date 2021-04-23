@@ -526,8 +526,8 @@ body {
 .label,
 label,
 fieldset,
-.title,
-.text {
+.title, .card-title,
+.text, .card-text {
   margin: 0;
   padding: 0;
 }
@@ -1110,4 +1110,8 @@ fieldset,
 .btn-modal:hover::before,
 .btn-modal:focus::before {
   opacity: 1;
+}
+
+.hero-name, .hero-birth-date, .hero-occupation, .hero-hair, .hero-eyes, .hero-patronus, .hero-actor {
+  font-size: 14px;
 }

@@ -165,6 +165,12 @@ function createAside() {
   span.textContent = 'Search';
   fieldsetSearch.appendChild(searchLabel);
   form.appendChild(fieldsetSearch);
+  const buttonReset = document.createElement('button');
+  ['btn', 'btn-reset'].forEach(_class => buttonReset.classList.add(styles[_class]));
+  buttonReset.type = 'reset';
+  buttonReset.name = 'reset';
+  buttonReset.textContent = 'Reset';
+  form.appendChild(buttonReset);
   aside.appendChild(form);
   const divAdditional = document.createElement('div');
   divAdditional.classList.add(styles['additional']);

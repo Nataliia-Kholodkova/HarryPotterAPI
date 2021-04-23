@@ -22,7 +22,7 @@ class Controller {
 
   renderHeroesList = dataHeroes => {
     if (dataHeroes.length === 0) {
-      return;
+      this.displayHeroesList(null);
     }
     Promise.resolve(dataHeroes)
       .then(heroes => this.view.renderHeroesList(heroes))
@@ -46,6 +46,10 @@ class Controller {
     const heroCardBig =
       this.resultDiv.querySelector(`.${styles['hero-card__big']}`) ||
       this.resultDiv.querySelector(`.hero-card__big`);
+    if (!template) {
+      heroCardBig.innerHTML = '';
+      return;
+    }
     if (heroCardBig) {
       this.resultDiv.replaceChild(template, heroCardBig);
     } else {
@@ -56,6 +60,9 @@ class Controller {
   displayHeroesList = template => {
     const slider = this.resultDiv.querySelector(`.${styles['hero-list__slider']}`);
     slider.innerHTML = '';
+    if (!template) {
+      return;
+    }
     slider.append(template);
   };
 
