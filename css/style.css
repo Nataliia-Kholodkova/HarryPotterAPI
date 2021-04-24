@@ -526,8 +526,10 @@ body {
 .label,
 label,
 fieldset,
-.title, .card-title,
-.text, .card-text {
+.title,
+.card-title,
+.text,
+.card-text {
   margin: 0;
   padding: 0;
 }
@@ -1112,6 +1114,12 @@ fieldset,
   opacity: 1;
 }
 
-.hero-name, .hero-birth-date, .hero-occupation, .hero-hair, .hero-eyes, .hero-patronus, .hero-actor {
+.hero-name,
+.hero-birth-date,
+.hero-occupation,
+.hero-hair,
+.hero-eyes,
+.hero-patronus,
+.hero-actor {
   font-size: 14px;
 }

@@ -28,7 +28,7 @@ class Hero {
     this.patronus = patronus;
     this.species = species;
     this.image = `${image.slice(0, 4)}s${image.slice(4)}`;
-    this.alive = true ? 'alive' : 'dead';
+    this.alive = alive === true ? 'alive' : 'dead';
     this.actor = actor;
     this.id = null;
   }

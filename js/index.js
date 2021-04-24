@@ -79,7 +79,7 @@ function createInput(state, labelString, container) {
     input.name = state.name;
     const img = label.querySelector('img');
     if (img) {
-      img.src = `${state['imgUrls'][value].slice(1)}`;
+      img.src = `${state['imgUrls'][value]}`; //.slice(1)
       img.alt = value;
       state.imgClasses.forEach(_class => img.classList.add(styles[_class]));
       img.width = value === 'All' ? '150' : '120';
