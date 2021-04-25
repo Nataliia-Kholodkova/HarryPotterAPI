@@ -24,7 +24,7 @@ function createInputElements(state, value) {
   input.name = state.name;
   state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
   span.textContent = value.length > 0 ? value : 'None';
-  return label, input, span;
+  return [label, input, span];
 }
 
 function createInputModal(state, container) {

@@ -86,7 +86,13 @@ class Controller {
       this.model.filterFromState(dataHeroes, this.state),
     );
     promise.then(dataHeroes => this.renderHeroCard(dataHeroes));
-    promise.then(dataHeroes => this.renderHeroesList(dataHeroes));
+    if (this.state.house === null) {
+      promise
+        .then(dataHeroes => this.model.getRandomHeroes(dataHeroes))
+        .then(dataHeroes => this.renderHeroesList(dataHeroes));
+    } else {
+      promise.then(dataHeroes => this.renderHeroesList(dataHeroes));
+    }
   };
 
   resetFilter = () => {
