@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-/* eslint-disable indent */
 
 import Hero from './hero.js';
 
@@ -34,9 +33,9 @@ class Model {
     }).then(dataHeroes => this.constructHeroesList(dataHeroes));
   }
 
-  constructHeroesList = dataHeroes => Model.$constructHeroesList(dataHeroes);
+  constructHeroesList = dataHeroes => Model.constructHeroesList(dataHeroes);
 
-  static $constructHeroesList(dataHeroes) {
+  static constructHeroesList(dataHeroes) {
     let id = 1;
     const heroes = dataHeroes.map(item => {
       const hero = new Hero(item);

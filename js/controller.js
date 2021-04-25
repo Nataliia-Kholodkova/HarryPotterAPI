@@ -38,22 +38,22 @@ class Controller {
       promise = Promise.resolve(dataHeroes).then(heroes => this.model.getRandomHero(heroes));
     }
     promise
-      .then(hero => this.view.renderHero('big', hero))
+      .then(hero => this.view.renderHeroBig(hero))
       .then(template => this.displayBigHero(template));
   };
 
   displayBigHero = template => {
-    const heroCardBig =
-      this.resultDiv.querySelector(`.${styles['hero-card__big']}`) ||
-      this.resultDiv.querySelector(`.hero-card__big`);
-    if (!template) {
-      heroCardBig.innerHTML = '';
-      return;
-    }
-    if (heroCardBig) {
-      this.resultDiv.replaceChild(template, heroCardBig);
-    } else {
-      this.resultDiv.insertAdjacentElement('afterbegin', template);
+    const heroContainer = document.createElement('div');
+    heroContainer.classList.add(styles['hero-card'], styles['hero-card__big']);
+    heroContainer.id = 'hero-card__big';
+    heroContainer.innerHTML = template || '';
+    try {
+      this.resultDiv.replaceChild(
+        heroContainer,
+        document.querySelector(`.${styles['hero-card__big']}`),
+      );
+    } catch {
+      this.resultDiv.insertAdjacentElement('afterbegin', heroContainer);
     }
   };
 
@@ -63,7 +63,7 @@ class Controller {
     if (!template) {
       return;
     }
-    slider.append(template);
+    slider.innerHTML = template;
   };
 
   renderSimilarHeroes = state => {

@@ -52,6 +52,58 @@ const FORM_STATE = {
     formClasses: ['form', 'filter-form'],
     spanClasses: ['label', 'label-radio'],
   },
+
+  eyes: {
+    name: 'hairColour',
+    values: ['Alive', 'Dead', 'All'],
+    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
+    imgClasses: [],
+    labelClasses: ['form-label', 'filter-form__label'],
+    formClasses: ['form', 'filter-form'],
+    spanClasses: ['label', 'label-radio'],
+  },
+
+  hair: {
+    name: 'alive',
+    values: ['Alive', 'Dead', 'All'],
+    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
+    imgClasses: [],
+    labelClasses: ['form-label', 'filter-form__label'],
+    formClasses: ['form', 'filter-form'],
+    spanClasses: ['label', 'label-radio'],
+  },
+};
+
+const MODAL_FORM_STATE = {
+  eyes: {
+    name: 'eyeColour',
+    values: ['Black', 'Brown', 'Red', 'Green', 'Grey', 'Blue', 'Yellow'],
+    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
+    labelClasses: ['form-label', 'similarity-form__label'],
+    formClasses: ['form', 'similarity-form'],
+    spanClasses: ['label', 'label-radio'],
+    score: '4',
+  },
+
+  hair: {
+    name: 'hairColour',
+    values: ['Black', 'Brown', 'Red', 'Blonde', 'Grey', 'Bald'],
+    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
+    labelClasses: ['form-label', 'similarity-form__label'],
+    formClasses: ['form', 'similarity-form'],
+    spanClasses: ['label', 'label-radio'],
+    score: '5',
+  },
+
+  gender: {
+    name: 'gender',
+    values: ['Male', 'Female', 'All'],
+    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
+    labelClasses: ['form-label', 'similarity-form__label'],
+    formClasses: ['form', 'similarity-form'],
+    spanClasses: ['label', 'label-radio'],
+    score: '2',
+  },
 };
 
 function crealeFieldset(fieldsetClass, legendClass = null, legendValue = null) {
@@ -66,27 +118,56 @@ function crealeFieldset(fieldsetClass, legendClass = null, legendValue = null) {
   return fieldset;
 }
 
-function createInput(state, labelString, container) {
+function createInputModal(state, container) {
+  let isChecked = true;
   state.values.forEach(value => {
-    const label = document
-      .querySelector(`#${labelString}Label`)
-      .content.querySelector('label')
-      .cloneNode(true);
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    const span = document.createElement('span');
     state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
-    const input = label.querySelector('input');
+    input.type = 'radio';
+    if (isChecked) {
+      input.checked = true;
+      isChecked = false;
+    }
     state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
     input.value = value;
     input.name = state.name;
-    const img = label.querySelector('img');
-    if (img) {
-      img.src = `${state['imgUrls'][value]}`; //.slice(1)
+    input.dataset.score = state.score;
+    state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
+    span.textContent = value.length > 0 ? value : 'None';
+    label.appendChild(input);
+    label.appendChild(span);
+    container.appendChild(label);
+  });
+  return container;
+}
+
+function createInput(state, imgNeed, container) {
+  state.values.forEach(value => {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    const span = document.createElement('span');
+    let img = null;
+    state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
+    input.type = 'radio';
+    state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
+    input.value = value;
+    input.name = state.name;
+    if (imgNeed) {
+      img = document.createElement('img');
+      img.src = `${state['imgUrls'][value]}`;
       img.alt = value;
       state.imgClasses.forEach(_class => img.classList.add(styles[_class]));
       img.width = value === 'All' ? '150' : '120';
     }
-    const span = label.querySelector('span');
     state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
     span.textContent = value.length > 0 ? value : 'None';
+    label.appendChild(input);
+    if (imgNeed) {
+      label.appendChild(img);
+    }
+    label.appendChild(span);
     container.appendChild(label);
   });
   return container;
@@ -101,80 +182,78 @@ function createForm(state) {
 function createHeader() {
   const fragment = document.createDocumentFragment();
   const header = document.createElement('header');
-  header.classList.add(styles.header);
   const wrapper = document.createElement('div');
-  wrapper.classList.add(styles.wrapper);
   const headerTitle = document.createElement('h1');
+  let form = createForm(FORM_STATE['faculty']);
+  header.classList.add(styles.header);
+  wrapper.classList.add(styles.wrapper);
   headerTitle.classList.add(styles.title, styles['title-main']);
   headerTitle.textContent = 'Welcome to the magic World of Hogwarts';
   wrapper.appendChild(headerTitle);
-  let form = createForm(FORM_STATE['faculty']);
-  form = createInput(FORM_STATE['faculty'], 'faculty', form);
+  form = createInput(FORM_STATE['faculty'], true, form);
   wrapper.appendChild(form);
   header.appendChild(wrapper);
   fragment.appendChild(header);
-  document.querySelector('body').insertBefore(fragment, document.querySelector('script'));
+  document.querySelector('.container').appendChild(fragment);
 }
 
 function createAside() {
   const aside = document.createElement('aside');
-  aside.classList.add(styles.aside);
   const form = createForm(FORM_STATE['staff']);
+  const searchLabel = document.createElement('label');
+  const span = document.createElement('span');
+  const input = document.createElement('input');
+  const buttonReset = document.createElement('button');
+  const divAdditional = document.createElement('div');
+  const buttonAdditional = document.createElement('button');
+  let fieldsetSearch = document.createElement('fieldset');
   let fieldsetStaff = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
     'Filter by Staff',
   );
-  fieldsetStaff = createInput(FORM_STATE['staff'], 'filter', fieldsetStaff);
-  form.appendChild(fieldsetStaff);
   let fieldsetGender = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
     'Filter by Gender',
   );
-  fieldsetGender = createInput(FORM_STATE['gender'], 'filter', fieldsetGender);
-  form.appendChild(fieldsetGender);
   let fieldsetAlive = crealeFieldset(
     ['fieldset', 'filter-form__fieldset'],
     ['legend', 'filter-form__legend'],
     'Filter by Destiny',
   );
-  fieldsetAlive = createInput(FORM_STATE['alive'], 'filter', fieldsetAlive);
+  aside.classList.add(styles.aside);
+  fieldsetStaff = createInput(FORM_STATE['staff'], false, fieldsetStaff);
+  form.appendChild(fieldsetStaff);
+  fieldsetGender = createInput(FORM_STATE['gender'], false, fieldsetGender);
+  form.appendChild(fieldsetGender);
+  fieldsetAlive = createInput(FORM_STATE['alive'], false, fieldsetAlive);
   form.appendChild(fieldsetAlive);
-  let fieldsetSearch = document.createElement('fieldset');
   ['fieldset', 'filter-form__fieldset'].forEach(_class =>
     fieldsetSearch.classList.add(styles[_class]),
   );
-  const searchLabel = document
-    .querySelector(`#searchLabel`)
-    .content.querySelector('label')
-    .cloneNode(true);
   ['label', 'form-label', 'filter-form__label', 'form-label__text'].forEach(_class =>
     searchLabel.classList.add(styles[_class]),
   );
-  const input = searchLabel.querySelector('input');
   ['input', 'text-input', 'filter-form-input__text'].forEach(_class =>
     input.classList.add(styles[_class]),
   );
+  input.type = 'search';
   input.name = 'name';
   input.placeholder = "Hero's name";
-  const span = searchLabel.querySelector('span');
   ['label', 'label-search', 'visually-hidden'].forEach(_class =>
     span.classList.add(styles[_class]),
   );
   span.textContent = 'Search';
   fieldsetSearch.appendChild(searchLabel);
   form.appendChild(fieldsetSearch);
-  const buttonReset = document.createElement('button');
   ['btn', 'btn-reset'].forEach(_class => buttonReset.classList.add(styles[_class]));
   buttonReset.type = 'reset';
   buttonReset.name = 'reset';
   buttonReset.textContent = 'Reset';
   form.appendChild(buttonReset);
   aside.appendChild(form);
-  const divAdditional = document.createElement('div');
   divAdditional.classList.add(styles['additional']);
-  const buttonAdditional = document.createElement('button');
   ['btn', 'btn-find'].forEach(_class => buttonAdditional.classList.add(styles[_class]));
   buttonAdditional.type = 'button';
   buttonAdditional.textContent = 'Find your Hero :)';
@@ -185,26 +264,26 @@ function createAside() {
 
 function createMain() {
   const main = document.createElement('main');
-  main.classList.add(styles.main);
   const resultDiv = document.createElement('div');
-  resultDiv.classList.add(styles.results);
   const heroList = document.createElement('div');
-  heroList.classList.add(styles['hero-list']);
   const buttonLeft = document.createElement('button');
+  const buttonRight = document.createElement('button');
+  const heroListWrapper = document.createElement('div');
+  const slider = document.createElement('div');
+  main.classList.add(styles.main);
+  resultDiv.classList.add(styles.results);
+  heroList.classList.add(styles['hero-list']);
   ['btn', 'btn-list', 'btn-list__left'].forEach(_class => buttonLeft.classList.add(styles[_class]));
   buttonLeft.type = 'button';
   buttonLeft.innerHTML = '&lsaquo;';
   buttonLeft.dataset.dir = '1';
-  const buttonRight = document.createElement('button');
   ['btn', 'btn-list', 'btn-list__right'].forEach(_class =>
     buttonRight.classList.add(styles[_class]),
   );
   buttonRight.type = 'button';
   buttonRight.innerHTML = '&rsaquo;';
   buttonRight.dataset.dir = '-1';
-  const heroListWrapper = document.createElement('div');
   heroListWrapper.classList.add(styles['hero-list__wrapper']);
-  const slider = document.createElement('div');
   slider.classList.add(styles['hero-list__slider']);
   heroListWrapper.appendChild(slider);
   heroList.appendChild(buttonLeft);
@@ -222,8 +301,51 @@ function createBodyMain() {
   wrapper.appendChild(createAside());
   wrapper.appendChild(createMain());
   fragment.appendChild(wrapper);
+  document.querySelector('.container').appendChild(fragment);
+}
+
+function createModalForm() {
+  const fragment = document.createDocumentFragment();
+  const modal = document.createElement('div');
+  const closeModelButton = document.createElement('button');
+  const buttonSubmit = document.createElement('button');
+  const form = createForm(MODAL_FORM_STATE['hair']);
+  let fieldsetHair = crealeFieldset(
+    ['fieldset', 'similarity-form__fieldset'],
+    ['legend', 'similarity-form__legend'],
+    'Select color of your hair',
+  );
+  let fieldsetEyes = crealeFieldset(
+    ['fieldset', 'similarity-form__fieldset'],
+    ['legend', 'similarity-form__legend'],
+    'Select color of your eyes',
+  );
+  let fieldsetGender = crealeFieldset(
+    ['fieldset', 'similarity-form__fieldset'],
+    ['legend', 'similarity-form__legend'],
+    'Select your gender',
+  );
+  ['modal', 'modal-closed'].forEach(_class => modal.classList.add(styles[_class]));
+  ['btn', 'btn-modal'].forEach(_class => closeModelButton.classList.add(styles[_class]));
+  closeModelButton.type = 'button';
+  modal.appendChild(closeModelButton);
+  fieldsetHair = createInputModal(MODAL_FORM_STATE['hair'], fieldsetHair);
+  form.appendChild(fieldsetHair);
+  fieldsetEyes = createInputModal(MODAL_FORM_STATE['eyes'], fieldsetEyes);
+  form.appendChild(fieldsetEyes);
+  fieldsetGender = createInputModal(MODAL_FORM_STATE['gender'], fieldsetGender);
+  form.appendChild(fieldsetGender);
+  buttonSubmit.type = 'submit';
+  buttonSubmit.name = 'submit';
+  buttonSubmit.value = 'submit';
+  buttonSubmit.textContent = 'Submit';
+  ['btn', 'btn-submit'].forEach(_class => buttonSubmit.classList.add(styles[_class]));
+  form.appendChild(buttonSubmit);
+  modal.appendChild(form);
+  fragment.appendChild(modal);
   document.querySelector('body').insertBefore(fragment, document.querySelector('script'));
 }
 
 createHeader();
 createBodyMain();
+createModalForm();

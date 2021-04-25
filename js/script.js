@@ -5,14 +5,14 @@ import Controller from './controller.js';
 import model from './model.js';
 import View from './view.js';
 import Slider from './slider.js';
-// import ModalForm from './modalForm.js';
+import ModalForm from './modalForm.js';
 import styles from '../css/style.css';
 
 class App {
   constructor() {
     this.controller = new Controller(model, new View());
     this.slider = new Slider();
-    // this.modalWindow = new ModalForm();
+    this.modalWindow = new ModalForm();
     this.facultyForm = document.querySelector(`.${styles['faculty-form']}`);
     this.filterForm = document.querySelector(`.${styles['filter-form']}`);
     this.resetBtn = document.querySelector(`.${styles['btn-reset']}`);
@@ -33,13 +33,13 @@ class App {
         .getHeroes()
         .then(dataHeroes => this.controller.renderHeroCard(dataHeroes, id));
     });
-    // this.modalWindow.findButton.addEventListener('click', this.modalWindow.modalFormHandler);
-    // this.modalWindow.form.addEventListener('submit', event => {
-    //   event.preventDefault();
-    //   const state = this.modalWindow.modalFormSubmit();
-    //   this.controller.renderSimilarHeroes(state);
-    //   this.modalWindow.closeModal();
-    // });
+    this.modalWindow.findButton.addEventListener('click', this.modalWindow.modalFormHandler);
+    this.modalWindow.form.addEventListener('submit', event => {
+      event.preventDefault();
+      const state = this.modalWindow.modalFormSubmit();
+      this.controller.renderSimilarHeroes(state);
+      this.modalWindow.closeModal();
+    });
   };
 
   filterFormHandler = ({ target }) => {

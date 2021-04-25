@@ -1,40 +1,8 @@
 /* eslint-disable indent */
 import { doc } from 'prettier';
 import styles from '../css/style.css';
+
 class View {
-  static updateTemplateClasses(template) {
-    if (template) {
-      const classes = {};
-      template.classList.forEach(_class => {
-        classes[_class] = styles[_class];
-      });
-      for (let _class in classes) {
-        template.classList.remove(_class);
-        template.classList.add(styles[_class]);
-      }
-      [...template.children].forEach(child => View.updateTemplateClasses(child));
-    }
-  }
-
-  renderHero = (templateIdMark, hero) => View.renderHero(templateIdMark, hero);
-
-  static renderHero(templateIdMark, hero) {
-    if (!hero) {
-      return;
-    }
-    let template = document
-      .querySelector(`#${templateIdMark}Hero`)
-      .content.querySelector(`#hero-card__${templateIdMark}`)
-      .cloneNode(true);
-    View.updateTemplateClasses(template);
-    template = View.renderHeroeSmall(hero, template, templateIdMark);
-    if (templateIdMark === 'big') {
-      template = View.renderHeroBig(hero, template);
-    }
-    template.dataset.id = hero.id;
-    return template;
-  }
-
   generateOccupation = hero => View.generateOccupation(hero);
 
   static generateOccupation(hero) {
@@ -56,49 +24,68 @@ class View {
     return occupationTemplate;
   }
 
-  renderHeroeSmall = (hero, template) => View.renderHeroeSmall(hero, template);
+  renderHeroSmall = (hero, template) => View.renderHeroeSmall(hero, template);
 
-  static renderHeroeSmall(hero, template, templateIdMark) {
+  static renderHeroSmall(hero) {
     if (!hero) {
       return;
     }
-    const newTemplate = template.cloneNode(true);
-    const templateImg = newTemplate.querySelector('img');
-    templateImg.classList.add(
-      styles.img,
-      styles['card-img'],
-      styles[`card-img__${templateIdMark}`],
-    );
-    templateImg.src = hero.image;
-    templateImg.alt = hero.name;
-    newTemplate.querySelector(`.${styles['card-title']}`).textContent = hero.name;
-    newTemplate.querySelector(`.${styles['hero-name']}`).textContent = hero.name;
-    newTemplate.querySelector(`.${styles['hero-birth-date']}`).textContent = hero.dateOfBirth;
-    newTemplate.querySelector(
-      `.${styles['hero-occupation']}`,
-    ).textContent = View.generateOccupation(hero);
-    return newTemplate;
+    const template = `<div class="${styles['hero-card']} ${styles['hero-card__small']}" data-id="${
+      hero.id
+    }" id="hero-card__small">
+    <img src="${hero.image}" alt="Photo of ${hero.name}" width="80" class="${styles['img']} ${
+      styles['card-img']
+    }  ${styles['card-img__small']}" />
+    <div class="${styles['hero-description']}">
+      <h3 class="${styles['title']} ${styles['card-title']}">${hero.name}</h3>
+      <p class="${styles['text']} ${styles['card-text']}">
+        <span class="${styles['hero-name']}">${hero.name}</span> was bourn
+        <span class="${styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
+        <span class="${styles['hero-occupation']}">${View.generateOccupation(hero)}</span>
+      </p>
+    </div>
+  </div>`;
+    return template;
   }
 
-  renderHeroBig = (hero, template) => View.renderHeroBig(hero, template);
+  renderHeroBig = hero => View.renderHeroBig(hero);
 
-  static renderHeroBig(hero, template) {
+  static renderHeroBig(hero) {
     if (!hero) {
       return;
     }
-    const newTemplate = template.cloneNode(true);
-    newTemplate.querySelector(`.${styles['hero-eyes']}`).textContent = hero.eyeColour;
-    newTemplate.querySelector(`.${styles['hero-hair']}`).textContent = hero.hairColour;
-    newTemplate.querySelector(`.${styles['hero-patronus']}`).textContent = hero.patronus;
-    newTemplate.querySelector(`.${styles['hero-actor']}`).textContent = hero.actor;
-    return newTemplate;
+    const template = `
+    <img src="${hero.image}" alt="Photo of ${hero.name}" width="150" class="${styles['img']} ${
+      styles['card-img']
+    }  ${styles['card-img__big']}" />
+    <div class="${styles['hero-description']}">
+      <h2 class="${styles['title']} ${styles['card-title']}">${hero.name}</h2>
+      <p class="${styles['text']} ${styles['card-text']}">
+      <span class="${styles['hero-name']}">${hero.name}</span> was bourn
+      <span class="${styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
+      <span class="${styles['hero-occupation']}">${View.generateOccupation(hero)}</span>
+      </p>
+      <p class="${styles['text']} ${styles['card-text']}">
+        Has <span class="${styles['hero-hair']}">${hero.hairColour}</span> hair,
+        <span class="${styles['hero-eyes']}">${hero.eyeColour}</span> eyes. Patronus -
+        <span class="${styles['hero-patronus']}">${hero.patronus}</span>
+      </p>
+      <p class="${styles['text']} ${styles['card-text']}">
+        Acted by
+        <span class="${styles['hero-actor']}">${hero.actor}</span>.
+      </p>
+    </div>`;
+    return template;
   }
 
   renderHeroesList = heroes => View.renderHeroesList(heroes);
 
   static renderHeroesList(heroes) {
-    const template = document.createDocumentFragment();
-    heroes.forEach(hero => template.append(View.renderHero('small', hero)));
+    let template = '';
+    heroes.forEach(hero => {
+      const heroTemplate = View.renderHeroSmall(hero);
+      template += heroTemplate;
+    });
     return template;
   }
 }

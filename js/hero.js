@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-
 class Hero {
   constructor({
     name,
