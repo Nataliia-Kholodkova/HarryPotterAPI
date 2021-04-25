@@ -1,110 +1,5 @@
 import styles from '../css/style.css';
-import allUrl from '../img/all.png';
-import gryffindorUrl from '../img/gryffindor.png';
-import hufflepuffUrl from '../img/hufflepuff.png';
-import ravenclawUrl from '../img/ravenclaw.png';
-import slytherinUrl from '../img/slytherin.png';
-
-const FORM_STATE = {
-  faculty: {
-    name: 'house',
-    values: ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin', 'All'],
-    inputClasses: ['faculty-form__box', 'visually-hidden'],
-    imgClasses: ['img-checkbox'],
-    labelClasses: [],
-    formClasses: ['form', 'faculty-form'],
-    spanClasses: ['visually-hidden'],
-    imgUrls: {
-      Gryffindor: gryffindorUrl,
-      Hufflepuff: hufflepuffUrl,
-      Ravenclaw: ravenclawUrl,
-      Slytherin: slytherinUrl,
-      All: allUrl,
-    },
-  },
-
-  staff: {
-    name: 'hogwarts',
-    values: ['Staff', 'Student', '', 'All'],
-    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
-    imgClasses: [],
-    labelClasses: ['form-label', 'filter-form__label'],
-    formClasses: ['form', 'filter-form'],
-    spanClasses: ['label', 'label-radio'],
-  },
-
-  gender: {
-    name: 'gender',
-    values: ['Male', 'Female', 'All'],
-    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
-    imgClasses: [],
-    labelClasses: ['form-label', 'filter-form__label'],
-    formClasses: ['form', 'filter-form'],
-    spanClasses: ['label', 'label-radio'],
-  },
-
-  alive: {
-    name: 'alive',
-    values: ['Alive', 'Dead', 'All'],
-    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
-    imgClasses: [],
-    labelClasses: ['form-label', 'filter-form__label'],
-    formClasses: ['form', 'filter-form'],
-    spanClasses: ['label', 'label-radio'],
-  },
-
-  eyes: {
-    name: 'hairColour',
-    values: ['Alive', 'Dead', 'All'],
-    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
-    imgClasses: [],
-    labelClasses: ['form-label', 'filter-form__label'],
-    formClasses: ['form', 'filter-form'],
-    spanClasses: ['label', 'label-radio'],
-  },
-
-  hair: {
-    name: 'alive',
-    values: ['Alive', 'Dead', 'All'],
-    inputClasses: ['input radio-input', 'filter-form-input__radio', 'visually-hidden'],
-    imgClasses: [],
-    labelClasses: ['form-label', 'filter-form__label'],
-    formClasses: ['form', 'filter-form'],
-    spanClasses: ['label', 'label-radio'],
-  },
-};
-
-const MODAL_FORM_STATE = {
-  eyes: {
-    name: 'eyeColour',
-    values: ['Black', 'Brown', 'Red', 'Green', 'Grey', 'Blue', 'Yellow'],
-    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
-    labelClasses: ['form-label', 'similarity-form__label'],
-    formClasses: ['form', 'similarity-form'],
-    spanClasses: ['label', 'label-radio'],
-    score: '4',
-  },
-
-  hair: {
-    name: 'hairColour',
-    values: ['Black', 'Brown', 'Red', 'Blonde', 'Grey', 'Bald'],
-    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
-    labelClasses: ['form-label', 'similarity-form__label'],
-    formClasses: ['form', 'similarity-form'],
-    spanClasses: ['label', 'label-radio'],
-    score: '5',
-  },
-
-  gender: {
-    name: 'gender',
-    values: ['Male', 'Female', 'All'],
-    inputClasses: ['input radio-input', 'similarity-form-input__radio', 'visually-hidden'],
-    labelClasses: ['form-label', 'similarity-form__label'],
-    formClasses: ['form', 'similarity-form'],
-    spanClasses: ['label', 'label-radio'],
-    score: '2',
-  },
-};
+import { FORM_STATE, MODAL_FORM_STATE } from './buildState.js';
 
 function crealeFieldset(fieldsetClass, legendClass = null, legendValue = null) {
   const fieldset = document.createElement('fieldset');
@@ -118,24 +13,29 @@ function crealeFieldset(fieldsetClass, legendClass = null, legendValue = null) {
   return fieldset;
 }
 
+function createInputElements(state, value) {
+  const label = document.createElement('label');
+  const input = document.createElement('input');
+  const span = document.createElement('span');
+  state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
+  input.type = 'radio';
+  state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
+  input.value = value;
+  input.name = state.name;
+  state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
+  span.textContent = value.length > 0 ? value : 'None';
+  return label, input, span;
+}
+
 function createInputModal(state, container) {
   let isChecked = true;
   state.values.forEach(value => {
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    const span = document.createElement('span');
-    state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
-    input.type = 'radio';
+    const [label, input, span] = createInputElements(state, value);
     if (isChecked) {
       input.checked = true;
       isChecked = false;
     }
-    state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
-    input.value = value;
-    input.name = state.name;
     input.dataset.score = state.score;
-    state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
-    span.textContent = value.length > 0 ? value : 'None';
     label.appendChild(input);
     label.appendChild(span);
     container.appendChild(label);
@@ -145,15 +45,8 @@ function createInputModal(state, container) {
 
 function createInput(state, imgNeed, container) {
   state.values.forEach(value => {
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    const span = document.createElement('span');
+    const [label, input, span] = createInputElements(state, value);
     let img = null;
-    state.labelClasses.forEach(_class => label.classList.add(styles[_class]));
-    input.type = 'radio';
-    state.inputClasses.forEach(_class => input.classList.add(styles[_class]));
-    input.value = value;
-    input.name = state.name;
     if (imgNeed) {
       img = document.createElement('img');
       img.src = `${state['imgUrls'][value]}`;
@@ -161,8 +54,6 @@ function createInput(state, imgNeed, container) {
       state.imgClasses.forEach(_class => img.classList.add(styles[_class]));
       img.width = value === 'All' ? '150' : '120';
     }
-    state.spanClasses.forEach(_class => span.classList.add(styles[_class]));
-    span.textContent = value.length > 0 ? value : 'None';
     label.appendChild(input);
     if (imgNeed) {
       label.appendChild(img);

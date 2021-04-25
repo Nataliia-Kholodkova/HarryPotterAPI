@@ -1,6 +1,4 @@
 /* eslint-disable import/extensions */
-/* eslint-disable indent */
-
 import Controller from './controller.js';
 import model from './model.js';
 import View from './view.js';
