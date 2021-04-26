@@ -7,16 +7,15 @@ const URL = 'https://hp-api.herokuapp.com/api/characters';
 class Model {
   constructor(url) {
     this.url = url;
-    this.heroes = this.getheroesFromServer();
   }
 
-  getHeroes = () => this.heroes.then(heroes => Promise.resolve(heroes));
+  getHeroes = path => this.getheroesFromServer(path || '');
 
-  getheroesFromServer() {
+  getheroesFromServer(path) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
-      xhr.open('GET', this.url);
+      xhr.open('GET', `${this.url}/${path}`);
       xhr.addEventListener('load', () => {
         if (xhr.status !== 200) {
           alert(`Cannot load dataHeroes ${xhr.status}: ${xhr.statusText}. Please, reload`);

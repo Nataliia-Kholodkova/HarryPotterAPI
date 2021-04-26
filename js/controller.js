@@ -12,13 +12,13 @@ class Controller {
       hogwarts: null,
       isAlive: null,
     };
-    this.getHeroes().then(heroes => this.renderHeroCard(heroes));
-    this.getHeroes()
+    this.getHeroes('').then(heroes => this.renderHeroCard(heroes));
+    this.getHeroes('')
       .then(heroes => this.model.getRandomHeroes(heroes))
       .then(heroes => this.renderHeroesList(heroes));
   }
 
-  getHeroes = () => this.model.getHeroes();
+  getHeroes = path => this.model.getHeroes(path);
 
   renderHeroesList = dataHeroes => {
     if (dataHeroes.length === 0) {
@@ -67,11 +67,34 @@ class Controller {
   };
 
   renderSimilarHeroes = state => {
-    const heroes = this.getHeroes().then(dataHeroes =>
+    const heroes = this.getHeroes('').then(dataHeroes =>
       this.model.calculateSimilarity(dataHeroes, state),
     );
     heroes.then(dataHeroes => this.renderHeroCard(dataHeroes, dataHeroes[0].id));
     heroes.then(dataHeroes => this.renderHeroesList(dataHeroes));
+  };
+
+  getPathOnFilter = () => {
+    if (this.state.house) {
+      switch (this.state.house) {
+        case 'All':
+          return '';
+        default:
+          return `house/${this.state.house}`;
+      }
+    } else {
+      if (this.state.hogwarts) {
+        switch (this.state.hogwarts) {
+          case 'Student':
+            return `${this.state.hogwarts.toLowerCase()}s`;
+          case 'Staff':
+            return `${this.state.hogwarts.toLowerCase()}`;
+          default:
+            return '';
+        }
+      }
+    }
+    return '';
   };
 
   formFilterHandler = element => {
@@ -82,17 +105,12 @@ class Controller {
       default:
         this.state[element.name] = element.value;
     }
-    const promise = this.getHeroes().then(dataHeroes =>
-      this.model.filterFromState(dataHeroes, this.state),
-    );
-    promise.then(dataHeroes => this.renderHeroCard(dataHeroes));
-    if (this.state.house === null) {
-      promise
-        .then(dataHeroes => this.model.getRandomHeroes(dataHeroes))
-        .then(dataHeroes => this.renderHeroesList(dataHeroes));
-    } else {
-      promise.then(dataHeroes => this.renderHeroesList(dataHeroes));
-    }
+    this.getHeroes(this.getPathOnFilter())
+      .then(dataHeroes => this.model.filterFromState(dataHeroes, this.state))
+      .then(dataHeroes => {
+        this.renderHeroCard(dataHeroes);
+        this.renderHeroesList(dataHeroes);
+      });
   };
 
   resetFilter = () => {
@@ -103,9 +121,10 @@ class Controller {
       staff: null,
       isAlive: null,
     };
-    const promise = this.getHeroes();
-    promise.then(dataHeroes => this.renderHeroCard(dataHeroes));
-    promise.then(dataHeroes => this.renderHeroesList(dataHeroes));
+    this.getHeroes('').then(dataHeroes => {
+      this.renderHeroCard(dataHeroes);
+      this.renderHeroesList(dataHeroes);
+    });
   };
 }
 
