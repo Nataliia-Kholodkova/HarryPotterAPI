@@ -23,9 +23,7 @@ function getheroesFromServer(path) {
         return response.json();
       })
       .then(dataHeroes => window.constructHeroesList(dataHeroes))
-      .catch(error => {
-        window.renderApp([], null, error);
-      });
+      .catch(window.renderApp([], null, 'Cannot load the data. Please, reload'));
   } catch {
     window.renderApp([], null, 'Cannot load the data. Please, reload');
   }
@@ -237,7 +235,7 @@ function createForm(
   let template = `
   <form class="${formState[0].formClasses
     .map(_class => window.styles[_class] || _class)
-    .join(' ')}" onchange="(${listener})(event);">`;
+    .join(' ')}" onchange='(${listener})(event);'>`;
   for (let _state of formState) {
     template += window.createInputContainer(_state, imgNeed, isFieldset);
   }
@@ -256,7 +254,7 @@ function createForm(
         class="${['input', 'text-input', 'filter-form-input__text']
           .map(_class => window.styles[_class] || _class)
           .join(' ')}"
-        placeholder="Hero's name" onchange="(event.istopPropagation(); ${listener})(event);"
+        placeholder="Hero's name" onchange='(event.istopPropagation(); ${listener})(event);'
       />
       <span class="${window.styles['visually-hidden']}">Search</span>
     </label>
@@ -269,7 +267,7 @@ function createForm(
           .map(_class => window.styles[_class] || _class)
           .join(
             ' ',
-          )}" name="reset" type="reset"  onclick="(${resetFilterHandler})(event);">Reset</button>`;
+          )}" name="reset" type="reset" onclick='(${resetFilterHandler})();'>Reset</button>`;
   }
   template += `</form>`;
   return template;
@@ -307,9 +305,9 @@ function createMain(hero, heroList, cardHandler, error) {
   <main class="${window.styles.main}">
     <div class="${window.styles.results}">
       <div class="${window.styles['hero-list']}">
-          ${hero ? hero : window.createErrorTemplate(error)}
+          ${hero ? hero : window.createErrorTemplate(error) || ''}
           <div class="${window.styles['hero-list__wrapper']}">
-            <div class="${window.styles['hero-list__slider']}" onclick="(${cardHandler})(event);">
+            <div class="${window.styles['hero-list__slider']}" onclick='(${cardHandler})(event);'>
               ${heroList ? heroList : ''}
             </div>
           </div>
@@ -331,7 +329,7 @@ function createErrorTemplate(error) {
   }" style="color: #2a221e">${error}</h1>
   <button tyle="button" class="${['btn', 'btn-reset']
     .map(_class => window.styles[_class] || _class)
-    .join(' ')}" name="reload" onclick="(${reloadApp})();">Reload</button>
+    .join(' ')}" name="reload" onclick='(${reloadApp})();'>Reload</button>
   </div>
   `;
 }
@@ -353,15 +351,22 @@ function renderApp(dataHeroes, id, error) {
   let hero = null;
   let heroesListTemplate = '';
   let heroTemplate = null;
-  if (dataHeroes.length > 0) {
-    heroesListTemplate += window.renderHeroesList(dataHeroes);
+  try {
+    if (dataHeroes.length > 0) {
+      heroesListTemplate += window.renderHeroesList(dataHeroes);
+    }
+    if (id != null) {
+      hero = window.getHero(dataHeroes, id);
+    } else {
+      hero = window.getRandomHero(dataHeroes);
+    }
+    heroTemplate = window.renderHeroBig(hero);
+  } catch {
+    heroesListTemplate = '';
   }
-  if (id != null) {
-    hero = window.getHero(dataHeroes, id);
-  } else {
-    hero = window.getRandomHero(dataHeroes);
+  if (heroTemplate === undefined) {
+    heroTemplate = '';
   }
-  heroTemplate = window.renderHeroBig(hero);
   let template = window.createHeader(formFilterHandler);
   template += window.createBodyMain(
     heroTemplate,
@@ -369,7 +374,7 @@ function renderApp(dataHeroes, id, error) {
     formFilterHandler,
     cardHandler,
     resetFilterHandler,
-    error,
+    error || 'Cannot load the data. Please, reload',
   );
   document.querySelector('.container').innerHTML = template;
 }
