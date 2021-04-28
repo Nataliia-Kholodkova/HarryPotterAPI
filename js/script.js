@@ -1,6 +1,7 @@
 import Hero from './hero.js';
 import { FORM_STATE } from './buildState.js';
 import styles from '../css/style.css';
+import hat from '../img/hat.png';
 
 const URL = 'https://hp-api.herokuapp.com/api/characters';
 window.STATE = {
@@ -13,24 +14,21 @@ window.STATE = {
 window.styles = styles;
 
 function getheroesFromServer(path) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.open('GET', `${URL}/${path}`);
-    xhr.addEventListener('load', () => {
-      if (xhr.status !== 200) {
-        alert(`Cannot load dataHeroes ${xhr.status}: ${xhr.statusText}. Please, reload`);
-        reject();
-      }
-      resolve(xhr.response);
-    });
-
-    xhr.addEventListener('error', () => {
-      alert(`Cannot load dataHeroes ${xhr.status}: ${xhr.statusText}. Please, reload`);
-      reject();
-    });
-    xhr.send();
-  }).then(dataHeroes => window.constructHeroesList(dataHeroes));
+  try {
+    return fetch(`${URL}/${path}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Cannot load the data. Please, reload');
+        }
+        return response.json();
+      })
+      .then(dataHeroes => window.constructHeroesList(dataHeroes))
+      .catch(error => {
+        window.renderApp([], null, error);
+      });
+  } catch {
+    window.renderApp([], null, 'Cannot load the data. Please, reload');
+  }
 }
 
 window.getheroesFromServer = getheroesFromServer;
@@ -115,18 +113,19 @@ function renderHeroSmall(hero) {
   if (!hero) {
     return;
   }
-  const template = `<div class="${styles['hero-card']} ${styles['hero-card__small']}" data-id="${
+  const template = `
+  <div class="${window.styles['hero-card']} ${window.styles['hero-card__small']}" data-id="${
     hero.id
   }" id="hero-card__small">
-  <img src="${hero.image}" alt="Photo of ${hero.name}" width="80" class="${styles['img']} ${
-    styles['card-img']
-  }  ${styles['card-img__small']}" />
-  <div class="${styles['hero-description']}">
-    <h3 class="${styles['title']} ${styles['card-title']}">${hero.name}</h3>
-    <p class="${styles['text']} ${styles['card-text']}">
-      <span class="${styles['hero-name']}">${hero.name}</span> was bourn
-      <span class="${styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
-      <span class="${styles['hero-occupation']}">${window.generateOccupation(hero)}</span>
+  <img src="${hero.image}" alt="Photo of ${hero.name}" width="80" class="${window.styles['img']} ${
+    window.styles['card-img']
+  }  ${window.styles['card-img__small']}" />
+  <div class="${window.styles['hero-description']}">
+    <h3 class="${window.styles['title']} ${window.styles['card-title']}">${hero.name}</h3>
+    <p class="${window.styles['text']} ${window.styles['card-text']}">
+      <span class="${window.styles['hero-name']}">${hero.name}</span> was bourn
+      <span class="${window.styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
+      <span class="${window.styles['hero-occupation']}">${window.generateOccupation(hero)}</span>
     </p>
   </div>
 </div>`;
@@ -140,25 +139,27 @@ function renderHeroBig(hero) {
     return;
   }
   const template = `
-  <div class="${styles['hero-card']} ${styles['hero-card__big']}" id = "hero-card__big">
-    <img src="${hero.image}" alt="Photo of ${hero.name}" width="150" class="${styles['img']} ${
-    styles['card-img']
-  } ${styles['card-img__big']}" />
-    <div class="${styles['hero-description']}">
-      <h2 class="${styles['title']} ${styles['card-title']}">${hero.name}</h2>
-      <p class="${styles['text']} ${styles['card-text']}">
-      <span class="${styles['hero-name']}">${hero.name}</span> was bourn
-      <span class="${styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
-      <span class="${styles['hero-occupation']}">${window.generateOccupation(hero)}</span>
+  <div class="${window.styles['hero-card']} ${
+    window.styles['hero-card__big']
+  }" id = "hero-card__big">
+    <img src="${hero.image}" alt="Photo of ${hero.name}" width="150" class="${
+    window.styles['img']
+  } ${window.styles['card-img']} ${window.styles['card-img__big']}" />
+    <div class="${window.styles['hero-description']}">
+      <h2 class="${window.styles['title']} ${window.styles['card-title']}">${hero.name}</h2>
+      <p class="${window.styles['text']} ${window.styles['card-text']}">
+      <span class="${window.styles['hero-name']}">${hero.name}</span> was bourn
+      <span class="${window.styles['hero-birth-date']}">${hero.dateOfBirth}</span>.
+      <span class="${window.styles['hero-occupation']}">${window.generateOccupation(hero)}</span>
       </p>
-      <p class="${styles['text']} ${styles['card-text']}">
-        Has <span class="${styles['hero-hair']}">${hero.hairColour}</span> hair,
-        <span class="${styles['hero-eyes']}">${hero.eyeColour}</span> eyes. Patronus -
-        <span class="${styles['hero-patronus']}">${hero.patronus}</span>
+      <p class="${window.styles['text']} ${window.styles['card-text']}">
+        Has <span class="${window.styles['hero-hair']}">${hero.hairColour}</span> hair,
+        <span class="${window.styles['hero-eyes']}">${hero.eyeColour}</span> eyes. Patronus -
+        <span class="${window.styles['hero-patronus']}">${hero.patronus}</span>
       </p>
-      <p class="${styles['text']} ${styles['card-text']}">
+      <p class="${window.styles['text']} ${window.styles['card-text']}">
         Acted by
-        <span class="${styles['hero-actor']}">${hero.actor}</span>.
+        <span class="${window.styles['hero-actor']}">${hero.actor}</span>.
       </p>
     </div>
   </div>`;
@@ -179,7 +180,7 @@ function renderHeroesList(heroes) {
 window.renderHeroesList = renderHeroesList;
 
 function createImg(value, state) {
-  return `<img class="${state.imgClasses.map(_class => styles[_class] || _class).join(' ')}" 
+  return `<img class="${state.imgClasses.map(_class => window.styles[_class] || _class).join(' ')}"
   src=${state['imgUrls'][value]} alt=${value} width=${value === 'All' ? '150' : '120'}/>`;
 }
 
@@ -189,11 +190,11 @@ function createInputContainer(state, imgNeed, isFieldset) {
   const label = window.createInput(state, imgNeed);
   if (isFieldset) {
     return `<fieldset class="${state.fieldsetClasses
-      .map(_class => styles[_class] || _class)
+      .map(_class => window.styles[_class] || _class)
       .join(' ')}">
-      <legend class="${state.legendClasses.map(_class => styles[_class] || _class).join(' ')}">${
-      state.legend
-    }</legend>
+      <legend class="${state.legendClasses
+        .map(_class => window.styles[_class] || _class)
+        .join(' ')}">${state.legend}</legend>
         ${label}
     </fieldset>`;
   }
@@ -206,13 +207,13 @@ function createInput(state, imgNeed) {
   let templateInput = ``;
   state['values'].forEach(value => {
     const label = `<label class="${state.labelClasses
-      .map(_class => styles[_class] || _class)
+      .map(_class => window.styles[_class] || _class)
       .join(' ')}">
       <input type="radio" class="${state.inputClasses
-        .map(_class => styles[_class] || _class)
+        .map(_class => window.styles[_class] || _class)
         .join(' ')}" name="${state.name}" value=${value}></input>
       ${imgNeed === true ? window.createImg(value, state) : ''}
-      <span class="${state.spanClasses.map(_class => styles[_class] || _class).join(' ')}">${
+      <span class="${state.spanClasses.map(_class => window.styles[_class] || _class).join(' ')}">${
       value.length > 0 ? value : 'None'
     }</span>
     </label>
@@ -230,20 +231,42 @@ function createForm(
   imgNeed = false,
   isFieldset = false,
   resetNeed = false,
+  isSearchNeed,
   resetFilterHandler = null,
 ) {
   let template = `
   <form class="${formState[0].formClasses
-    .map(_class => styles[_class] || _class)
-    .join(' ')}" onclick="(${listener})(event);">`;
+    .map(_class => window.styles[_class] || _class)
+    .join(' ')}" onchange="(${listener})(event);">`;
   for (let _state of formState) {
     template += window.createInputContainer(_state, imgNeed, isFieldset);
   }
 
+  if (isSearchNeed) {
+    template += `
+    <fieldset class="${['fieldset', 'filter-form__fieldset']
+      .map(_class => window.styles[_class] || _class)
+      .join(' ')}">
+    <label class="${['form-label', 'filter-form__label', 'form-label__text']
+      .map(_class => window.styles[_class] || _class)
+      .join(' ')}">
+      <input
+        type="search"
+        name="name"
+        class="${['input', 'text-input', 'filter-form-input__text']
+          .map(_class => window.styles[_class] || _class)
+          .join(' ')}"
+        placeholder="Hero's name" onchange="(event.istopPropagation(); ${listener})(event);"
+      />
+      <span class="${window.styles['visually-hidden']}">Search</span>
+    </label>
+  </fieldset>
+    `;
+  }
   if (resetNeed) {
     template += `
         <button type="reset" class="${['btn', 'btn-reset']
-          .map(_class => styles[_class] || _class)
+          .map(_class => window.styles[_class] || _class)
           .join(
             ' ',
           )}" name="reset" type="reset"  onclick="(${resetFilterHandler})(event);">Reset</button>`;
@@ -256,10 +279,10 @@ window.createForm = createForm;
 
 function createHeader(funcFaculty) {
   return `
-  <header class="${styles.header}">
-    <div class="${styles.wrapper}">
-      <h1 class "${styles.title} ${
-    styles['title-main']
+  <header class="${window.styles.header}">
+    <div class="${window.styles.wrapper}">
+      <h1 class "${window.styles.title} ${
+    window.styles['title-main'] || 'title-main'
   }">Welcome to the magic World of Hogwarts</h1>
       ${window.createForm(FORM_STATE.faculty, funcFaculty, true)}
     </div>
@@ -271,23 +294,23 @@ window.createHeader = createHeader;
 
 function createAside(filterHandler, resetHandler) {
   return `
-  <aside class="${styles.aside}">
-  ${window.createForm(FORM_STATE.filter, filterHandler, false, true, true, resetHandler)}
+  <aside class="${window.styles.aside}">
+  ${window.createForm(FORM_STATE.filter, filterHandler, false, true, true, true, resetHandler)}
   </aside>
   `;
 }
 
 window.createAside = createAside;
 
-function createMain(hero, heroList, cardHandler) {
+function createMain(hero, heroList, cardHandler, error) {
   let template = `
-  <main class="${styles.main}">
-    <div class="${styles.results}">
-      <div class="${styles['hero-list']}">
-          ${hero}
-          <div class="${styles['hero-list__wrapper']}">
-            <div class="${styles['hero-list__slider']}" onclick="(${cardHandler})(event);">
-              ${heroList}
+  <main class="${window.styles.main}">
+    <div class="${window.styles.results}">
+      <div class="${window.styles['hero-list']}">
+          ${hero ? hero : window.createErrorTemplate(error)}
+          <div class="${window.styles['hero-list__wrapper']}">
+            <div class="${window.styles['hero-list__slider']}" onclick="(${cardHandler})(event);">
+              ${heroList ? heroList : ''}
             </div>
           </div>
       </div>
@@ -299,18 +322,34 @@ function createMain(hero, heroList, cardHandler) {
 
 window.createMain = createMain;
 
-function createBodyMain(hero, heroesList, formHandler, cardHandler, resetHandler) {
+function createErrorTemplate(error) {
   return `
-  <div class = "${styles.wrapper} ${styles['main-wrapper'] || 'main-wrapper'}">
+  <div class="${window.styles.error}">
+  <img src="${hat}" alt="Sorting hat" class="${window.styles.img} ${window.styles['img-hat']}"/>
+  <h1 class "${window.styles.title} ${
+    window.styles['title-main'] | 'title-main'
+  }" style="color: #2a221e">${error}</h1>
+  <button tyle="button" class="${['btn', 'btn-reset']
+    .map(_class => window.styles[_class] || _class)
+    .join(' ')}" name="reload" onclick="(${reloadApp})();">Reload</button>
+  </div>
+  `;
+}
+
+window.createErrorTemplate = createErrorTemplate;
+
+function createBodyMain(hero, heroesList, formHandler, cardHandler, resetHandler, error) {
+  return `
+  <div class = "${window.styles.wrapper} ${window.styles['main-wrapper'] || 'main-wrapper'}">
     ${window.createAside(formHandler, resetHandler)}
-    ${window.createMain(hero, heroesList, cardHandler)}
+    ${window.createMain(hero, heroesList, cardHandler, error)}
   </div>
   `;
 }
 
 window.createBodyMain = createBodyMain;
 
-function renderApp(dataHeroes, id) {
+function renderApp(dataHeroes, id, error) {
   let hero = null;
   let heroesListTemplate = '';
   let heroTemplate = null;
@@ -330,6 +369,7 @@ function renderApp(dataHeroes, id) {
     formFilterHandler,
     cardHandler,
     resetFilterHandler,
+    error,
   );
   document.querySelector('.container').innerHTML = template;
 }
@@ -377,8 +417,12 @@ function formFilterHandler(event) {
     .getheroesFromServer(window.getPathOnFilter())
     .then(dataHeroes => window.filterFromState(dataHeroes))
     .then(dataHeroes => {
+      if (dataHeroes.length === 0) {
+        throw new Error('No one magic hero match the parameters. Please, select something else.');
+      }
       window.renderApp(dataHeroes);
-    });
+    })
+    .catch(error => window.renderApp([], null, error));
 }
 
 function resetFilterHandler() {
@@ -394,6 +438,8 @@ function resetFilterHandler() {
   });
 }
 
+window.resetFilterHandler = resetFilterHandler;
+
 function createApp(id = null) {
   window
     .getheroesFromServer('')
@@ -402,6 +448,12 @@ function createApp(id = null) {
 }
 
 window.createApp = createApp;
+
+function reloadApp() {
+  window.resetFilterHandler();
+}
+
+window.reloadApp = reloadApp;
 
 function cardHandler(event) {
   const card = event.target.closest(`div.${window.styles['hero-card__small']}`);

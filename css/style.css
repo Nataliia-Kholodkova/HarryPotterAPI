@@ -1125,3 +1125,11 @@ fieldset,
 .hero-actor {
   font-size: 14px;
 }
+
+.error {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
