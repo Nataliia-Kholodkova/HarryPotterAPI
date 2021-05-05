@@ -14,8 +14,8 @@ window.STATE = {
 window.ERROR_LOAD = null;
 window.styles = styles;
 
-function getheroesFromServer(path) {
-  return fetch(`${URL_ADDR}/${path}`)
+function getheroesFromServer() {
+  return fetch(`${URL_ADDR}`)
     .then(response => {
       return response.json();
     })
@@ -24,8 +24,6 @@ function getheroesFromServer(path) {
       throw new Error('Cannot load the data. Please, reload');
     });
 }
-
-window.getheroesFromServer = getheroesFromServer;
 
 function constructHeroesList(dataHeroes) {
   let id = 1;
@@ -379,31 +377,6 @@ function renderApp(dataHeroes, id, error) {
 
 window.renderApp = renderApp;
 
-function getPathOnFilter() {
-  if (window.STATE.house) {
-    switch (window.STATE.house) {
-      case 'All':
-        return '';
-      default:
-        return `house/${window.STATE.house}`;
-    }
-  } else {
-    if (window.STATE.hogwarts) {
-      switch (window.STATE.hogwarts) {
-        case 'Student':
-          return `${window.STATE.hogwarts.toLowerCase()}s`;
-        case 'Staff':
-          return `${window.STATE.hogwarts.toLowerCase()}`;
-        default:
-          return '';
-      }
-    }
-  }
-  return '';
-}
-
-window.getPathOnFilter = getPathOnFilter;
-
 function updateUrl() {
   const url = new URL(window.location.href);
   for (let param in window.STATE) {
@@ -447,8 +420,7 @@ function formFilterHandler(event) {
       window.STATE[element.name] = element.value;
   }
   window.setUrl();
-  window
-    .getheroesFromServer(window.getPathOnFilter())
+  window.heroes
     .then(dataHeroes => window.filterFromState(dataHeroes))
     .then(dataHeroes => {
       if (dataHeroes.length === 0) {
@@ -468,7 +440,7 @@ function resetFilterHandler() {
     isAlive: null,
   };
   window.setUrl();
-  window.getheroesFromServer('').then(dataHeroes => {
+  window.heroes.then(dataHeroes => {
     window.renderApp(dataHeroes, null);
   });
 }
@@ -476,8 +448,7 @@ function resetFilterHandler() {
 window.resetFilterHandler = resetFilterHandler;
 
 function createApp(id = null) {
-  window
-    .getheroesFromServer('')
+  window.heroes
     .then(heroes => window.filterFromState(heroes))
     .then(heroes => window.renderApp(heroes, id))
     .catch(error => window.renderApp([], null, error));
@@ -505,4 +476,5 @@ function cardHandler(event) {
   window.createApp(id);
 }
 
+window.heroes = getheroesFromServer();
 createApp();
