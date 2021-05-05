@@ -918,8 +918,12 @@ fieldset,
 
 @media screen and (min-width: 648px) {
   .btn-list {
-    top: 21%;
+    top: 75%;
   }
+}
+
+.results {
+  position: relative;
 }
 
 .hero-list__slider {
@@ -927,10 +931,10 @@ fieldset,
   position: relative;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  /* flex-wrap: nowrap; */
-  /* justify-content: flex-start; */
+  /* flex-wrap: wrap;
+  justify-content: space-evenly; */
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   transition: 0.3s linear;
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
@@ -1129,7 +1133,10 @@ fieldset,
 .error {
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  justify-items: center;
   padding: 20px;
 }
