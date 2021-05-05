@@ -2,7 +2,6 @@ import Hero from './hero.js';
 import { FORM_STATE } from './buildState.js';
 import styles from '../css/style.css';
 import hat from '../img/hat.png';
-// const { Url } = require('url');
 
 const URL_ADDR = 'https://hp-api.herokuapp.com/api/characters';
 window.STATE = {
@@ -12,22 +11,18 @@ window.STATE = {
   hogwarts: null,
   isAlive: null,
 };
+window.ERROR_LOAD = null;
 window.styles = styles;
 
 function getheroesFromServer(path) {
-  try {
-    return fetch(`${URL_ADDR}/${path}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Cannot load the data. Please, reload');
-        }
-        return response.json();
-      })
-      .then(dataHeroes => window.constructHeroesList(dataHeroes))
-      .catch(window.renderApp([], null, 'Cannot load the data. Please, reload'));
-  } catch (error) {
-    window.renderApp([], null, error);
-  }
+  return fetch(`${URL_ADDR}/${path}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(dataHeroes => window.constructHeroesList(dataHeroes))
+    .catch(error => {
+      throw new Error('Cannot load the data. Please, reload');
+    });
 }
 
 window.getheroesFromServer = getheroesFromServer;
@@ -332,7 +327,7 @@ function createErrorTemplate(error) {
   }" style="color: #2a221e">${error}</h1>
   <button tyle="button" class="${['btn', 'btn-reset']
     .map(_class => window.styles[_class] || _class)
-    .join(' ')}" name="reload" onclick='(${reloadApp})();'>Reload</button>
+    .join(' ')}" name="reload" onclick="(${reloadApp})();">Reload</button>
   </div>
   `;
 }
@@ -377,7 +372,7 @@ function renderApp(dataHeroes, id, error) {
     formFilterHandler,
     cardHandler,
     resetFilterHandler,
-    error || 'Cannot load the data. Please, reload',
+    error,
   );
   document.querySelector('.container').innerHTML = template;
 }
@@ -461,8 +456,7 @@ function formFilterHandler(event) {
       }
       window.renderApp(dataHeroes);
     })
-    .catch(error => window.renderApp([], null, error))
-    .finally();
+    .catch(error => window.renderApp([], null, error));
 }
 
 function resetFilterHandler() {
@@ -482,11 +476,12 @@ function resetFilterHandler() {
 window.resetFilterHandler = resetFilterHandler;
 
 function createApp(id = null) {
-  window.updateUrl();
   window
     .getheroesFromServer('')
     .then(heroes => window.filterFromState(heroes))
-    .then(heroes => window.renderApp(heroes, id));
+    .then(heroes => window.renderApp(heroes, id))
+    .catch(error => window.renderApp([], null, error));
+  window.updateUrl();
 }
 
 window.createApp = createApp;
