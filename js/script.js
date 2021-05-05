@@ -2,8 +2,9 @@ import Hero from './hero.js';
 import { FORM_STATE } from './buildState.js';
 import styles from '../css/style.css';
 import hat from '../img/hat.png';
+// const { Url } = require('url');
 
-const URL = 'https://hp-api.herokuapp.com/api/characters';
+const URL_ADDR = 'https://hp-api.herokuapp.com/api/characters';
 window.STATE = {
   house: null,
   gender: null,
@@ -15,7 +16,7 @@ window.styles = styles;
 
 function getheroesFromServer(path) {
   try {
-    return fetch(`${URL}/${path}`)
+    return fetch(`${URL_ADDR}/${path}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Cannot load the data. Please, reload');
@@ -24,8 +25,8 @@ function getheroesFromServer(path) {
       })
       .then(dataHeroes => window.constructHeroesList(dataHeroes))
       .catch(window.renderApp([], null, 'Cannot load the data. Please, reload'));
-  } catch {
-    window.renderApp([], null, 'Cannot load the data. Please, reload');
+  } catch (error) {
+    window.renderApp([], null, error);
   }
 }
 
@@ -109,7 +110,7 @@ window.generateOccupation = generateOccupation;
 
 function renderHeroSmall(hero) {
   if (!hero) {
-    return;
+    return null;
   }
   const template = `
   <div class="${window.styles['hero-card']} ${window.styles['hero-card__small']}" data-id="${
@@ -134,7 +135,7 @@ window.renderHeroSmall = renderHeroSmall;
 
 function renderHeroBig(hero) {
   if (!hero) {
-    return;
+    return null;
   }
   const template = `
   <div class="${window.styles['hero-card']} ${
@@ -170,7 +171,9 @@ function renderHeroesList(heroes) {
   let template = '';
   heroes.forEach(hero => {
     const heroTemplate = window.renderHeroSmall(hero);
-    template += heroTemplate;
+    if (heroTemplate) {
+      template += heroTemplate;
+    }
   });
   return template;
 }
@@ -235,7 +238,7 @@ function createForm(
   let template = `
   <form class="${formState[0].formClasses
     .map(_class => window.styles[_class] || _class)
-    .join(' ')}" onchange='(${listener})(event);'>`;
+    .join(' ')}" onchange="(${listener})(event);">`;
   for (let _state of formState) {
     template += window.createInputContainer(_state, imgNeed, isFieldset);
   }
@@ -254,7 +257,7 @@ function createForm(
         class="${['input', 'text-input', 'filter-form-input__text']
           .map(_class => window.styles[_class] || _class)
           .join(' ')}"
-        placeholder="Hero's name" onchange='(event.istopPropagation(); ${listener})(event);'
+        placeholder="Hero's name" onchange="(event.istopPropagation(); ${listener})(event);"
       />
       <span class="${window.styles['visually-hidden']}">Search</span>
     </label>
@@ -267,7 +270,7 @@ function createForm(
           .map(_class => window.styles[_class] || _class)
           .join(
             ' ',
-          )}" name="reset" type="reset" onclick='(${resetFilterHandler})();'>Reset</button>`;
+          )}" name="reset" type="reset" onclick="(${resetFilterHandler})();">Reset</button>`;
   }
   template += `</form>`;
   return template;
@@ -307,7 +310,7 @@ function createMain(hero, heroList, cardHandler, error) {
       <div class="${window.styles['hero-list']}">
           ${hero ? hero : window.createErrorTemplate(error) || ''}
           <div class="${window.styles['hero-list__wrapper']}">
-            <div class="${window.styles['hero-list__slider']}" onclick='(${cardHandler})(event);'>
+            <div class="${window.styles['hero-list__slider']}" onclick="(${cardHandler})(event);">
               ${heroList ? heroList : ''}
             </div>
           </div>
@@ -325,7 +328,7 @@ function createErrorTemplate(error) {
   <div class="${window.styles.error}">
   <img src="${hat}" alt="Sorting hat" class="${window.styles.img} ${window.styles['img-hat']}"/>
   <h1 class "${window.styles.title} ${
-    window.styles['title-main'] | 'title-main'
+    window.styles['title-main'] || 'title-main'
   }" style="color: #2a221e">${error}</h1>
   <button tyle="button" class="${['btn', 'btn-reset']
     .map(_class => window.styles[_class] || _class)
@@ -364,7 +367,7 @@ function renderApp(dataHeroes, id, error) {
   } catch {
     heroesListTemplate = '';
   }
-  if (heroTemplate === undefined) {
+  if (heroTemplate === undefined || heroTemplate === null) {
     heroTemplate = '';
   }
   let template = window.createHeader(formFilterHandler);
@@ -406,6 +409,36 @@ function getPathOnFilter() {
 
 window.getPathOnFilter = getPathOnFilter;
 
+function updateUrl() {
+  const url = new URL(window.location.href);
+  for (let param in window.STATE) {
+    let searchParam = url.searchParams.get(param);
+    try {
+      window.STATE[param] = searchParam;
+    } catch {
+      window.STATE[param] = null;
+    }
+  }
+  window.history.pushState({}, '', url);
+}
+
+window.updateUrl = updateUrl;
+
+function setUrl() {
+  const url = new URL(window.location.href);
+  url.search = '';
+  for (let param in window.STATE) {
+    if (window.STATE[param] === null) {
+      url.searchParams.delete(param);
+    } else {
+      url.searchParams.set(param, window.STATE[param]);
+    }
+  }
+  window.history.pushState({}, '', url);
+}
+
+window.setUrl = setUrl;
+
 function formFilterHandler(event) {
   const element = event.target.closest('input');
   if (!element) {
@@ -418,6 +451,7 @@ function formFilterHandler(event) {
     default:
       window.STATE[element.name] = element.value;
   }
+  window.setUrl();
   window
     .getheroesFromServer(window.getPathOnFilter())
     .then(dataHeroes => window.filterFromState(dataHeroes))
@@ -427,7 +461,8 @@ function formFilterHandler(event) {
       }
       window.renderApp(dataHeroes);
     })
-    .catch(error => window.renderApp([], null, error));
+    .catch(error => window.renderApp([], null, error))
+    .finally();
 }
 
 function resetFilterHandler() {
@@ -438,6 +473,7 @@ function resetFilterHandler() {
     staff: null,
     isAlive: null,
   };
+  window.setUrl();
   window.getheroesFromServer('').then(dataHeroes => {
     window.renderApp(dataHeroes, null);
   });
@@ -446,6 +482,7 @@ function resetFilterHandler() {
 window.resetFilterHandler = resetFilterHandler;
 
 function createApp(id = null) {
+  window.updateUrl();
   window
     .getheroesFromServer('')
     .then(heroes => window.filterFromState(heroes))
