@@ -1,4 +1,4 @@
-import { FORM_STATE } from './buildState.js';
+import { FORM_STATE } from '../js/buildState.js';
 import styles from '../css/style.css';
 import filterFromState from '../data/filterHeroes';
 import renderApp from '../components/app';
@@ -9,7 +9,7 @@ import cardHandler from '../handlers/giveCard';
 import sliderHandler from '../handlers/slider';
 import resetFilterHandler from '../handlers/resetFilter';
 
-function createApp(id = null) {
+export default function createApp(id = null) {
   window.heroes
     .then(heroes => window.filterFromState(heroes))
     .then(heroes =>
@@ -56,6 +56,3 @@ window.formFilterHandler = formFilterHandler;
 window.sliderHandler = sliderHandler;
 window.createApp = createApp;
 window.getHeroesFromServer = getHeroesFromServer;
-window.heroes = window.getHeroesFromServer();
-window.createApp = createApp;
-window.createApp();
