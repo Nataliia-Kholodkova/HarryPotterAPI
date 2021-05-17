@@ -1,9 +1,24 @@
-import createForm from './addForm';
+/** @jsx createElement */
+/** @jsxFrag createFragment */
+import { createElement, createFragment } from '../framework/element';
+import CreateForm from './addForm';
 
-export default function createAside(filterHandler, resetHandler) {
-  return `
-      <aside class="${window.styles.aside}">
-      ${createForm(FORM_STATE.filter, filterHandler, false, true, true, true, resetHandler)}
-      </aside>
-      `;
+function CreateAside({ filterHandler, resetHandler }) {
+  return (
+    <aside className={window.styles.aside}>
+      (
+      <CreateForm
+        formState={window.FORM_STATE.filter}
+        listener={filterHandler}
+        imgNeed={false}
+        isFieldset={true}
+        resetNeed={true}
+        isSearchNeed={true}
+        resetFilterHandler={resetHandler}
+      />
+      )
+    </aside>
+  );
 }
+
+export default CreateAside;

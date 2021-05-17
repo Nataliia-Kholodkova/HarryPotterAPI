@@ -1,12 +1,14 @@
-import renderHeroSmall from './heroSmall';
+/** @jsx createElement */
+/** @jsxFrag createFragment */
+import { createElement, createFragment } from '../framework/element';
+import RenderHeroSmall from './heroSmall';
 
-export default function renderHeroesList(heroes) {
-  let template = '';
-  heroes.forEach(hero => {
-    const heroTemplate = renderHeroSmall(hero);
-    if (heroTemplate) {
-      template += heroTemplate;
-    }
-  });
-  return template;
+export default function RenderHeroesList(heroes) {
+  return (
+    <>
+      {heroes.map(hero => (
+        <RenderHeroSmall hero={hero} />
+      ))}
+    </>
+  );
 }

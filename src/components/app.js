@@ -1,11 +1,14 @@
-import createMain from './addMain';
-import createAside from './addAside';
-import createHeader from './addHeader';
-import renderHeroesList from './heroesList';
-import renderHeroBig from './heroBig';
+/** @jsx createElement */
+/** @jsxFrag createFragment */
+import { createElement, createFragment } from '../framework/element';
+import CreateMain from './addMain';
+import CreateAside from './addAside';
+import CreateHeader from './addHeader';
+import RenderHeroesList from './heroesList';
+import RenderHeroBig from './heroBig';
 import { getRandomHero, getHero } from '../js/utils';
 
-function createBodyMain(
+function CreateBodyMain({
   hero,
   heroesList,
   error,
@@ -14,13 +17,20 @@ function createBodyMain(
   resetHandler,
   sliderHandler,
   errorHandler,
-) {
-  return `
-    <div class = "${window.styles.wrapper} ${window.styles['main-wrapper'] || 'main-wrapper'}">
-      ${createAside(formHandler, resetHandler)}
-      ${createMain(hero, heroesList, cardHandler, error, errorHandler, sliderHandler)}
+}) {
+  return (
+    <div className={[window.styles.wrapper, window.styles['main-wrapper'] || 'main-wrapper']}>
+      <CreateAside filterHandler={formHandler} resetHandler={resetHandler} />
+      <CreateMain
+        hero={hero}
+        heroList={heroesList}
+        cardHandler={cardHandler}
+        error={error}
+        errorHandler={errorHandler}
+        sliderHandler={sliderHandler}
+      />
     </div>
-    `;
+  );
 }
 
 export default function renderApp(
@@ -34,34 +44,40 @@ export default function renderApp(
   errorHandler,
 ) {
   let hero = null;
-  let heroesListTemplate = '';
+  let heroesListTemplate = null;
   let heroTemplate = null;
   try {
     if (dataHeroes.length > 0) {
-      heroesListTemplate += renderHeroesList(dataHeroes);
+      heroesListTemplate = RenderHeroesList(dataHeroes);
     }
     if (id != null) {
       hero = getHero(dataHeroes, id);
     } else {
       hero = getRandomHero(dataHeroes);
     }
-    heroTemplate = renderHeroBig(hero);
+    heroTemplate = RenderHeroBig({ hero });
   } catch {
-    heroesListTemplate = '';
+    heroesListTemplate = null;
   }
   if (heroTemplate === undefined || heroTemplate === null) {
-    heroTemplate = '';
+    heroTemplate = null;
   }
-  let template = createHeader(formHandler);
-  template += createBodyMain(
-    heroTemplate,
-    heroesListTemplate,
-    error,
-    formHandler,
-    cardHandler,
-    resetHandler,
-    sliderHandler,
-    errorHandler,
+  const template = (
+    <>
+      <CreateHeader funcFaculty={formHandler} />
+      <CreateBodyMain
+        hero={heroTemplate}
+        heroesList={heroesListTemplate}
+        error={error}
+        formHandler={formHandler}
+        cardHandler={cardHandler}
+        resetHandler={resetHandler}
+        sliderHandler={sliderHandler}
+        errorHandler={errorHandler}
+      />
+    </>
   );
-  document.querySelector('.container').innerHTML = template;
+  const target = document.querySelector('.container');
+  target.innerHTML = '';
+  target.appendChild(template);
 }

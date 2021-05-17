@@ -1,16 +1,22 @@
-import createInput from './inputField';
+/** @jsx createElement */
+/** @jsxFrag createFragment */
+import { createElement, createFragment } from '../framework/element';
+import CreateInput from './inputField';
 
-export default function createInputContainer(state, imgNeed, isFieldset) {
-  const label = createInput(state, imgNeed);
+function CreateInputContainer({ state, imgNeed, isFieldset }) {
   if (isFieldset) {
-    return `<fieldset class="${state.fieldsetClasses
-      .map(_class => window.styles[_class] || _class)
-      .join(' ')}">
-          <legend class="${state.legendClasses
-            .map(_class => window.styles[_class] || _class)
-            .join(' ')}">${state.legend}</legend>
-            ${label}
-        </fieldset>`;
+    return (
+      <>
+        <fieldset className={state.fieldsetClasses.map(_class => window.styles[_class] || _class)}>
+          <legend className={state.legendClasses.map(_class => window.styles[_class] || _class)}>
+            {state.legend}
+          </legend>
+          <CreateInput state={state} imgNeed={imgNeed} />
+        </fieldset>
+      </>
+    );
   }
-  return label;
+  return <CreateInput state={state} imgNeed={imgNeed} />;
 }
+
+export default CreateInputContainer;

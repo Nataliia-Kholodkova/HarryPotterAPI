@@ -1,14 +1,19 @@
-import createForm from './addForm';
+/** @jsx createElement */
+/** @jsxFrag createFragment */
+import { createElement, createFragment } from '../framework/element';
+import CreateForm from './addForm';
 
-export default function createHeader(funcFaculty) {
-  return `
-      <header class="${window.styles.header}">
-        <div class="${window.styles.wrapper}">
-          <h1 class "${window.styles.title} ${
-    window.styles['title-main'] || 'title-main'
-  }">Welcome to the magic World of Hogwarts</h1>
-          ${createForm(FORM_STATE.faculty, funcFaculty, true)}
-        </div>
-      </header>
-      `;
+function CreateHeader({ funcFaculty }) {
+  return (
+    <header className={window.styles.header}>
+      <div className={window.styles.wrapper}>
+        <h1 className={[window.styles.title, window.styles['title-main'] || 'title-main']}>
+          Welcome to the magic World of Hogwarts
+        </h1>
+        <CreateForm formState={window.FORM_STATE.faculty} listener={funcFaculty} imgNeed={true} />
+      </div>
+    </header>
+  );
 }
+
+export default CreateHeader;
