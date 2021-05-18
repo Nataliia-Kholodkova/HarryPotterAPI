@@ -3,7 +3,7 @@
   margin-right: 15px;
   flex-shrink: 0;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   transition: 0.3s linear;
   -webkit-transition: 0.3s linear;
   -moz-transition: 0.3s linear;
@@ -22,19 +22,28 @@
 
 .card-img__small {
   border-radius: 49%;
+  width: 35%;
 }
 
 .hero-description {
   width: 100%;
 }
 
-/* @media screen and (min-width: 960px) {
-  .hero-description {
-    width: 35%;
-  }
-} */
+.hero-card__small .hero-description {
+  text-align: center;
+}
 
 @media screen and (min-width: 648px) {
+  .hero-card__small {
+    width: 50%;
+  }
+
+  .card-img__small {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 960px) {
   .hero-card__small {
     width: 31%;
   }
