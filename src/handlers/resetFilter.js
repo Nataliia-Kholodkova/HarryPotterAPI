@@ -1,3 +1,5 @@
+import createApp from '../framework/framework';
+
 export default function resetFilterHandler() {
   window.STATE = {
     house: null,
@@ -6,17 +8,5 @@ export default function resetFilterHandler() {
     staff: null,
     isAlive: null,
   };
-  window.heroes.then(dataHeroes => {
-    const hero = window.getRandomHero(heroes);
-    window.renderApp(
-      dataHeroes,
-      hero,
-      null,
-      window.formFilterHandler,
-      window.cardHandler,
-      window.resetFilterHandler,
-      window.sliderHandler,
-      window.resetFilterHandler,
-    );
-  });
+  createApp();
 }

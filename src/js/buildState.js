@@ -107,4 +107,4 @@ const FORM_STATE = {
   ],
 };
 
-export { FORM_STATE };
+export default FORM_STATE;

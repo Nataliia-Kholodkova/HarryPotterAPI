@@ -1,3 +1,4 @@
+import constructHeroesList from './getHroesList';
 const URL_ADDR = 'https://hp-api.herokuapp.com/api/characters';
 
 export default function getHeroesFromServer() {
@@ -5,7 +6,7 @@ export default function getHeroesFromServer() {
     .then(response => {
       return response.json();
     })
-    .then(dataHeroes => window.constructHeroesList(dataHeroes))
+    .then(dataHeroes => constructHeroesList(dataHeroes))
     .catch(error => {
       throw new Error('Cannot load the data. Please, reload');
     });

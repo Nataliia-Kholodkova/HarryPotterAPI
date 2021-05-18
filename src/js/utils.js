@@ -27,4 +27,17 @@ function getHero(dataHeroes, id) {
   return hero;
 }
 
-export { getHero, generateOccupation, getRandomHero };
+function setUrl() {
+  const url = new URL(window.location.href);
+  url.search = '';
+  for (let param in window.STATE) {
+    if (window.STATE[param] === null || window.STATE[param] === '') {
+      url.searchParams.delete(param);
+    } else {
+      url.searchParams.set(param, window.STATE[param]);
+    }
+  }
+  window.history.pushState({}, '', url);
+}
+
+export { getHero, generateOccupation, getRandomHero, setUrl };

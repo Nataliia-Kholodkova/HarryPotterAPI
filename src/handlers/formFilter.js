@@ -1,3 +1,5 @@
+import createApp from '../framework/framework';
+
 export default function formFilterHandler(event) {
   const element = event.target.closest('input');
   if (!element) {
@@ -10,34 +12,5 @@ export default function formFilterHandler(event) {
     default:
       window.STATE[element.name] = element.value;
   }
-  window.heroes
-    .then(dataHeroes => window.filterFromState(dataHeroes))
-    .then(dataHeroes => {
-      if (dataHeroes.length === 0) {
-        throw new Error('No one magic hero match the parameters. Please, select something else.');
-      }
-      const hero = window.getRandomHero(dataHeroes);
-      window.renderApp(
-        dataHeroes,
-        hero,
-        null,
-        window.formFilterHandler,
-        window.cardHandler,
-        window.resetFilterHandler,
-        window.sliderHandler,
-        window.resetFilterHandler,
-      );
-    })
-    .catch(error =>
-      window.renderApp(
-        [],
-        null,
-        error,
-        window.formFilterHandler,
-        window.cardHandler,
-        window.resetFilterHandler,
-        window.sliderHandler,
-        window.resetFilterHandler,
-      ),
-    );
+  createApp();
 }

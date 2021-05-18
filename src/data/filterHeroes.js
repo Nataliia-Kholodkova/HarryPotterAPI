@@ -21,5 +21,10 @@ export default function filterFromState(dataHeroes) {
       }),
     Promise.resolve(dataHeroes),
   );
-  return fileteredHeroes.then(resultHeroes => resultHeroes);
+  return fileteredHeroes.then(resultHeroes => {
+    if (resultHeroes.length === 0) {
+      throw new Error('No magic heros matching current parameters. Please, reload.');
+    }
+    return resultHeroes;
+  });
 }
