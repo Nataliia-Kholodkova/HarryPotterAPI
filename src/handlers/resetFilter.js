@@ -7,9 +7,10 @@ export default function resetFilterHandler() {
     isAlive: null,
   };
   window.heroes.then(dataHeroes => {
+    const hero = window.getRandomHero(heroes);
     window.renderApp(
       dataHeroes,
-      null,
+      hero,
       null,
       window.formFilterHandler,
       window.cardHandler,

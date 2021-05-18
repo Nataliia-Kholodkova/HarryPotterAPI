@@ -16,9 +16,10 @@ export default function formFilterHandler(event) {
       if (dataHeroes.length === 0) {
         throw new Error('No one magic hero match the parameters. Please, select something else.');
       }
+      const hero = window.getRandomHero(dataHeroes);
       window.renderApp(
         dataHeroes,
-        null,
+        hero,
         null,
         window.formFilterHandler,
         window.cardHandler,
@@ -34,7 +35,7 @@ export default function formFilterHandler(event) {
         error,
         window.formFilterHandler,
         window.cardHandler,
-        window.resetHandler,
+        window.resetFilterHandler,
         window.sliderHandler,
         window.resetFilterHandler,
       ),

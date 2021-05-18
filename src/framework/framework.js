@@ -8,22 +8,24 @@ import formFilterHandler from '../handlers/formFilter';
 import cardHandler from '../handlers/giveCard';
 import sliderHandler from '../handlers/slider';
 import resetFilterHandler from '../handlers/resetFilter';
+import { getRandomHero, getHero } from '../js/utils';
 
 export default function createApp(id = null) {
   window.heroes
     .then(heroes => window.filterFromState(heroes))
-    .then(heroes =>
+    .then(heroes => {
+      const hero = id ? window.getHero(heroes, id) : window.getRandomHero(heroes);
       window.renderApp(
         heroes,
-        id,
+        hero,
         null,
         window.formFilterHandler,
         window.cardHandler,
         window.resetFilterHandler,
         window.sliderHandler,
         window.resetFilterHandler,
-      ),
-    )
+      );
+    })
     .catch(error =>
       window.renderApp(
         [],
@@ -56,3 +58,5 @@ window.formFilterHandler = formFilterHandler;
 window.sliderHandler = sliderHandler;
 window.createApp = createApp;
 window.getHeroesFromServer = getHeroesFromServer;
+window.getRandomHero = getRandomHero;
+window.getHero = getHero;
