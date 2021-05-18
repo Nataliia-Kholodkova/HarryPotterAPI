@@ -1,0 +1,30 @@
+.faculty-form {
+  width: 90%;
+  margin: 0 auto;
+  align-items: flex-end;
+}
+
+.filter-form {
+  margin-bottom: 30px;
+  width: 95%;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.similarity-form {
+  width: 100%;
+}
+
+@media screen and (min-width: 648px) {
+  .faculty-form {
+    width: 70%;
+  }
+}
+
+.faculty-form label {
+  width: 25%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 38px;
+}

@@ -1,8 +1,7 @@
 export default function sliderMove(event) {
-  const slider = document.querySelector(`.${window.styles['hero-list__slider']}`);
+  const slider = document.querySelector('#slider');
   const sliderWidth = slider.offsetWidth;
-  const cardWidth =
-    document.querySelector(`.${window.styles['hero-card__small']}`).offsetWidth + 15;
+  const cardWidth = slider.querySelector(`div`).offsetWidth + 15;
   const direction = +event.target.dataset.dir;
   const cardsPerSlider = Math.round(sliderWidth / cardWidth);
   const totalSliderWidth = cardWidth * slider.children.length;

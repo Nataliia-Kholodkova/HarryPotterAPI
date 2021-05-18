@@ -3,6 +3,7 @@
 import { createElement, createFragment } from '../../framework/element';
 import { generateOccupation } from '../../js/utils';
 import Image from '../Image/Image';
+import styles from './styles.css';
 
 export default function MainHeroCard({ hero = null }) {
   if (!hero) {
@@ -10,35 +11,28 @@ export default function MainHeroCard({ hero = null }) {
   }
   return (
     <>
-      <div
-        class={[window.styles['hero-card'], window.styles['hero-card__big']]}
-        id="hero-card__big"
-      >
+      <div class={`hero-card ${styles['hero-card__big']}`} id="hero-card__big">
         <Image
           value={hero.name}
           url={hero.image}
           width={'150'}
-          imgClasses={[
-            window.styles['img'],
-            window.styles['card-img'],
-            window.styles['card-img__big'],
-          ]}
+          imgClasses={['card-img', styles['card-img__big']]}
         />
-        <div class={window.styles['hero-description']}>
-          <h2 class={[window.styles['title'], window.styles['card-title']]}>{hero.name}</h2>
-          <p class={[window.styles['text'], window.styles['card-text']]}>
-            <span class={window.styles['hero-name']}>{hero.name}</span> was bourn
-            <span class={window.styles['hero-birth-date']}>{hero.dateOfBirth}</span>.
-            <span class={window.styles['hero-occupation']}>{generateOccupation(hero)}</span>
+        <div class={styles['hero-description']}>
+          <h2 class={`title card-title`}>{hero.name}</h2>
+          <p class={`text card-text`}>
+            <span class={'hero-name'}>{hero.name}</span> was bourn
+            <span class={'hero-birth-date'}>{hero.dateOfBirth}</span>.
+            <span class={'hero-occupation'}>{generateOccupation(hero)}</span>
           </p>
-          <p class={[window.styles['text'], window.styles['card-text']]}>
-            Has <span class={window.styles['hero-hair']}>{hero.hairColour}</span> hair,
-            <span class={window.styles['hero-eyes']}>{hero.eyeColour}</span> eyes. Patronus -
-            <span class={window.styles['hero-patronus']}>{hero.patronus}</span>
+          <p class={`text card-text`}>
+            Has <span class={'hero-hair'}>{hero.hairColour}</span> hair,
+            <span class={'hero-eyes'}>{hero.eyeColour}</span> eyes. Patronus -
+            <span class={'hero-patronus'}>{hero.patronus}</span>
           </p>
-          <p class={[window.styles['text'], window.styles['card-text']]}>
+          <p class={`text card-text`}>
             Acted by
-            <span class={window.styles['hero-actor']}>{hero.actor}</span>.
+            <span class={'hero-actor'}>{hero.actor}</span>.
           </p>
         </div>
       </div>

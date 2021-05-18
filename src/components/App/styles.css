@@ -1,0 +1,14 @@
+.main-wrapper {
+  width: 100%;
+  background-image: url(./img/pergament.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (min-width: 960px) {
+  .main-wrapper {
+    width: 85%;
+  }
+}

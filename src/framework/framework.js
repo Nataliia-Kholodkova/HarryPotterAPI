@@ -1,6 +1,5 @@
-import styles from '../css/style.css';
 import filterFromState from '../data/filterHeroes';
-import renderApp from '../components/app';
+import App from '../components/App/App';
 import getHeroesFromServer from '../data/getData';
 import formFilterHandler from '../handlers/formFilter';
 import cardHandler from '../handlers/giveCard';
@@ -14,7 +13,7 @@ export default function createApp(id = null) {
     .then(heroes => filterFromState(heroes))
     .then(heroes => {
       const hero = id ? getHero(heroes, id) : getRandomHero(heroes);
-      renderApp(
+      App(
         heroes,
         hero,
         null,
@@ -26,7 +25,7 @@ export default function createApp(id = null) {
       );
     })
     .catch(error =>
-      renderApp(
+      App(
         [],
         null,
         error,
@@ -46,4 +45,3 @@ window.STATE = {
   hogwarts: null,
   isAlive: null,
 };
-window.styles = styles;

@@ -4,23 +4,24 @@ import { createElement, createFragment } from '../../framework/element';
 import Error from '../Error/Error';
 import MainHeroCard from '../MainHeroCard/MainHeroCard';
 import HeroesList from '../HeroesList/HeroesList';
+import styles from './styles.css';
 
 export default function Main({ hero, heroList, cardHandler, error, errorHandler, sliderHandler }) {
   const buttons = (
     <>
       <button
         type="button"
-        class={[window.styles['btn'], window.styles['btn-list'], window.styles['btn-list__left']]}
-        data-dir="1"
-        onClick={event => sliderHandler(event)}
+        class={`btn ${styles['btn-list']} ${styles['btn-list__left']}`}
+        data-dir={'1'}
+        onclick={event => sliderHandler(event)}
       >
         &lsaquo;
       </button>
       <button
         type="button"
-        class={[window.styles['btn'], window.styles['btn-list'], window.styles['btn-list__right']]}
-        data-dir="-1"
-        onClick={event => sliderHandler(event)}
+        class={`btn ${styles['btn-list']} ${styles['btn-list__right']}`}
+        data-dir={'-1'}
+        onclick={event => sliderHandler(event)}
       >
         &rsaquo;
       </button>
@@ -28,14 +29,18 @@ export default function Main({ hero, heroList, cardHandler, error, errorHandler,
   );
   return (
     <>
-      <main class={window.styles.main}>
-        <div class={window.styles.results}>
+      <main class={styles.main}>
+        <div class={styles.results}>
           {buttons}
-          <div class={window.styles['hero-list']}>
+          <div class={styles['hero-list']}>
             <Error error={error} reloadHandler={errorHandler} />
             <MainHeroCard hero={hero} />
-            <div class={window.styles['hero-list__wrapper']}>
-              <div class={window.styles['hero-list__slider']} onlick={event => cardHandler(event)}>
+            <div class={styles['hero-list__wrapper']}>
+              <div
+                class={styles['hero-list__slider']}
+                id="slider"
+                onclick={event => cardHandler(event)}
+              >
                 <HeroesList heroes={heroList} />
               </div>
             </div>

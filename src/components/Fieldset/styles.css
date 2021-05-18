@@ -1,0 +1,9 @@
+.filter-form__fieldset {
+    margin-bottom: 5px;
+  }
+
+  @media screen and (min-width: 960px) {
+    .filter-form__fieldset {
+      margin-bottom: 30px;
+    }
+  }

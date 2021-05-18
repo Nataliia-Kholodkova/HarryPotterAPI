@@ -1,0 +1,61 @@
+.hero-card__big {
+  padding-top: 50px;
+  margin-bottom: 60px;
+}
+
+@media screen and (min-width: 648px) {
+  .hero-card__big {
+    flex-direction: column;
+    margin-bottom: 55px;
+    padding-top: 70px;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .hero-card__big {
+    flex-direction: row;
+  }
+}
+
+.hero-description {
+  width: 55%;
+}
+
+@media screen and (min-width: 960px) {
+  .hero-description {
+    width: 35%;
+  }
+}
+
+.card-img__big {
+  width: 35%;
+  transform: rotate(-15deg) translateX(15px);
+  -webkit-transform: rotate(-15deg) translateX(15px);
+  -moz-transform: rotate(-15deg) translateX(15px);
+  -ms-transform: rotate(-15deg) translateX(15px);
+  -o-transform: rotate(-15deg) translateX(15px);
+}
+
+@media screen and (min-width: 648px) {
+  .card-img__big {
+    width: 73%;
+    margin-bottom: 65px;
+    transform: rotate(-15deg) translateX(0);
+    -webkit-transform: rotate(-15deg) translateX(0);
+    -moz-transform: rotate(-15deg) translateX(0);
+    -ms-transform: rotate(-15deg) translateX(0);
+    -o-transform: rotate(-15deg) translateX(0);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .card-img__big {
+    width: 45%;
+    margin-bottom: 0;
+    transform: rotate(-15deg) translateX(65px);
+    -webkit-transform: rotate(-15deg) translateX(65px);
+    -moz-transform: rotate(-15deg) translateX(65px);
+    -ms-transform: rotate(-15deg) translateX(65px);
+    -o-transform: rotate(-15deg) translateX(65px);
+  }
+}

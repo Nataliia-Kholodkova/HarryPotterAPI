@@ -1,0 +1,13 @@
+.aside {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  background-color: #2a221e;
+}
+
+@media screen and (min-width: 648px) {
+  .aside {
+    width: 30%;
+  }
+}

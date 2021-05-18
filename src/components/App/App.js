@@ -1,11 +1,12 @@
 /** @jsx createElement */
 /** @jsxFrag createFragment */
-import { createElement, createFragment } from '../framework/element';
-import Main from './Main/Main';
-import Aside from './Aside/Aside';
-import Header from './Header/Header';
+import { createElement, createFragment } from '../../framework/element';
+import Main from '../Main/Main';
+import Aside from '../Aside/Aside';
+import Header from '../Header/Header';
+import styles from './styles.css';
 
-export default function renderApp(
+export default function App(
   dataHeroes,
   hero,
   error,
@@ -18,7 +19,7 @@ export default function renderApp(
   const template = (
     <>
       <Header funcFaculty={formHandler} />
-      <div class={[window.styles.wrapper, window.styles['main-wrapper'] || 'main-wrapper']}>
+      <div class={`wrapper ${styles['main-wrapper']}`}>
         <Aside filterHandler={formHandler} resetHandler={resetHandler} />
         <Main
           hero={hero}

@@ -1,0 +1,77 @@
+.btn-list {
+  position: absolute;
+  top: 10px;
+  width: 38px;
+  color: #2a221e;
+  font-size: 80px;
+  opacity: 0.7;
+  transition: 0.3s linear;
+  -webkit-transition: 0.3s linear;
+  -moz-transition: 0.3s linear;
+  -ms-transition: 0.3s linear;
+  -o-transition: 0.3s linear;
+  z-index: 1;
+}
+
+.btn-list:hover,
+.btn-list:focus {
+  opacity: 1;
+}
+
+.btn-list__left {
+  left: 3px;
+}
+
+.btn-list__right {
+  right: 3px;
+}
+
+@media screen and (min-width: 648px) {
+  .btn-list {
+    top: 75%;
+  }
+}
+
+.main {
+  width: 100%;
+}
+
+@media screen and (min-width: 648px) {
+  .main {
+    width: 70%;
+  }
+}
+
+.results {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-list {
+  position: relative;
+}
+
+.hero-list__wrapper {
+  width: 75%;
+  padding: 15px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.hero-list__slider {
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  /* flex-wrap: wrap;
+    justify-content: space-evenly; */
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  transition: 0.3s linear;
+  -webkit-transition: 0.3s linear;
+  -moz-transition: 0.3s linear;
+  -ms-transition: 0.3s linear;
+  -o-transition: 0.3s linear;
+  left: 0px;
+}

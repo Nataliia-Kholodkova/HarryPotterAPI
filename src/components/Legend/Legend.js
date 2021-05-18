@@ -1,14 +1,11 @@
 /** @jsx createElement */
 /** @jsxFrag createFragment */
 import { createElement } from '../../framework/element';
+import styles from './styles.css';
 
-export default function Legend(state) {
+export default function Legend({ state }) {
   if (!state.legend) {
     return null;
   }
-  return (
-    <legend class={state.legendClasses.map(_class => window.styles[_class] || _class)}>
-      {state.legend}
-    </legend>
-  );
+  return <legend class={`legend ${styles[state.legendClasses]}`}>{state.legend}</legend>;
 }

@@ -2,6 +2,7 @@
 /** @jsxFrag createFragment */
 import { createElement, createFragment } from '../../framework/element';
 import Fieldset from '../Fieldset/Fieldset';
+import styles from './styles.css';
 
 export default function Form({
   formState,
@@ -12,10 +13,7 @@ export default function Form({
   resetFilterHandler = null,
 }) {
   return (
-    <form
-      class={formState[0].formClasses.map(_class => window.styles[_class] || _class)}
-      onChange={event => listener(event)}
-    >
+    <form class={`form ${styles[formState[0].formClasses]}`} onChange={event => listener(event)}>
       {formState.map(_state => (
         <Fieldset state={_state} imgNeed={imgNeed} isFieldset={isFieldset} />
       ))}
@@ -23,7 +21,7 @@ export default function Form({
         <>
           <button
             type="reset"
-            class={['btn', 'btn-reset'].map(_class => window.styles[_class] || _class)}
+            class={`btn btn-reset`}
             name="reset"
             type="reset"
             onClick={event => resetFilterHandler(event)}
