@@ -4,9 +4,20 @@ import { createElement, createFragment } from '../../framework/element';
 import Error from '../Error/Error';
 import MainHeroCard from '../MainHeroCard/MainHeroCard';
 import HeroesList from '../HeroesList/HeroesList';
+import { getHero } from '../../js/utils';
 import styles from './styles.css';
 
-export default function Main({ hero, heroList, cardHandler, error, errorHandler, sliderHandler }) {
+export default function Main({
+  hero,
+  heroList,
+  idHandler,
+  heroHandler,
+  error,
+  errorHandler,
+  sliderHandler,
+  state,
+  setNeedReload,
+}) {
   const buttons = (
     <>
       <button
@@ -39,7 +50,20 @@ export default function Main({ hero, heroList, cardHandler, error, errorHandler,
               <div
                 class={styles['hero-list__slider']}
                 id="slider"
-                onclick={event => cardHandler(event)}
+                onclick={event => {
+                  const card = event.target.closest(`div.hero-card`);
+                  let id = null;
+                  if (!card) {
+                    idHandler(null);
+                    heroHandler(null);
+                    return;
+                  }
+                  id = +card.dataset.id;
+                  idHandler(id);
+                  const hero = getHero(heroList, id);
+                  heroHandler(hero);
+                  setNeedReload(true);
+                }}
               >
                 <HeroesList heroes={heroList} />
               </div>

@@ -1,3 +1,4 @@
-import createApp from './framework/framework';
+import { render } from './framework/framework';
+import App from './components/App/App';
 
-createApp();
+render(App, document.querySelector('#root'));

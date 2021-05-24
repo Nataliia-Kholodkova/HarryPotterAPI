@@ -1,3 +1,5 @@
+import { useState } from '../framework/hooks';
+
 function generateOccupation(hero) {
   let occupationTemplate = '';
   if (hero.fromHogwarts()) {
@@ -17,27 +19,40 @@ function generateOccupation(hero) {
   return occupationTemplate;
 }
 
-function getRandomHero(dataHeroes) {
-  const index = Math.floor(Math.random() * dataHeroes.length);
-  return dataHeroes[index];
-}
-
 function getHero(dataHeroes, id) {
-  const hero = dataHeroes.find(item => item.id === id);
+  const hero = id
+    ? dataHeroes.find(item => item.id === id)
+    : dataHeroes[Math.floor(Math.random() * dataHeroes.length)];
   return hero;
 }
 
-function setUrl() {
+function setUrl(state) {
   const url = new URL(window.location.href);
   url.search = '';
-  for (let param in window.STATE) {
-    if (window.STATE[param] === null || window.STATE[param] === '') {
+  for (let param in state) {
+    if (state[param] === null || state[param] === '') {
       url.searchParams.delete(param);
     } else {
-      url.searchParams.set(param, window.STATE[param]);
+      url.searchParams.set(param, state[param]);
     }
   }
   window.history.pushState({}, '', url);
 }
 
-export { getHero, generateOccupation, getRandomHero, setUrl };
+function updateStateFromUrl(state, setState) {
+  const url = new URL(window.location.href);
+  for (let param in state) {
+    let searchParam = url.searchParams.get(param);
+    try {
+      state[param] = searchParam;
+    } catch {
+      state[param] = null;
+    }
+  }
+  window.history.pushState({}, '', url);
+  setState(state);
+}
+
+const isFunction = func => typeof func === 'function';
+
+export { getHero, generateOccupation, setUrl, updateStateFromUrl, isFunction };
