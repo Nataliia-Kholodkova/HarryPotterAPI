@@ -4,7 +4,7 @@ import { createElement, createFragment } from '../../framework/element';
 import Image from '../Image/Image';
 import styles from './styles.css';
 
-export default function Input({ state, imgNeed, stateApp }) {
+export default function Input({ state, imgNeed, appState }) {
   return (
     <>
       {state['values'].map(value => (
@@ -15,10 +15,10 @@ export default function Input({ state, imgNeed, stateApp }) {
               ${
                 state.inputClasses.includes('visually-hidden') ? 'visually-hidden' : ''
               } ${state.inputClasses.map(_class => styles[_class]).join(' ')}`}
-            value={state.placeholder ? stateApp[state.name] || '' : value}
+            value={state.placeholder ? appState[state.name] || '' : value}
             name={state.name}
             placeholder={state.placeholder || null}
-            checked={stateApp[state.name] === value}
+            checked={appState[state.name] === value}
           />
           {imgNeed === true ? (
             <Image

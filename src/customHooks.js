@@ -8,61 +8,51 @@ export const useHeroes = () => {
   const [error, setError] = useState(null);
   const [heroId, setHeroId] = useState(null);
   const [hero, setHero] = useState(null);
-  const [needReload, setNeedReload] = useState(true);
   let [state, setState] = useState({
-    house: null,
-    gender: null,
-    name: null,
-    hogwarts: null,
-    isAlive: null,
-  });
-  const resetState = () => {
-    state = {
+    state: {
       house: null,
       gender: null,
       name: null,
       hogwarts: null,
       isAlive: null,
-    };
-    setState(state);
-    setNeedReload(true);
-  };
-
+    },
+    needReload: true,
+  });
   useEffect(() => {
-    if (needReload) {
+    if (state.needReload) {
       getHeroesFromServer()
         .then(heroesList => {
-          const heroesData = filterFromState(heroesList, state);
+          const heroesData = filterFromState(heroesList, state.state);
           return heroesData;
         })
         .then(heroesData => {
           const heroItemId = heroId || null;
           const heroItem = getHero(heroesData, heroId);
+          state.needReload = false;
           setHeroes(heroesData);
           setHero(heroItem);
           setHeroId(heroItemId);
-          setNeedReload(false);
+          setState(state);
+          setError(null);
         })
         .catch(errorItem => {
+          state.needReload = false;
           setError(errorItem);
           setHeroes([]);
           setHeroId(null);
           setHero(null);
-          setNeedReload(false);
+          setState(state);
         });
     }
-  }, [heroes, heroId, hero, error, state, needReload]);
+  }, [heroes, heroId, hero, error, state]);
 
   return {
+    state,
     heroes,
-    heroId,
     hero,
     error,
     setState,
     setHero,
     setHeroId,
-    resetState,
-    state,
-    setNeedReload,
   };
 };

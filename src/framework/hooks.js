@@ -1,5 +1,17 @@
 import { isFunction } from '../js/utils';
 
+function compareState(nextDeps) {
+  if (!nextDeps) {
+    return false;
+  }
+  for (let i = 0; i < nextDeps.length; i++) {
+    if (!nextDeps[i] || !nextDeps[i].hasOwnProperty('needReload')) {
+      continue;
+    }
+    return nextDeps[i].needReload === true;
+  }
+}
+
 export const current = {
   shouldReRender: true,
   wipComponent: null,
@@ -44,8 +56,9 @@ export function useEffect(effect, deps) {
   const oldDeps = oldHook ? oldHook.deps : undefined;
 
   const hasChanged = hasDepsChanged(oldDeps, deps);
+  const needReload = compareState(deps);
 
-  if (!hasChanged) return;
+  if (!hasChanged && !needReload) return;
 
   if (oldHook && oldHook.unmount) {
     window.removeEventListener('beforeunload', oldHook.unmount);

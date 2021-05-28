@@ -5,7 +5,7 @@ import hat from './img/hat.png';
 import Image from '../Image/Image';
 import styles from './styles.css';
 
-export default function Error({ error, reloadHandler }) {
+export default function Error({ error, setState }) {
   if (!error) {
     return null;
   }
@@ -20,7 +20,18 @@ export default function Error({ error, reloadHandler }) {
           type="button"
           class={`btn ${styles['btn-reset']}`}
           name="reload"
-          onClick={event => reloadHandler(event)}
+          onClick={event =>
+            setState({
+              state: {
+                house: null,
+                gender: null,
+                name: null,
+                hogwarts: null,
+                isAlive: null,
+              },
+              needReload: true,
+            })
+          }
         >
           Reload
         </button>

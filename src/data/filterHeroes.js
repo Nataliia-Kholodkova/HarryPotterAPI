@@ -1,6 +1,7 @@
 import { useState } from '../framework/hooks';
 
 export default function filterFromState(dataHeroes, state) {
+  // console.log(state)
   const fileteredHeroes = Object.entries(state).reduce((initial, entry) => {
     if (entry[1] !== null) {
       const [key, value] = entry;

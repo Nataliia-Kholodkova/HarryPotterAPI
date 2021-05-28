@@ -6,43 +6,26 @@ import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
 import styles from './styles.css';
 import sliderHandler from '../../handlers/slider';
-import { setUrl, updateStateFromUrl } from '../../js/utils';
+import { setUrl } from '../../js/utils';
 import { useHeroes } from '../../customHooks';
 
 export default function App() {
-  const {
-    heroes,
-    heroId,
-    hero,
-    error,
-    setState,
-    setHero,
-    setHeroId,
-    resetState,
-    state,
-    setNeedReload,
-  } = useHeroes();
+  const { state, heroes, hero, error, setState, setHero, setHeroId } = useHeroes();
   setUrl(state);
   const template = (
     <>
-      <Header funcFaculty={setState} state={state} setNeedReload={setNeedReload} />
+      <Header setState={setState} appState={state} />
       <div class={`wrapper ${styles['main-wrapper']}`}>
-        <Aside
-          filterHandler={setState}
-          resetHandler={resetState}
-          state={state}
-          setNeedReload={setNeedReload}
-        />
+        <Aside setState={setState} appState={state} />
         <Main
           hero={hero}
           heroList={heroes}
-          idHandler={setHeroId}
-          heroHandler={setHero}
+          setHeroId={setHeroId}
+          setHero={setHero}
           error={error}
-          errorHandler={resetState}
+          setState={setState}
           sliderHandler={sliderHandler}
-          state={state}
-          setNeedReload={setNeedReload}
+          appState={state}
         />
       </div>
     </>

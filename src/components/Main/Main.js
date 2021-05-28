@@ -10,14 +10,27 @@ import styles from './styles.css';
 export default function Main({
   hero,
   heroList,
-  idHandler,
-  heroHandler,
+  setHeroId,
+  setHero,
+  setState,
   error,
-  errorHandler,
   sliderHandler,
-  state,
-  setNeedReload,
+  appState,
 }) {
+  const clickHandler = event => {
+    const card = event.target.closest(`div.hero-card`);
+    let id = null;
+    if (!card) {
+      setHeroId(null);
+      setHero(null);
+      return;
+    }
+    id = +card.dataset.id;
+    setHeroId(id);
+    const hero = getHero(heroList, id);
+    setHero(hero);
+    setState(appState => (appState.needReload = true));
+  };
   const buttons = (
     <>
       <button
@@ -44,27 +57,10 @@ export default function Main({
         <div class={styles.results}>
           {buttons}
           <div class={styles['hero-list']}>
-            <Error error={error} reloadHandler={errorHandler} />
+            <Error error={error} setState={setState} />
             <MainHeroCard hero={hero} />
             <div class={styles['hero-list__wrapper']}>
-              <div
-                class={styles['hero-list__slider']}
-                id="slider"
-                onclick={event => {
-                  const card = event.target.closest(`div.hero-card`);
-                  let id = null;
-                  if (!card) {
-                    idHandler(null);
-                    heroHandler(null);
-                    return;
-                  }
-                  id = +card.dataset.id;
-                  idHandler(id);
-                  const hero = getHero(heroList, id);
-                  heroHandler(hero);
-                  setNeedReload(true);
-                }}
-              >
+              <div class={styles['hero-list__slider']} id="slider" onclick={clickHandler}>
                 <HeroesList heroes={heroList} />
               </div>
             </div>

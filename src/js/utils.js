@@ -27,32 +27,17 @@ function getHero(dataHeroes, id) {
 }
 
 function setUrl(state) {
-  const url = new URL(window.location.href);
-  url.search = '';
-  for (let param in state) {
-    if (state[param] === null || state[param] === '') {
-      url.searchParams.delete(param);
+  const params = new URLSearchParams(window.location.search);
+  for (let param in state.state) {
+    if (!state.state[param]) {
+      params.delete(param);
     } else {
-      url.searchParams.set(param, state[param]);
+      params.set(param, state.state[param]);
     }
   }
-  window.history.pushState({}, '', url);
-}
-
-function updateStateFromUrl(state, setState) {
-  const url = new URL(window.location.href);
-  for (let param in state) {
-    let searchParam = url.searchParams.get(param);
-    try {
-      state[param] = searchParam;
-    } catch {
-      state[param] = null;
-    }
-  }
-  window.history.pushState({}, '', url);
-  setState(state);
+  window.history.replaceState({}, '', decodeURIComponent(`${window.location.pathname}?${params}`));
 }
 
 const isFunction = func => typeof func === 'function';
 
-export { getHero, generateOccupation, setUrl, updateStateFromUrl, isFunction };
+export { getHero, generateOccupation, setUrl, isFunction };

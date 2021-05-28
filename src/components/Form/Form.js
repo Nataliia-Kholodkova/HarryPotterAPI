@@ -6,35 +6,36 @@ import styles from './styles.css';
 
 export default function Form({
   formState,
-  listener,
+  setState,
   imgNeed = false,
   isFieldset = false,
   resetNeed = false,
-  resetFilterHandler = null,
-  state,
-  setNeedReload,
+  appState,
 }) {
+  const formHandler = (event, appState) => {
+    const element = event.target.closest('input');
+    if (!element) {
+      return;
+    }
+    switch (element.value) {
+      case 'all':
+        appState.state[element.name] = null;
+        break;
+      default:
+        appState.state[element.name] = element.value;
+    }
+    appState.needReload = true;
+    return appState;
+  };
   return (
     <form
       class={`form ${styles[formState[0].formClasses]}`}
       onChange={event => {
-        const element = event.target.closest('input');
-        if (!element) {
-          return;
-        }
-        switch (element.value) {
-          case 'all':
-            state[element.name] = null;
-            break;
-          default:
-            state[element.name] = element.value;
-        }
-        listener(state);
-        setNeedReload(true);
+        setState(formHandler(event, appState));
       }}
     >
       {formState.map(_state => (
-        <Fieldset state={_state} imgNeed={imgNeed} isFieldset={isFieldset} stateApp={state} />
+        <Fieldset state={_state} imgNeed={imgNeed} isFieldset={isFieldset} appState={appState} />
       ))}
       {resetNeed ? (
         <>
@@ -43,7 +44,18 @@ export default function Form({
             class={`btn btn-reset`}
             name="reset"
             type="reset"
-            onClick={event => resetFilterHandler()}
+            onClick={event =>
+              setState({
+                state: {
+                  house: null,
+                  gender: null,
+                  name: null,
+                  hogwarts: null,
+                  isAlive: null,
+                },
+                needReload: true,
+              })
+            }
           >
             Reset
           </button>
