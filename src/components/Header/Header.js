@@ -4,9 +4,8 @@ import { createElement } from '../../framework/element';
 import Form from '../Form/Form';
 import styles from './styles.css';
 import FORM_STATE from '../../utils/buildState';
-import { HeaderFormContext } from '../../context';
 
-export default function Header({ setState, appState }) {
+export default function Header({ setState, appState, setHeroesState }) {
   return (
     <header class={styles.header}>
       <div class={'wrapper'}>
@@ -16,6 +15,7 @@ export default function Header({ setState, appState }) {
           imgNeed={true}
           appState={appState}
           formState={FORM_STATE.faculty}
+          setHeroesState={setHeroesState}
         />
       </div>
     </header>

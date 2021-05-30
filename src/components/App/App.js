@@ -14,18 +14,18 @@ export default function App() {
   setUrl(state);
   const template = (
     <>
-      <Header setState={setState} appState={state} />
-      <div class={`wrapper ${styles['main-wrapper']}`}>
-        <Aside setState={setState} appState={state} />
-        <AppContext.Provider value={heroesState}>
+      <AppContext.Provider value={heroesState}>
+        <Header setState={setState} appState={state} setHeroesState={setHeroesState} />
+        <div class={`wrapper ${styles['main-wrapper']}`}>
+          <Aside setState={setState} appState={state} setHeroesState={setHeroesState} />
           <Main
             error={error}
             setState={setState}
             appState={state}
             setHeroesState={setHeroesState}
           />
-        </AppContext.Provider>
-      </div>
+        </div>
+      </AppContext.Provider>
     </>
   );
   return template;

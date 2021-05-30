@@ -3,6 +3,7 @@
 import { createElement, createFragment } from '../../framework/element';
 import Fieldset from '../Fieldset/Fieldset';
 import styles from './styles.css';
+import { useAppContext } from '../../context';
 
 export default function Form({
   setState,
@@ -11,8 +12,9 @@ export default function Form({
   resetNeed = false,
   appState,
   formState,
+  setHeroesState,
 }) {
-  const formHandler = (event, appState) => {
+  const formHandler = (event, appState, heroesData, setHeroesState) => {
     const element = event.target.closest('input');
     if (!element) {
       return;
@@ -25,13 +27,17 @@ export default function Form({
         appState.state[element.name] = element.value;
     }
     appState.needReload = true;
+    heroesData.heroId = null;
+    heroesData.hero = null;
+    setHeroesState(heroesData);
     return appState;
   };
+  const heroesData = useAppContext();
   return (
     <form
       class={`form ${styles[formState[0].formClasses]}`}
       onChange={event => {
-        setState(formHandler(event, appState));
+        setState(formHandler(event, appState, heroesData, setHeroesState));
       }}
     >
       {formState.map(_state => (
