@@ -1,7 +1,7 @@
 /** @jsx createElement */
 /** @jsxFrag createFragment */
 import { createElement, createFragment } from '../../framework/element';
-import { generateOccupation } from '../../js/utils';
+import { generateOccupation } from '../../utils/utils';
 import Image from '../Image/Image';
 import styles from './styles.css';
 

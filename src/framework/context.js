@@ -1,5 +1,5 @@
-import { current } from '../framework';
-import { isFunction } from '../utils';
+import { current } from './hooks';
+import { isFunction } from '../utils/utils';
 
 /**
  * @typedef {Object} Context

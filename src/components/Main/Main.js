@@ -2,55 +2,18 @@
 /** @jsxFrag createFragment */
 import { createElement, createFragment } from '../../framework/element';
 import Error from '../Error/Error';
-import MainHeroCard from '../MainHeroCard/MainHeroCard';
-import HeroesList from '../HeroesList/HeroesList';
-import { getHero } from '../../js/utils';
 import styles from './styles.css';
+import { useAppContext } from '../../context';
+import sliderHandler from '../../utils/slider';
+import { generateButtons, generateData } from './helpers';
 
-export default function Main({
-  hero,
-  heroList,
-  setHeroId,
-  setHero,
-  setState,
-  error,
-  sliderHandler,
-  appState,
-}) {
-  const clickHandler = event => {
-    const card = event.target.closest(`div.hero-card`);
-    let id = null;
-    if (!card) {
-      setHeroId(null);
-      setHero(null);
-      return;
-    }
-    id = +card.dataset.id;
-    setHeroId(id);
-    const hero = getHero(heroList, id);
-    setHero(hero);
-    setState(appState => (appState.needReload = true));
-  };
-  const buttons = (
-    <>
-      <button
-        type="button"
-        class={`btn ${styles['btn-list']} ${styles['btn-list__left']}`}
-        data-dir={'1'}
-        onclick={event => sliderHandler(event)}
-      >
-        &lsaquo;
-      </button>
-      <button
-        type="button"
-        class={`btn ${styles['btn-list']} ${styles['btn-list__right']}`}
-        data-dir={'-1'}
-        onclick={event => sliderHandler(event)}
-      >
-        &rsaquo;
-      </button>
-    </>
-  );
+export default function Main({ setState, error, setHeroesState, appState }) {
+  const heroesData = useAppContext();
+  if (Object.keys(heroesData).length === 0) {
+    return null;
+  }
+  const buttons = generateButtons(sliderHandler);
+  const data = generateData(appState, heroesData, setHeroesState, setState, error);
   return (
     <>
       <main class={styles.main}>
@@ -58,12 +21,7 @@ export default function Main({
           {buttons}
           <div class={styles['hero-list']}>
             <Error error={error} setState={setState} />
-            <MainHeroCard hero={hero} />
-            <div class={styles['hero-list__wrapper']}>
-              <div class={styles['hero-list__slider']} id="slider" onclick={clickHandler}>
-                <HeroesList heroes={heroList} />
-              </div>
-            </div>
+            {data}
           </div>
         </div>
       </main>

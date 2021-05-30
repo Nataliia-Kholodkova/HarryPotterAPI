@@ -1,4 +1,4 @@
-import Hero from '../js/hero';
+import Hero from '../utils/hero';
 
 export default function constructHeroesList(dataHeroes) {
   let id = 1;

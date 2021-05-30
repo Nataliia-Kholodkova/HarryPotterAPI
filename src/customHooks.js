@@ -1,13 +1,16 @@
 import { useEffect, useState } from './framework/hooks';
 import filterFromState from './data/filterHeroes';
 import getHeroesFromServer from './data/getData';
-import { getHero } from './js/utils';
+import { getHero } from './utils/utils';
 
 export const useHeroes = () => {
-  const [heroes, setHeroes] = useState([]);
+  const [heroesState, setHeroesState] = useState({
+    heroId: null,
+    hero: null,
+    heroes: [],
+    currentHeroes: [],
+  });
   const [error, setError] = useState(null);
-  const [heroId, setHeroId] = useState(null);
-  const [hero, setHero] = useState(null);
   let [state, setState] = useState({
     state: {
       house: null,
@@ -19,40 +22,51 @@ export const useHeroes = () => {
     needReload: true,
   });
   useEffect(() => {
-    if (state.needReload) {
+    if (heroesState.heroes.length === 0) {
       getHeroesFromServer()
         .then(heroesList => {
-          const heroesData = filterFromState(heroesList, state.state);
-          return heroesData;
-        })
-        .then(heroesData => {
-          const heroItemId = heroId || null;
-          const heroItem = getHero(heroesData, heroId);
+          heroesState.heroes = heroesList;
+          heroesState.currentHeroes = heroesList;
+          const heroItemId = heroesState.heroId || null;
+          const heroItem = getHero(heroesList, heroItemId);
+          heroesState.heroId = heroItemId;
+          heroesState.hero = heroItem;
+          setHeroesState(heroesState);
           state.needReload = false;
-          setHeroes(heroesData);
-          setHero(heroItem);
-          setHeroId(heroItemId);
           setState(state);
-          setError(null);
         })
         .catch(errorItem => {
           state.needReload = false;
           setError(errorItem);
-          setHeroes([]);
-          setHeroId(null);
-          setHero(null);
           setState(state);
         });
+    } else {
+      if (state.needReload) {
+        try {
+          const heroesData = filterFromState(heroesState.heroes, state.state);
+          const heroItemId = heroesState.heroId || null;
+          const heroItem = getHero(heroesData, heroItemId);
+          state.needReload = false;
+          heroesState.heroId = heroItemId;
+          heroesState.hero = heroItem;
+          heroesState.currentHeroes = heroesData;
+          setHeroesState(heroesState);
+          setState(state);
+          setError(null);
+        } catch (errorItem) {
+          state.needReload = false;
+          setError(errorItem);
+          setState(state);
+        }
+      }
     }
-  }, [heroes, heroId, hero, error, state]);
+  }, [heroesState, error, state]);
 
   return {
     state,
-    heroes,
-    hero,
     error,
+    heroesState,
     setState,
-    setHero,
-    setHeroId,
+    setHeroesState,
   };
 };

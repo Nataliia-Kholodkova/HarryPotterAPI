@@ -5,12 +5,12 @@ import Fieldset from '../Fieldset/Fieldset';
 import styles from './styles.css';
 
 export default function Form({
-  formState,
   setState,
   imgNeed = false,
   isFieldset = false,
   resetNeed = false,
   appState,
+  formState,
 }) {
   const formHandler = (event, appState) => {
     const element = event.target.closest('input');

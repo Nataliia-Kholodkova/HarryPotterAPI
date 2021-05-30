@@ -1,7 +1,4 @@
-import { useState } from '../framework/hooks';
-
 export default function filterFromState(dataHeroes, state) {
-  // console.log(state)
   const fileteredHeroes = Object.entries(state).reduce((initial, entry) => {
     if (entry[1] !== null) {
       const [key, value] = entry;
@@ -21,7 +18,9 @@ export default function filterFromState(dataHeroes, state) {
     return initial;
   }, dataHeroes);
   if (fileteredHeroes.length === 0) {
-    throw new Error('No magic heros matching current parameters. Please, reload.');
+    throw new Error(
+      'No magic heros matching current parameters. Please, reload or select other search parameters.',
+    );
   }
   return fileteredHeroes;
 }

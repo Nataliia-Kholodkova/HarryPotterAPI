@@ -1,5 +1,3 @@
-import { useState } from '../framework/hooks';
-
 function generateOccupation(hero) {
   let occupationTemplate = '';
   if (hero.fromHogwarts()) {

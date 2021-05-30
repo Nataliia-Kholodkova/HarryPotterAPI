@@ -1,4 +1,4 @@
-import { isFunction } from '../js/utils';
+import { isFunction } from '../utils/utils';
 
 function compareState(nextDeps) {
   if (!nextDeps) {

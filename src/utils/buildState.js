@@ -89,23 +89,6 @@ const FORM_STATE = {
       type: 'search',
     },
   ],
-
-  random: [
-    {
-      name: 'random',
-      values: ['Get random heroes'],
-      inputClasses: ['input, radio-input', 'filter-form-input__radio', 'visually-hidden'],
-      imgClasses: [],
-      labelClasses: ['form-label', 'filter-form__label'],
-      formClasses: ['form', 'filter-form'],
-      spanClasses: ['label', 'label-radio'],
-      fieldsetClasses: 'filter-form__fieldset',
-      legendClasses: ['legend', 'filter-form__legend'],
-      legend: 'Gnerate random Heroes',
-      placeholder: '',
-      type: 'radio',
-    },
-  ],
 };
 
 export default FORM_STATE;
