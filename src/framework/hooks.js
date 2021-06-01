@@ -1,4 +1,4 @@
-import { isFunction } from '../utils/utils';
+import { isFunction, updateAppFromHystory } from '../utils/utils';
 
 function compareState(nextDeps) {
   if (!nextDeps) {

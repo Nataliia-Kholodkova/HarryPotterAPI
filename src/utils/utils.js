@@ -24,18 +24,6 @@ function getHero(dataHeroes, id) {
   return hero;
 }
 
-function setUrl(state) {
-  const params = new URLSearchParams(window.location.search);
-  for (let param in state.state) {
-    if (!state.state[param]) {
-      params.delete(param);
-    } else {
-      params.set(param, state.state[param]);
-    }
-  }
-  window.history.replaceState({}, '', decodeURIComponent(`${window.location.pathname}?${params}`));
-}
-
 const isFunction = func => typeof func === 'function';
 
-export { getHero, generateOccupation, setUrl, isFunction };
+export { getHero, generateOccupation, isFunction };

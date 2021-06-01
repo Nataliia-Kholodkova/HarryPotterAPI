@@ -17,7 +17,7 @@ export const useHeroes = () => {
       gender: null,
       name: null,
       hogwarts: null,
-      isAlive: null,
+      alive: null,
     },
     needReload: true,
   });
@@ -32,12 +32,13 @@ export const useHeroes = () => {
           heroesState.heroId = heroItemId;
           heroesState.hero = heroItem;
           setHeroesState(heroesState);
-          state.needReload = false;
-          setState(state);
         })
         .catch(errorItem => {
           state.needReload = false;
           setError(errorItem);
+        })
+        .finally(() => {
+          state.needReload = false;
           setState(state);
         });
     } else {
@@ -46,16 +47,14 @@ export const useHeroes = () => {
           const heroesData = filterFromState(heroesState.heroes, state.state);
           const heroItemId = heroesState.heroId || null;
           const heroItem = getHero(heroesData, heroItemId);
-          state.needReload = false;
           heroesState.heroId = heroItemId;
           heroesState.hero = heroItem;
           heroesState.currentHeroes = heroesData;
           setHeroesState(heroesState);
-          setState(state);
-          setError(null);
         } catch (errorItem) {
-          state.needReload = false;
           setError(errorItem);
+        } finally {
+          state.needReload = false;
           setState(state);
         }
       }
