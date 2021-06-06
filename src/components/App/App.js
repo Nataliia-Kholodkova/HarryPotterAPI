@@ -1,28 +1,79 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 import Main from '../Main/Main';
 import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
 import styles from './styles.css';
 import { useHeroes } from '../../customHooks';
-import { AppContext } from '../../context';
+import { getHero } from '../../utils/utils';
 
 export default function App() {
-  const { state, error, heroesState, setState, setHeroesState } = useHeroes();
+  const {
+    hero,
+    setHero,
+    heroId,
+    setHeroId,
+    heroes,
+    setHeroes,
+    error,
+    setError,
+    house,
+    setHouse,
+    hogwarts,
+    setHogwarts,
+    gender,
+    setGender,
+    alive,
+    setAlive,
+    name,
+    setName,
+  } = useHeroes();
+
+  const appState = {
+    house: [house, setHouse],
+    hogwarts: [hogwarts, setHogwarts],
+    gender: [gender, setGender],
+    alive: [alive, setAlive],
+    name: [name, setName],
+  };
+
   const template = (
     <>
-      <Header setState={setState} appState={state} setHeroesState={setHeroesState} />
-      <div class={`wrapper ${styles['main-wrapper']}`}>
-        <Aside setState={setState} appState={state} setHeroesState={setHeroesState} />
-        <AppContext.Provider value={heroesState}>
-          <Main
-            error={error}
-            setState={setState}
-            appState={state}
-            setHeroesState={setHeroesState}
-          />
-        </AppContext.Provider>
+      <Header
+        hero={hero}
+        setHero={setHero}
+        heroId={heroId}
+        setHeroId={setHeroId}
+        setHeroes={setHeroes}
+        setError={setError}
+        appState={appState}
+        heroes={heroes}
+      />
+      <div className={`wrapper ${styles['main-wrapper']}`}>
+        <Aside
+          hero={hero}
+          setHero={setHero}
+          heroId={heroId}
+          setHeroId={setHeroId}
+          setHeroes={setHeroes}
+          setError={setError}
+          appState={appState}
+          heroes={heroes}
+        />
+        <Main
+          error={error}
+          hero={hero}
+          setHero={setHero}
+          heroId={heroId}
+          setHeroId={setHeroId}
+          heroes={heroes}
+          setHeroes={setHeroes}
+          setError={setError}
+          setHouse={setHouse}
+          setHogwarts={setHogwarts}
+          setGender={setGender}
+          setAlive={setAlive}
+          setName={setName}
+        />
       </div>
     </>
   );

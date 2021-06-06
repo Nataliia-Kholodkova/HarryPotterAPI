@@ -1,26 +1,47 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 import Error from '../Error/Error';
 import styles from './styles.css';
-import { useAppContext } from '../../context';
 import sliderHandler from '../../utils/slider';
 import { generateButtons, generateData } from './helpers';
 
-export default function Main({ setState, error, setHeroesState, appState }) {
-  const heroesData = useAppContext();
-  if (Object.keys(heroesData).length === 0) {
-    return null;
-  }
+export default function Main({
+  error,
+  hero,
+  setHero,
+  heroId,
+  setHeroId,
+  heroes,
+  setHeroes,
+  setError,
+  setHouse,
+  setHogwarts,
+  setGender,
+  setAlive,
+  setName,
+}) {
   const buttons = generateButtons(sliderHandler);
-  const data = generateData(appState, heroesData, setHeroesState, setState, error);
+  const data = generateData(error, hero, setHero, setHeroId, heroes);
   return (
     <>
-      <main class={styles.main}>
-        <div class={styles.results}>
+      <main className={styles.main}>
+        <div className={styles.results}>
           {buttons}
-          <div class={styles['hero-list']}>
-            <Error error={error} setState={setState} />
+          <div className={styles['hero-list']}>
+            <Error
+              error={error}
+              hero={hero}
+              setHero={setHero}
+              heroId={heroId}
+              setHeroId={setHeroId}
+              heroes={heroes}
+              setHeroes={setHeroes}
+              setError={setError}
+              setHouse={setHouse}
+              setHogwarts={setHogwarts}
+              setGender={setGender}
+              setAlive={setAlive}
+              setName={setName}
+            />
             {data}
           </div>
         </div>

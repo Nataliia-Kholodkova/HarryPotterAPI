@@ -501,7 +501,7 @@ textarea,
 }
 
 body {
-  font-family: 'Satisfy', cursive;
+  font-family: 'Patrick Hand', cursive;
   font-size: 14px;
   color: aliceblue;
   background-image: url(../img/lib.jpg);
@@ -559,7 +559,6 @@ fieldset {
 }
 
 :global .title-main {
-  font-family: 'Arizonia', cursive;
   font-size: 50px;
   color: aliceblue;
   text-align: center;

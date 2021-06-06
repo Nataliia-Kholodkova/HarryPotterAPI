@@ -1,21 +1,33 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement } from '../../framework/element';
+import React from 'react';
 import Form from '../Form/Form';
 import styles from './styles.css';
 import FORM_STATE from '../../utils/buildState';
 
-export default function Header({ setState, appState, setHeroesState }) {
+export default function Header({
+  hero,
+  setHero,
+  heroId,
+  setHeroId,
+  heroes,
+  setHeroes,
+  setError,
+  appState,
+}) {
   return (
-    <header class={styles.header}>
-      <div class={'wrapper'}>
-        <h1 class={`title title-main`}>Welcome to the magic World of Hogwarts</h1>
+    <header className={styles.header}>
+      <div className={'wrapper'}>
+        <h1 className={`title title-main`}>Welcome to the magic World of Hogwarts</h1>
         <Form
-          setState={setState}
           imgNeed={true}
-          appState={appState}
           formState={FORM_STATE.faculty}
-          setHeroesState={setHeroesState}
+          hero={hero}
+          setHero={setHero}
+          heroId={heroId}
+          setHeroId={setHeroId}
+          setHeroes={setHeroes}
+          setError={setError}
+          appState={appState}
+          heroes={heroes}
         />
       </div>
     </header>

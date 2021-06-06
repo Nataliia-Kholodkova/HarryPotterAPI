@@ -1,71 +1,52 @@
-import { useEffect, useState } from './framework/hooks';
-import filterFromState from './data/filterHeroes';
+import { useEffect, useState } from 'react';
 import getHeroesFromServer from './data/getData';
 import { getHero } from './utils/utils';
+import filterFromState from './data/filterHeroes';
 
 export const useHeroes = () => {
-  const [heroesState, setHeroesState] = useState({
-    heroId: null,
-    hero: null,
-    heroes: [],
-    currentHeroes: [],
-  });
+  const [hero, setHero] = useState(null);
+  const [heroId, setHeroId] = useState(null);
+  const [heroes, setHeroes] = useState([]);
   const [error, setError] = useState(null);
-  let [state, setState] = useState({
-    state: {
-      house: null,
-      gender: null,
-      name: null,
-      hogwarts: null,
-      alive: null,
-    },
-    needReload: true,
-  });
-  useEffect(() => {
-    if (heroesState.heroes.length === 0) {
-      getHeroesFromServer()
-        .then(heroesList => {
-          heroesState.heroes = heroesList;
-          heroesState.currentHeroes = heroesList;
-          const heroItemId = heroesState.heroId || null;
-          const heroItem = getHero(heroesList, heroItemId);
-          heroesState.heroId = heroItemId;
-          heroesState.hero = heroItem;
-          setHeroesState(heroesState);
-        })
-        .catch(errorItem => {
-          state.needReload = false;
-          setError(errorItem);
-        })
-        .finally(() => {
-          state.needReload = false;
-          setState(state);
-        });
-    } else {
-      if (state.needReload) {
-        try {
-          const heroesData = filterFromState(heroesState.heroes, state.state);
-          const heroItemId = heroesState.heroId || null;
-          const heroItem = getHero(heroesData, heroItemId);
-          heroesState.heroId = heroItemId;
-          heroesState.hero = heroItem;
-          heroesState.currentHeroes = heroesData;
-          setHeroesState(heroesState);
-        } catch (errorItem) {
-          setError(errorItem);
-        } finally {
-          state.needReload = false;
-          setState(state);
-        }
-      }
-    }
-  }, [heroesState, error, state]);
+  const [house, setHouse] = useState('All');
+  const [hogwarts, setHogwarts] = useState('All');
+  const [gender, setGender] = useState('All');
+  const [alive, setAlive] = useState('All');
+  const [name, setName] = useState(undefined);
 
+  useEffect(() => {
+    if (heroes.length === 0 && !error) {
+      getHeroesFromServer()
+        .then(heroesList => filterFromState(heroesList, 'house', house))
+        .then(heroesData => filterFromState(heroesData, 'hogwarts', hogwarts))
+        .then(heroesData => filterFromState(heroesData, 'gender', gender))
+        .then(heroesData => filterFromState(heroesData, 'alive', alive))
+        .then(heroesData => filterFromState(heroesData, 'name', name || ''))
+        .then(heroesData => setHeroes(heroesData))
+        .catch(errorItem => setError(errorItem));
+    }
+    if (!hero) {
+      setHero(getHero(heroes, heroId));
+    }
+  }, [hero, heroId, heroes, error, house, hogwarts, gender, alive, name]);
   return {
-    state,
+    hero,
+    setHero,
+    heroId,
+    setHeroId,
+    heroes,
+    setHeroes,
     error,
-    heroesState,
-    setState,
-    setHeroesState,
+    setError,
+    house,
+    setHouse,
+    hogwarts,
+    setHogwarts,
+    gender,
+    setGender,
+    alive,
+    setAlive,
+    name,
+    setName,
   };
 };

@@ -1,15 +1,14 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 import HeroCard from '../HeroCard/HeroCard';
-import { useAppContext } from '../../context';
 
-export default function HeroesList() {
-  const { currentHeroes } = useAppContext();
+export default function HeroesList({ heroes }) {
+  if ((heroes.length === 0) | (heroes.length === undefined)) {
+    return null;
+  }
   return (
     <>
-      {currentHeroes.map(hero => (
-        <HeroCard hero={hero} />
+      {heroes.map(hero => (
+        <HeroCard hero={hero} key={hero.id} />
       ))}
     </>
   );

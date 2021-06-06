@@ -1,6 +1,4 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 import MainHeroCard from '../MainHeroCard/MainHeroCard';
 import HeroesList from '../HeroesList/HeroesList';
 import { getHero } from '../../utils/utils';
@@ -11,17 +9,17 @@ function generateButtons(sliderHandler) {
     <>
       <button
         type="button"
-        class={`btn ${styles['btn-list']} ${styles['btn-list__left']}`}
+        className={`btn ${styles['btn-list']} ${styles['btn-list__left']}`}
         data-dir={'1'}
-        onclick={event => sliderHandler(event)}
+        onClick={event => sliderHandler(event)}
       >
         &lsaquo;
       </button>
       <button
         type="button"
-        class={`btn ${styles['btn-list']} ${styles['btn-list__right']}`}
+        className={`btn ${styles['btn-list']} ${styles['btn-list__right']}`}
         data-dir={'-1'}
-        onclick={event => sliderHandler(event)}
+        onClick={event => sliderHandler(event)}
       >
         &rsaquo;
       </button>
@@ -30,32 +28,28 @@ function generateButtons(sliderHandler) {
   return buttons;
 }
 
-function generateData(appState, heroesData, setHeroesState, setState, error) {
+function generateData(error, hero, setHero, setHeroId, heroes) {
   const clickHandler = event => {
     const card = event.target.closest(`div.hero-card`);
     let id = null;
     if (!card) {
-      heroesData.heroId = null;
-      heroesData.hero = null;
-      setHeroesState(heroesData);
-      return;
+      setHeroId(null);
+      setHero(null);
+      return null;
     }
     id = +card.dataset.id;
-    const hero = getHero(heroesData.currentHeroes, id);
-    heroesData.heroId = id;
-    heroesData.hero = hero;
-    setHeroesState(heroesData);
-    appState.needReload = true;
-    setState(appState);
+    const hero = getHero(heroes, id);
+    setHeroId(id);
+    setHero(hero);
   };
   let data = null;
   if (!error) {
     data = (
       <>
-        <MainHeroCard />
-        <div class={styles['hero-list__wrapper']}>
-          <div class={styles['hero-list__slider']} id="slider" onclick={clickHandler}>
-            <HeroesList />
+        <MainHeroCard hero={hero} />
+        <div className={styles['hero-list__wrapper']}>
+          <div className={styles['hero-list__slider']} id="slider" onClick={clickHandler}>
+            <HeroesList heroes={heroes} />
           </div>
         </div>
       </>

@@ -1,12 +1,10 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 
 export default function Image({ value, url, width, imgClasses }) {
   return (
     <>
       <img
-        class={imgClasses.join(' ')}
+        className={imgClasses.join(' ')}
         src={url}
         alt={value}
         width={value === 'All' ? '150' : width}

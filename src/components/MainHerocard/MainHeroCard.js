@@ -1,40 +1,36 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../../framework/element';
+import React from 'react';
 import { generateOccupation } from '../../utils/utils';
 import Image from '../Image/Image';
 import styles from './styles.css';
-import { useAppContext } from '../../context';
 
-export default function MainHeroCard() {
-  const { hero } = useAppContext();
+export default function MainHeroCard({ hero }) {
   if (!hero) {
     return null;
   }
   return (
     <>
-      <div class={`hero-card ${styles['hero-card__big']}`} id="hero-card__big">
+      <div className={`hero-card ${styles['hero-card__big']}`} id="hero-card__big">
         <Image
           value={hero.name}
           url={hero.image}
           width={'150'}
           imgClasses={['card-img', styles['card-img__big']]}
         />
-        <div class={styles['hero-description']}>
-          <h2 class={`title card-title`}>{hero.name}</h2>
-          <p class={`text card-text`}>
-            <span class={'hero-name'}>{hero.name}</span> was bourn
-            <span class={'hero-birth-date'}>{hero.dateOfBirth}</span>.
-            <span class={'hero-occupation'}>{generateOccupation(hero)}</span>
+        <div className={styles['hero-description']}>
+          <h2 className={`title card-title`}>{hero.name}</h2>
+          <p className={`text card-text`}>
+            <span className={'hero-name'}>{hero.name}</span> was bourn
+            <span className={'hero-birth-date'}>{hero.dateOfBirth}</span>.
+            <span className={'hero-occupation'}>{generateOccupation(hero)}</span>
           </p>
-          <p class={`text card-text`}>
-            Has <span class={'hero-hair'}>{hero.hairColour}</span> hair,
-            <span class={'hero-eyes'}>{hero.eyeColour}</span> eyes. Patronus -
-            <span class={'hero-patronus'}>{hero.patronus}</span>
+          <p className={`text card-text`}>
+            Has <span className={'hero-hair'}>{hero.hairColour}</span> hair,
+            <span className={'hero-eyes'}>{hero.eyeColour}</span> eyes. Patronus -
+            <span className={'hero-patronus'}>{hero.patronus}</span>
           </p>
-          <p class={`text card-text`}>
+          <p className={`text card-text`}>
             Acted by
-            <span class={'hero-actor'}>{hero.actor}</span>.
+            <span className={'hero-actor'}>{hero.actor}</span>.
           </p>
         </div>
       </div>
