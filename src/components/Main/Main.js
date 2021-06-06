@@ -3,22 +3,15 @@ import Error from '../Error/Error';
 import styles from './styles.css';
 import sliderHandler from '../../utils/slider';
 import { generateButtons, generateData } from './helpers';
+import { useAppContext } from '../../context';
 
-export default function Main({
-  error,
-  hero,
-  setHero,
-  heroId,
-  setHeroId,
-  heroes,
-  setHeroes,
-  setError,
-  setHouse,
-  setHogwarts,
-  setGender,
-  setAlive,
-  setName,
-}) {
+export default function Main() {
+  const appContext = useAppContext();
+  const [error] = appContext.error;
+  const [hero, setHero] = appContext.hero;
+  const [, setHeroId] = appContext.heroId;
+  const [heroes] = appContext.heroes;
+
   const buttons = generateButtons(sliderHandler);
   const data = generateData(error, hero, setHero, setHeroId, heroes);
   return (
@@ -27,21 +20,7 @@ export default function Main({
         <div className={styles.results}>
           {buttons}
           <div className={styles['hero-list']}>
-            <Error
-              error={error}
-              hero={hero}
-              setHero={setHero}
-              heroId={heroId}
-              setHeroId={setHeroId}
-              heroes={heroes}
-              setHeroes={setHeroes}
-              setError={setError}
-              setHouse={setHouse}
-              setHogwarts={setHogwarts}
-              setGender={setGender}
-              setAlive={setAlive}
-              setName={setName}
-            />
+            <Error />
             {data}
           </div>
         </div>

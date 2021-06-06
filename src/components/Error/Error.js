@@ -2,22 +2,19 @@ import React from 'react';
 import hat from './img/hat.png';
 import Image from '../Image/Image';
 import styles from './styles.css';
+import { useFormContext, useAppContext } from '../../context';
 
-export default function Error({
-  error,
-  setHero,
-  setHeroId,
-  setHeroes,
-  setError,
-  setHouse,
-  setHogwarts,
-  setGender,
-  setAlive,
-  setName,
-}) {
+export default function Error() {
+  const inputsState = useFormContext();
+  const appContext = useAppContext();
+  const [error, setError] = appContext.error;
+  const [, setHero] = appContext.hero;
+  const [, setHeroId] = appContext.heroId;
+  const [, setHeroes] = appContext.heroes;
   if (!error) {
     return null;
   }
+
   return (
     <>
       <div className={styles.error}>
@@ -35,11 +32,10 @@ export default function Error({
             setError(null);
             setHeroId(null);
             setHeroes([]);
-            setAlive('All');
-            setGender('All');
-            setHogwarts('All');
-            setHouse('All');
-            setName('');
+            for (let key in inputsState) {
+              const [_, setter] = inputsState[key];
+              key === 'name' ? setter(undefined) : setter('All');
+            }
           }}
         >
           Reload

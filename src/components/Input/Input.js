@@ -3,30 +3,21 @@ import Image from '../Image/Image';
 import styles from './styles.css';
 import filterFromState from '../../data/filterHeroes';
 
-export default function Input({
-  state,
-  imgNeed,
-  setHero,
-  setHeroes,
-  setHeroId,
-  setError,
-  appState,
-  heroes,
-}) {
+export default function Input({ state, imgNeed, appState, appInputsState }) {
   const inputHandler = event => {
-    const [, setter] = appState[event.target.name];
+    const [, setter] = appInputsState[event.target.name];
     setter(event.target.value);
-    setHeroId(null);
-    setHero(null);
-    setError(null);
-    if (heroes.length === 0) {
+    appState.heroId[1](null);
+    appState.hero[1](null);
+    appState.error[1](null);
+    if (appState.heroes[0].length === 0) {
       return;
     }
     try {
-      setHeroes(filterFromState(heroes, event.target.name, event.target.value));
+      setHeroes(filterFromState(appState.heroes[0], event.target.name, event.target.value));
     } catch (error) {
-      setError(error);
-      setHeroes([]);
+      appState.error[1](null);
+      appState.heroes[1]([]);
     }
   };
   return (
@@ -45,7 +36,7 @@ export default function Input({
             value={state.placeholder ? undefined : value}
             name={state.name}
             placeholder={state.placeholder || null}
-            checked={appState[state.name][0] === value}
+            checked={appInputsState[state.name][0] === value}
             onChange={inputHandler}
           />
           {imgNeed === true ? (

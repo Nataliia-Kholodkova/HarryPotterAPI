@@ -4,7 +4,7 @@ import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
 import styles from './styles.css';
 import { useHeroes } from '../../customHooks';
-import { getHero } from '../../utils/utils';
+import { AppContext, FormContext } from '../../context';
 
 export default function App() {
   const {
@@ -36,45 +36,24 @@ export default function App() {
     name: [name, setName],
   };
 
+  const heroesState = {
+    hero: [hero, setHero],
+    heroId: [heroId, setHeroId],
+    heroes: [heroes, setHeroes],
+    error: [error, setError],
+  };
+
   const template = (
     <>
-      <Header
-        hero={hero}
-        setHero={setHero}
-        heroId={heroId}
-        setHeroId={setHeroId}
-        setHeroes={setHeroes}
-        setError={setError}
-        appState={appState}
-        heroes={heroes}
-      />
-      <div className={`wrapper ${styles['main-wrapper']}`}>
-        <Aside
-          hero={hero}
-          setHero={setHero}
-          heroId={heroId}
-          setHeroId={setHeroId}
-          setHeroes={setHeroes}
-          setError={setError}
-          appState={appState}
-          heroes={heroes}
-        />
-        <Main
-          error={error}
-          hero={hero}
-          setHero={setHero}
-          heroId={heroId}
-          setHeroId={setHeroId}
-          heroes={heroes}
-          setHeroes={setHeroes}
-          setError={setError}
-          setHouse={setHouse}
-          setHogwarts={setHogwarts}
-          setGender={setGender}
-          setAlive={setAlive}
-          setName={setName}
-        />
-      </div>
+      <AppContext.Provider value={heroesState}>
+        <FormContext.Provider value={appState}>
+          <Header />
+          <div className={`wrapper ${styles['main-wrapper']}`}>
+            <Aside />
+            <Main />
+          </div>
+        </FormContext.Provider>
+      </AppContext.Provider>
     </>
   );
   return template;

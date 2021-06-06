@@ -2,18 +2,11 @@ import React from 'react';
 import Input from '../Input/Input';
 import Legend from '../Legend/Legend';
 import styles from './styles.css';
+import { useFormContext, useAppContext } from '../../context';
 
-export default function Fieldset({
-  state,
-  imgNeed,
-  isFieldset,
-  setHero,
-  setHeroId,
-  setHeroes,
-  setError,
-  appState,
-  heroes,
-}) {
+export default function Fieldset({ state, imgNeed, isFieldset }) {
+  const appInputsState = useFormContext();
+  const appState = useAppContext();
   if (isFieldset) {
     return (
       <>
@@ -22,27 +15,14 @@ export default function Fieldset({
           <Input
             state={state}
             imgNeed={imgNeed}
-            setHero={setHero}
-            setHeroId={setHeroId}
-            setHeroes={setHeroes}
-            setError={setError}
+            appInputsState={appInputsState}
             appState={appState}
-            heroes={heroes}
           />
         </fieldset>
       </>
     );
   }
   return (
-    <Input
-      state={state}
-      imgNeed={imgNeed}
-      setHero={setHero}
-      setHeroId={setHeroId}
-      setError={setError}
-      setHeroes={setHeroes}
-      appState={appState}
-      heroes={heroes}
-    />
+    <Input state={state} imgNeed={imgNeed} appInputsState={appInputsState} appState={appState} />
   );
 }

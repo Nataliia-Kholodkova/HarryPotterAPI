@@ -3,16 +3,7 @@ import Form from '../Form/Form';
 import FORM_STATE from '../../utils/buildState';
 import styles from './styles.css';
 
-export default function Aside({
-  hero,
-  setHero,
-  heroId,
-  setHeroId,
-  heroes,
-  setHeroes,
-  setError,
-  appState,
-}) {
+export default function Aside({ hero, setHero, heroId, setHeroId, heroes, setHeroes, setError }) {
   return (
     <aside className={styles.aside}>
       <Form
@@ -26,7 +17,6 @@ export default function Aside({
         setHeroId={setHeroId}
         setHeroes={setHeroes}
         setError={setError}
-        appState={appState}
         heroes={heroes}
       />
     </aside>
