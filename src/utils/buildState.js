@@ -108,7 +108,7 @@ const FORM_STATE = {
     },
     {
       name: 'hairColour',
-      values: ['Bald', 'Brown', 'Grey', 'Red', 'Black', 'Blond'],
+      values: ['Bald', 'Brown', 'Grey', 'Red', 'Black', 'Blonde'],
       inputClasses: ['radio-input', 'visually-hidden'],
       imgClasses: [],
       labelClasses: ['similarity-form__label'],
@@ -119,7 +119,7 @@ const FORM_STATE = {
       legend: 'Color of your hair',
       placeholder: '',
       type: 'radio',
-      'data-score': 2,
+      'data-score': 5,
     },
     {
       name: 'gender',
@@ -134,7 +134,7 @@ const FORM_STATE = {
       legend: 'Your gender',
       placeholder: '',
       type: 'radio',
-      'data-score': 1,
+      'data-score': 2,
     },
   ],
 };

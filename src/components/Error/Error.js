@@ -3,14 +3,12 @@ import hat from './img/hat.png';
 import Image from '../Image/Image';
 import styles from './styles.css';
 import { useFormContext, useAppContext } from '../../context';
+import { resetHandler } from '../../utils/handlers';
 
 export default function Error() {
-  const inputsState = useFormContext();
-  const appContext = useAppContext();
-  const [error, setError] = appContext.error;
-  const [, setHero] = appContext.hero;
-  const [, setHeroId] = appContext.heroId;
-  const [, setHeroes] = appContext.heroes;
+  const { house, hogwarts, gender, name, alive } = useFormContext();
+  const appState = useAppContext();
+  const [error] = appState.error;
   if (!error) {
     return null;
   }
@@ -27,16 +25,9 @@ export default function Error() {
           type="button"
           className={`btn ${styles['btn-reset']}`}
           name="reload"
-          onClick={() => {
-            setHero(null);
-            setError(null);
-            setHeroId(null);
-            setHeroes([]);
-            for (let key in inputsState) {
-              const [_, setter] = inputsState[key];
-              key === 'name' ? setter(undefined) : setter('All');
-            }
-          }}
+          onClick={() =>
+            resetHandler(appState, name[1], gender[1], house[1], alive[1], hogwarts[1])
+          }
         >
           Reload
         </button>

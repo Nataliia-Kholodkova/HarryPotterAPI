@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import getHeroesFromServer from './data/getData';
-import { getHero } from './utils/utils';
+import { getHero, calculateSimilarity } from './utils/utils';
 import filterFromState from './data/filterHeroes';
-import { calculateSimilarity } from './utils/modal';
 
 export const useHeroes = () => {
   const [hero, setHero] = useState(null);
@@ -26,20 +25,20 @@ export const useHeroes = () => {
         })
         .catch(errorItem => setError(errorItem))
         .finally(setSimilarityItems([]));
-      return;
-    }
-    if (heroes.length === 0 && !error) {
-      getHeroesFromServer()
-        .then(heroesList => filterFromState(heroesList, 'house', house))
-        .then(heroesData => filterFromState(heroesData, 'hogwarts', hogwarts))
-        .then(heroesData => filterFromState(heroesData, 'gender', gender))
-        .then(heroesData => filterFromState(heroesData, 'alive', alive))
-        .then(heroesData => filterFromState(heroesData, 'name', name || ''))
-        .then(heroesData => setHeroes(heroesData))
-        .catch(errorItem => setError(errorItem));
-    }
-    if (!hero) {
-      setHero(getHero(heroes, heroId));
+    } else {
+      if (heroes.length === 0 && !error) {
+        getHeroesFromServer()
+          .then(heroesList => filterFromState(heroesList, 'house', house))
+          .then(heroesData => filterFromState(heroesData, 'hogwarts', hogwarts))
+          .then(heroesData => filterFromState(heroesData, 'gender', gender))
+          .then(heroesData => filterFromState(heroesData, 'alive', alive))
+          .then(heroesData => filterFromState(heroesData, 'name', name || ''))
+          .then(heroesData => setHeroes(heroesData))
+          .catch(errorItem => setError(errorItem));
+      }
+      if (!hero) {
+        setHero(getHero(heroes, heroId));
+      }
     }
   }, [hero, heroId, heroes, error, house, hogwarts, gender, alive, name, similarityItems]);
   return {

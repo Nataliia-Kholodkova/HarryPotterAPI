@@ -1,7 +1,6 @@
 import React from 'react';
 import Error from '../Error/Error';
 import styles from './styles.css';
-import sliderHandler from '../../utils/slider';
 import { generateButtons, generateData } from './helpers';
 import { useAppContext } from '../../context';
 
@@ -11,8 +10,7 @@ export default function Main() {
   const [hero, setHero] = appContext.hero;
   const [, setHeroId] = appContext.heroId;
   const [heroes] = appContext.heroes;
-
-  const buttons = generateButtons(sliderHandler);
+  const buttons = generateButtons();
   const data = generateData(error, hero, setHero, setHeroId, heroes);
   return (
     <>

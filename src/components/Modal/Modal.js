@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.css';
 import FORM_STATE from '../../utils/buildState';
-import { modalFormClose } from '../../utils/modal';
+import { modalFormClose } from '../../utils/handlers';
 import Form from '../Form/Form';
 
 export default function Modal({ setSimilarityItems }) {

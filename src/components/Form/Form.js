@@ -2,7 +2,7 @@ import React from 'react';
 import Fieldset from '../Fieldset/Fieldset';
 import styles from './styles.css';
 import { useFormContext, useAppContext } from '../../context';
-import { modalFormSubmit } from '../../utils/modal';
+import { modalFormSubmit, resetHandler } from '../../utils/handlers';
 
 export default function Form({
   imgNeed = false,
@@ -37,17 +37,9 @@ export default function Form({
             className={`btn btn-reset`}
             name="reset"
             type="reset"
-            onClick={() => {
-              appState.heroId[1](null);
-              appState.error[1](null);
-              appState.hero[1](null);
-              appState.heroes[1](null);
-              name[1]('');
-              gender[1]('All');
-              house[1]('All');
-              alive[1]('All');
-              hogwarts[1]('All');
-            }}
+            onClick={() =>
+              resetHandler(appState, name[1], gender[1], house[1], alive[1], hogwarts[1])
+            }
           >
             Reset
           </button>

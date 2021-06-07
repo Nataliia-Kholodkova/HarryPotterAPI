@@ -2,7 +2,7 @@ import React from 'react';
 import Form from '../Form/Form';
 import FORM_STATE from '../../utils/buildState';
 import styles from './styles.css';
-import { modalFormOpener } from '../../utils/modal';
+import { modalFormOpener } from '../../utils/handlers';
 
 export default function Aside() {
   return (

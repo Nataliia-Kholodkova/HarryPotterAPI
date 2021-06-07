@@ -1,10 +1,10 @@
 import React from 'react';
 import MainHeroCard from '../MainHeroCard/MainHeroCard';
 import HeroesList from '../HeroesList/HeroesList';
-import { getHero } from '../../utils/utils';
 import styles from './styles.css';
+import { sliderHandler, clickCardHandler } from '../../utils/handlers';
 
-function generateButtons(sliderHandler) {
+function generateButtons() {
   const buttons = (
     <>
       <button
@@ -29,26 +29,17 @@ function generateButtons(sliderHandler) {
 }
 
 function generateData(error, hero, setHero, setHeroId, heroes) {
-  const clickHandler = event => {
-    const card = event.target.closest(`div.hero-card`);
-    let id = null;
-    if (!card) {
-      setHeroId(null);
-      setHero(null);
-      return null;
-    }
-    id = +card.dataset.id;
-    const hero = getHero(heroes, id);
-    setHeroId(id);
-    setHero(hero);
-  };
   let data = null;
   if (!error) {
     data = (
       <>
         <MainHeroCard hero={hero} />
         <div className={styles['hero-list__wrapper']}>
-          <div className={styles['hero-list__slider']} id="slider" onClick={clickHandler}>
+          <div
+            className={styles['hero-list__slider']}
+            id="slider"
+            onClick={event => clickCardHandler(event, heroes, setHeroId, setHero)}
+          >
             <HeroesList heroes={heroes} />
           </div>
         </div>
