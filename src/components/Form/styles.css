@@ -28,3 +28,22 @@
   justify-content: center;
   margin-bottom: 38px;
 }
+
+
+.similarity-form__label {
+  width: 28%;
+}
+
+@media screen and (min-width: 648px) {
+  .similarity-form__label {
+    width: 15%;
+  }
+}
+
+.btn-submit {
+  font: inherit;
+  font-weight: 700;
+  color: antiquewhite;
+  background-color: #c22828;
+  padding: 20px;
+}

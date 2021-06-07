@@ -2,6 +2,7 @@ import React from 'react';
 import Main from '../Main/Main';
 import Aside from '../Aside/Aside';
 import Header from '../Header/Header';
+import Modal from '../Modal/Modal';
 import styles from './styles.css';
 import { useHeroes } from '../../customHooks';
 import { AppContext, FormContext } from '../../context';
@@ -26,6 +27,7 @@ export default function App() {
     setAlive,
     name,
     setName,
+    setSimilarityItems,
   } = useHeroes();
 
   const appState = {
@@ -49,9 +51,10 @@ export default function App() {
         <FormContext.Provider value={appState}>
           <Header />
           <div className={`wrapper ${styles['main-wrapper']}`}>
-            <Aside />
+            <Aside setSimilarityItems={setSimilarityItems} />
             <Main />
           </div>
+          <Modal setSimilarityItems={setSimilarityItems} />
         </FormContext.Provider>
       </AppContext.Provider>
     </>

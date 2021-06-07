@@ -87,3 +87,17 @@
   -o-transition: 0.3s linear;
   cursor: pointer;
 }
+
+.similarity-form__label {
+  width: 28%;
+}
+
+@media screen and (min-width: 648px) {
+  .similarity-form__label {
+    width: 15%;
+  }
+}
+
+.similarity-form .label {
+  padding: 5px 0;
+}

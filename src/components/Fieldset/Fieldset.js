@@ -4,7 +4,7 @@ import Legend from '../Legend/Legend';
 import styles from './styles.css';
 import { useFormContext, useAppContext } from '../../context';
 
-export default function Fieldset({ state, imgNeed, isFieldset }) {
+export default function Fieldset({ state, imgNeed, isFieldset, needSubmit }) {
   const appInputsState = useFormContext();
   const appState = useAppContext();
   if (isFieldset) {
@@ -17,6 +17,7 @@ export default function Fieldset({ state, imgNeed, isFieldset }) {
             imgNeed={imgNeed}
             appInputsState={appInputsState}
             appState={appState}
+            needSubmit={needSubmit}
           />
         </fieldset>
       </>

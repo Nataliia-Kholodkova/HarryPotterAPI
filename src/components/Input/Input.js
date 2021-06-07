@@ -3,7 +3,7 @@ import Image from '../Image/Image';
 import styles from './styles.css';
 import filterFromState from '../../data/filterHeroes';
 
-export default function Input({ state, imgNeed, appState, appInputsState }) {
+export default function Input({ state, imgNeed, appState, appInputsState, needSubmit }) {
   const inputHandler = event => {
     const [, setter] = appInputsState[event.target.name];
     setter(event.target.value);
@@ -36,8 +36,14 @@ export default function Input({ state, imgNeed, appState, appInputsState }) {
             value={state.placeholder ? undefined : value}
             name={state.name}
             placeholder={state.placeholder || null}
-            checked={appInputsState[state.name][0] === value}
-            onChange={inputHandler}
+            checked={!needSubmit ? appInputsState[state.name][0] === value : undefined}
+            onChange={
+              !needSubmit
+                ? inputHandler
+                : function () {
+                    return false;
+                  }
+            }
           />
           {imgNeed === true ? (
             <Image

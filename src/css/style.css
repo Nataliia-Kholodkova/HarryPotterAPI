@@ -627,15 +627,7 @@ fieldset {
   width: 35%;
 }
 
-.additional {
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 0 auto;
-}
-
-.modal {
+:global .modal {
   position: fixed;
   width: 95%;
   height: 516px;
@@ -660,18 +652,18 @@ fieldset {
 }
 
 @media screen and (min-width: 648px) {
-  .modal {
+  :global .modal {
     height: 470px;
   }
 }
 
 @media screen and (min-width: 800px) {
-  .modal {
+  :global .modal {
     height: 420px;
   }
 }
 
-.modal-closed {
+:global .modal-closed {
   transform: scale(0);
   z-index: -10;
   -webkit-transform: scale(0);
@@ -680,100 +672,13 @@ fieldset {
   -o-transform: scale(0);
 }
 
-.modal-opened {
+:global .modal-opened {
   transform: scale(1);
   z-index: 2;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   -o-transform: scale(1);
-}
-
-.similarity-form__legend {
-  color: #2a221e;
-}
-
-.similarity-form__fieldset {
-  margin-bottom: 5px;
-}
-
-.similarity-form .form-label {
-  width: 28%;
-}
-
-@media screen and (min-width: 648px) {
-  .similarity-form .form-label {
-    width: 15%;
-  }
-}
-
-.similarity-form .label {
-  padding: 5px 0;
-}
-
-.btn-submit {
-  font: inherit;
-  background-color: #c22828;
-}
-
-.btn-modal {
-  position: absolute;
-  top: 22px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
-
-.btn-modal::before,
-.btn-modal::after {
-  display: block;
-  width: 30px;
-  height: 3px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #2a221e;
-  opacity: 0.7;
-  content: '';
-  transition: 0.3s linear;
-  -webkit-transition: 0.3s linear;
-  -moz-transition: 0.3s linear;
-  -ms-transition: 0.3s linear;
-  -o-transition: 0.3s linear;
-}
-
-.btn-modal::before {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-}
-
-.btn-modal::after {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-}
-
-.btn-modal:hover::after,
-.btn-modal:focus::after,
-.btn-modal:hover::before,
-.btn-modal:focus::before {
-  opacity: 1;
-}
-
-.hero-name,
-.hero-birth-date,
-.hero-occupation,
-.hero-hair,
-.hero-eyes,
-.hero-patronus,
-.hero-actor {
-  font-size: 14px;
 }
 
 :global .visually-hidden {

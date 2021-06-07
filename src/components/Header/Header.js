@@ -8,7 +8,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={'wrapper'}>
         <h1 className={`title title-main`}>Welcome to the magic World of Hogwarts</h1>
-        <Form imgNeed={true} formState={FORM_STATE.faculty} />
+        <Form imgNeed={true} formState={FORM_STATE.faculty} needSubmit={false} />
       </div>
     </header>
   );
