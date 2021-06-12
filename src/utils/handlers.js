@@ -89,3 +89,12 @@ export function clickCardHandler(event, heroes, setHeroId, setHero) {
   setHeroId(id);
   setHero(hero);
 }
+
+export function scrollToHeroes() {
+  const main = document.getElementById('main');
+  const position = main.getBoundingClientRect().top;
+  window.scrollBy({
+    top: position,
+    behavior: 'smooth',
+  });
+}

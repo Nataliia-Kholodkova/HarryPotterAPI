@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from '../Image/Image';
 import styles from './styles.css';
-import { inputHandler } from '../../utils/handlers';
+import { inputHandler, scrollToHeroes } from '../../utils/handlers';
 
 export default function Input({ state, imgNeed, appState, appInputsState, needSubmit }) {
   return (
@@ -23,7 +23,10 @@ export default function Input({ state, imgNeed, appState, appInputsState, needSu
             checked={!needSubmit ? appInputsState[state.name][0] === value : undefined}
             onChange={
               !needSubmit
-                ? event => inputHandler(event, appState, appInputsState)
+                ? event => {
+                    inputHandler(event, appState, appInputsState);
+                    scrollToHeroes();
+                  }
                 : function () {
                     return false;
                   }
@@ -34,7 +37,7 @@ export default function Input({ state, imgNeed, appState, appInputsState, needSu
             <Image
               value={value}
               url={state['imgUrls'][value]}
-              width={'120px'}
+              width={'100px'}
               imgClasses={[styles['img-checkbox']]}
             />
           ) : (

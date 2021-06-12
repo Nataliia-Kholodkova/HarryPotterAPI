@@ -18,7 +18,7 @@ export default function Error() {
       <div className={styles.error}>
         <Image value={'Sorting hat'} url={hat} width={'150'} imgClasses={['']} />
 
-        <h1 className={'title-main'} style={{ color: '#2a221e' }}>
+        <h1 className={styles['title-error']}>
           {typeof error === 'object' ? error.toString() : error}
         </h1>
         <button

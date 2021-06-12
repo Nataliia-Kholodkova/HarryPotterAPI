@@ -8,3 +8,12 @@
     justify-items: center;
     padding: 20px;
   }
+
+  .title-error {
+    width: 100%;
+    margin-bottom: 30px;
+    font-size: 30px;
+    text-align: center;
+    color: #2a221e;
+    opacity: 0.8;
+  }

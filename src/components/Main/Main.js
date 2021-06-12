@@ -14,7 +14,7 @@ export default function Main() {
   const data = generateData(error, hero, setHero, setHeroId, heroes);
   return (
     <>
-      <main className={styles.main}>
+      <main className={styles.main} id={'main'}>
         <div className={styles.results}>
           {buttons}
           <div className={styles['hero-list']}>

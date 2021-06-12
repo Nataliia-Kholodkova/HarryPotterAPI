@@ -5,7 +5,6 @@
 
 @media screen and (min-width: 648px) {
   .hero-card__big {
-    flex-direction: column;
     margin-bottom: 55px;
     padding-top: 70px;
   }
@@ -18,7 +17,7 @@
 }
 
 .hero-description {
-  width: 55%;
+  width: 48%;
 }
 
 @media screen and (min-width: 960px) {
@@ -30,32 +29,19 @@
 .card-img__big {
   width: 35%;
   transform: rotate(-15deg) translateX(15px);
-  -webkit-transform: rotate(-15deg) translateX(15px);
-  -moz-transform: rotate(-15deg) translateX(15px);
-  -ms-transform: rotate(-15deg) translateX(15px);
-  -o-transform: rotate(-15deg) translateX(15px);
 }
 
 @media screen and (min-width: 648px) {
   .card-img__big {
-    width: 73%;
-    margin-bottom: 65px;
-    transform: rotate(-15deg) translateX(0);
-    -webkit-transform: rotate(-15deg) translateX(0);
-    -moz-transform: rotate(-15deg) translateX(0);
-    -ms-transform: rotate(-15deg) translateX(0);
-    -o-transform: rotate(-15deg) translateX(0);
+    width: 33%;
+    transform: rotate(-20deg) translateX(45px);
   }
 }
 
 @media screen and (min-width: 960px) {
   .card-img__big {
-    width: 45%;
+    width: 33%;
     margin-bottom: 0;
-    transform: rotate(-15deg) translateX(65px);
-    -webkit-transform: rotate(-15deg) translateX(65px);
-    -moz-transform: rotate(-15deg) translateX(65px);
-    -ms-transform: rotate(-15deg) translateX(65px);
-    -o-transform: rotate(-15deg) translateX(65px);
+    transform: rotate(-23deg) translateX(100px);
   }
 }

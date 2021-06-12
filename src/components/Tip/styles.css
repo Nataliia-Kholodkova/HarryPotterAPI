@@ -1,0 +1,54 @@
+.tip {
+  position: absolute;
+  font-size: 10px;
+  top: 44%;
+  left: calc(50% - 30px);
+  width: 60px;
+  padding: 10px;
+  border-radius: 50%;
+  animation-name: pulse;
+  animation-duration: 5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+.text-tip {
+  font-size: 12px;
+  color: #333;
+}
+
+@media screen and (min-width: 415px) {
+  .tip {
+    top: 34%;
+  }
+}
+
+@media screen and (min-width: 773px) {
+  .tip {
+    top: 26%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .tip {
+    top: 48%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    color: #333;
+    background-color: white;
+  }
+  30%, 70% {
+    color: #333;
+  }
+  50% {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
