@@ -16,7 +16,7 @@ export default function Main() {
     <>
       <main className={styles.main} id={'main'}>
         <div className={styles.results}>
-          {buttons}
+          {error ? null : buttons}
           <div className={styles['hero-list']}>
             <Error />
             {data}
