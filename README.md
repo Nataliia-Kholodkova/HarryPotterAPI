@@ -8,4 +8,4 @@
 - Search by name;
 - Find the most looking like you hero (by color of hair, eyes, gender);
 
-# GitHubPages: https://ua-girl.github.io/HarryPotterAPI/
+# GitHubPages: https://nataliia-kholodkova.github.io/HarryPotterAPI/
